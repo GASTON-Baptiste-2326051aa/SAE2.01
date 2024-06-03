@@ -1,4 +1,4 @@
-/*package echec.demo;
+package echec.demo;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,5 +62,3 @@ public class JeuController implements Initializable {
     }
 
 }
-
- */

@@ -1,4 +1,4 @@
-/*package echec.Pions;
+package echec.Pions;
 
 public abstract class Pions{
 
@@ -33,5 +33,3 @@ public String getPos(){
         }
 
 }
-
- */

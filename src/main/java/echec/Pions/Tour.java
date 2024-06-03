@@ -1,4 +1,4 @@
-/*package echec.Pions;
+package echec.Pions;
 
 public class Tour extends Pions{
 
@@ -11,5 +11,3 @@ public class Tour extends Pions{
     }
 
 }
-
- */
