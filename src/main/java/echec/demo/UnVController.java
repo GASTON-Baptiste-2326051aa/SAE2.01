@@ -2,11 +2,10 @@ package echec.demo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
-public class HelloController {
+public class UnVController {
     @FXML
     private Label welcomeText;
 
