@@ -3,33 +3,30 @@ package echec.Pions;
 public abstract class Pions{
 
 private String couleur;
-private String posY;
-private int posX;
-private Boolean etat;
+private String posX;
+private int posY;
+private boolean etat = true;
 
-public Pions(String couleur,String posY,int posX,boolean etat){
+public Pions(String couleur,String posX,int posY){
     this.couleur = couleur;
     this.posY = posY;
     this.posX = posX;
-    this.etat = etat;
 }
 
-public abstract void deplacement();
+public abstract void deplacement(String posXDep, int posYDep, String posXFin, int posYFin);
 
-public void setEtat(Boolean etat){
-        this.etat = etat;
-        }
+public abstract boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin);
 
-public String getPosY(){
-        return this.posY;
-        }
+public void setEtat(Boolean etat){ this.etat = etat; }
 
-public int getPosX(){
-        return this.posX;
-        }
+public int getPosY(){ return this.posY; }
 
-public String getPos(){
-        return this.posX + String.valueOf(this.posY);
-        }
+public String getPosX(){ return this.posX; }
+
+public boolean getEtat(){ return this.etat; }
+
+public String getCouleur(){ return this.couleur;}
+
+public String getPos(){ return this.posY + String.valueOf(this.posX); }
 
 }

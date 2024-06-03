@@ -1,0 +1,15 @@
+.topButton{
+    -fx-background-color: #81b64c;
+    -fx-border-width: 0;
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-family: "cubik";
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow( two-pass-box,rgba(69, 117, 60, 1.0), 2, 0.9, 0, 7);
+
+}
+
+.topText{
+
+}
