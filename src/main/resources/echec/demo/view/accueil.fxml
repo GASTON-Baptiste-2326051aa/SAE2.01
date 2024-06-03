@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="echec.demo.AccueilController"
+            prefHeight="1000" prefWidth="1200.0">
+    <left>
+        <ImageView>
+            <image>
+                <Image url="@../img/plateau.png"/>
+            </image>
+        </ImageView>
+    </left>
+
+    <right>
+        <VBox>
+            <Label text="Choisi ton mode de jeu" textFill="white" wrapText="True" textAlignment="CENTER"/>
+            <Button>
+                <graphic>
+                    <HBox prefHeight="100" prefWidth="600">
+                        <children>
+                            <ImageView>
+                                <image>
+                                    <Image url="@../img/pion.png" />
+                                </image>
+                            </ImageView>
+                            <Label text="Joue contre ton ami" />
+                        </children>
+                    </HBox>
+                </graphic>
+            </Button>
+            <Label text="Item 3"/>
+        </VBox>
+    </right>
+
+    <top>
+        <Label text="Titre" />
+    </top>
+
+    <bottom>
+        <Label text="Footer" />
+    </bottom>
+
+</BorderPane>
