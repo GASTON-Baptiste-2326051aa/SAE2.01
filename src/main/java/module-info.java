@@ -10,6 +10,7 @@ module echec.demo {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens echec.demo to javafx.fxml;
     exports echec.demo;
