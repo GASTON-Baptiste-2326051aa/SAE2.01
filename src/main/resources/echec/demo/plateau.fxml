@@ -14,112 +14,228 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.HelloController"
             prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="echec.demo.HelloController">
-    <!-- Creation des tableaux pour les echecs -->
     <children>
-        <!-- Lignes 1 a 8 -->
-        <!-- Ligne 1 -->
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="1">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="2">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="3">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="4">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="5">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="6">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="0" GridPane.columnIndex="7">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <!-- Ligne 2 -->
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="0">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="1">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="2">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="3">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="4">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="5">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="6">
-            <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="1" GridPane.columnIndex="7">
-            <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
-        </StackPane>
-        <!-- Ligne 3 -->
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="0">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="1">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="2">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="3">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="4">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="5">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="6">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="2" GridPane.columnIndex="7">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <!--Ligne 4 -->
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="0">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="1">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="2">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="3">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="4">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="5">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="6">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <StackPane GridPane.rowIndex="3" GridPane.columnIndex="7">
-            <Rectangle width="50" height="50" fill="rgb()"/>
-        </StackPane>
-        <!-- -->
+        <GridPane xmlns:fx="http://javafx.com/fxml">
+            <!-- Creation des tableaux pour les echecs -->
+            <children>
+                <!-- Lignes 1 a 8 -->
+                <!-- Ligne 1 -->
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="8" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="7" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <!-- Ligne 2 -->
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="7" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="6" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <!-- Ligne 3 -->
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="6" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="5" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <!--Ligne 4 -->
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="5" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="4" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <!--Ligne 5 -->
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="4" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="3" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <!--Ligne 6-->
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="3" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="2" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <!--Ligne 7-->
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="2" translateX="3.0" translateY="-14.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="1" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                </StackPane>
+                <!--Ligne 8-->
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="1" translateX="3.0" translateY="-14.0"/>
+                    <Label text="a" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="1">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="b" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="2">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="c" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="3">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="d" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="4">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="e" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="5">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="f" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="6">
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
+                    <Label text="g" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+                <StackPane GridPane.rowIndex="0" GridPane.columnIndex="7">
+                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Label text="h" translateX="39.0" translateY="17.0"/>
+                </StackPane>
+            </children>
+        </GridPane>
     </children>
-</GridPane>
+</AnchorPane>
