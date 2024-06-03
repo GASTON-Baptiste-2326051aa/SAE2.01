@@ -1,4 +1,4 @@
-package echec.Pions;
+/*package echec.Pions;
 
 public class Fou extends Pions{
 
@@ -11,3 +11,4 @@ public class Fou extends Pions{
     }
 
 }
+ */
