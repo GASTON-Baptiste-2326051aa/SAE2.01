@@ -50,6 +50,40 @@ public class Position {
         return resultat;
     }
 
+    public String conversionIntLettre(int chiffre){
+        String resultat;
+        switch (chiffre) {
+            case 0:
+                resultat = "a";
+                break;
+            case 1:
+                resultat = "b";
+                break;
+            case 2:
+                resultat = "c";
+                break;
+            case 3:
+                resultat = "d";
+                break;
+            case 4:
+                resultat = "e";
+                break;
+            case 5:
+                resultat = "f";
+                break;
+            case 6:
+                resultat = "g";
+                break;
+            case 7:
+                resultat = "h";
+                break;
+            default:
+                resultat = "";
+                break;
+        }
+        return resultat;
+    }
+
 
     public int getI() {
         return i;

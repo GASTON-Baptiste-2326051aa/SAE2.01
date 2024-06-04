@@ -29,14 +29,24 @@ public void setEtat(Boolean etat){ this.etat = etat; }
 
 public int getPosY(){ return this.posY; }
 
-public String getPosX(){ return this.posX; }
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
 
-public boolean getEtat(){ return this.etat; }
+    public String getPosX(){ return this.posX; }
+
+    public void setPosX(String posX) {
+        this.posX = posX;
+    }
+
+    public boolean getEtat(){ return this.etat; }
 
 public String getCouleur(){ return this.couleur;}
 
 public String getPos(){ return this.posY + String.valueOf(this.posX); }
 
 public String getUrl(){return this.url;}
+
+public String toString(){return getClass().getSimpleName() + "." + this.couleur;}
 
 }

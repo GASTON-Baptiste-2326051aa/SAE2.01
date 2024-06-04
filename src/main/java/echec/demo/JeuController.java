@@ -82,7 +82,7 @@ public class JeuController implements Initializable {
     public void afficheMatrice(ArrayList<ArrayList<Pions>> matrice){
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Pions pion = matriceJeu.get(i).get(j);
+                Pions pion = matrice.get(i).get(j);
                 if (pion == null) {
                     System.out.print("  case vide  ");
                 } else {
@@ -94,6 +94,7 @@ public class JeuController implements Initializable {
     }
 
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice){
+        plateau.getChildren().removeIf(node -> node instanceof ImageView);
         Position position = new Position();
         for (int ligne = 0; ligne < 8; ligne++) {
             for (int colonne = 0; colonne < 8; colonne++) {
@@ -109,8 +110,9 @@ public class JeuController implements Initializable {
                     plateau.add(imageView, posX, pion.getPosY()-1);
                 }
             }
-            System.out.println();
         }
+        System.out.println("\n");
+        afficheMatrice(this.matriceJeu);
     }
 
     public void clic(){
@@ -129,16 +131,23 @@ public class JeuController implements Initializable {
 
             if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getI() >= 0){
 
-                System.out.println( this.positionDep.getI() + " " + this.positionDep.getJ());
 
-                Pions tmp = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
-                Pions tmp2 =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
-                //System.out.println(tmp.toString() + tmp2.toString());
+                Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
+                Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
+                System.out.println(9-pionDep.getPosY() + pionDep.getPosX() +" "+ (8 - positionFin.getI()) + positionFin.conversionIntLettre(positionFin.getJ()));
+                if (pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+                    this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), pionFin);
+                    this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
+                    if (pionFin != null){
+                        pionDep.setPosY(pionFin.getPosY());
+                        pionDep.setPosX(pionFin.getPosX());
+                    }
+                    else{
+                        pionDep.setPosY(positionFin.getI()+1);
+                        pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
+                    }
 
-                this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), tmp2);
-                this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), tmp);
-
-                System.out.println(this.matriceJeu);
+                }
 
                 afficheMatriceAvecPlateau(this.matriceJeu);
 
@@ -150,12 +159,13 @@ public class JeuController implements Initializable {
         });
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
         initMatrice();
         System.out.println("Boucle?");
-        //afficheMatriceAvecPlateau(this.matriceJeu);
+        afficheMatriceAvecPlateau(this.matriceJeu);
         clic();
 
         //timerJoueur1On();
