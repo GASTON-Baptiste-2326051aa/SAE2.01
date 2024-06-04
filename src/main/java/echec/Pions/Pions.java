@@ -2,6 +2,8 @@ package echec.Pions;
 
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
+
 public abstract class Pions{
 
 private String couleur;
@@ -11,11 +13,11 @@ private boolean etat = true;
 private String url;
 private ImageView image;
 
-public Pions(String couleur,String posX,int posY,String url){
+public Pions(String couleur,String posX,int posY,String fileName){
     this.couleur = couleur;
     this.posY = posY;
     this.posX = posX;
-    this.url = url;
+    this.url = this.getClass().getResource(fileName).toString();;
     this.image = new ImageView(this.url);
 }
 
