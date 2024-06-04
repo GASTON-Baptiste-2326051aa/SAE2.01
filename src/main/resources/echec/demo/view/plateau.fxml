@@ -43,7 +43,7 @@
                     <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
                 </StackPane>
                 <StackPane GridPane.rowIndex="7" GridPane.columnIndex="7">
-                    <Rectangle width="50" height="50" fill="rgb(235, 236, 208)"/>
+                    <Rectangle width="50" height="50" fill="rgb(119, 149, 86)"/>
                 </StackPane>
                 <!-- Ligne 2 -->
                 <StackPane GridPane.rowIndex="6" GridPane.columnIndex="0">
