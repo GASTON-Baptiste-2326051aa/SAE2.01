@@ -12,10 +12,10 @@ public class ButtonController {
     public void initButton(Button bouton1, Button bouton2) {
 
         bouton1.setOnMouseClicked(actionEvent -> {
-            changeScene("view/plateau.fxml", bouton1);
+            changeScene("view/pageJvJ.fxml", bouton1);
         });
         bouton2.setOnMouseClicked(actionEvent -> {
-            changeScene("view/pageJvJ.fxml", bouton2);
+            changeScene("view/pagebot.fxml", bouton2);
         });
     }
 
