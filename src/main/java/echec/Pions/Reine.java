@@ -2,8 +2,8 @@ package echec.Pions;
 
 public class Reine extends Pions{
 
-    public Reine(String couleur, String posX, int posY) {
-        super(couleur, posX, posY);
+    public Reine(String couleur, String posX, int posY, String url) {
+        super(couleur, posX, posY, url);
     }
 
     @Override

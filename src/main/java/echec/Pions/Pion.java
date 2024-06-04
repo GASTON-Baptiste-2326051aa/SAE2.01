@@ -2,8 +2,8 @@ package echec.Pions;
 
 public class Pion extends Pions{
 
-    public Pion(String couleur, String posX, int posY) {
-        super(couleur, posX, posY);
+    public Pion(String couleur, String posX, int posY, String url) {
+        super(couleur, posX, posY, url);
     }
 
     public void deplacement(String posXDep, int posYDep, String posXFin, int posYFin){
