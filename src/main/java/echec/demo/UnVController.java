@@ -33,6 +33,9 @@ public class UnVController implements Initializable {
     private Timer timer1;
     private Timer timer2;
 
+    private int tempsRestant1;
+    private int tempsRestant2;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
         buttonController.initButton3(bouton3);
@@ -82,7 +85,7 @@ public class UnVController implements Initializable {
         }else {
             int minutes = tempsRestant1 / 60;
             int seconds = tempsRestant1 % 60;
-            label.setText(String.format("%02d:%02d", minutes, seconds));
+            timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
         }
     }
 }
