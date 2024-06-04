@@ -37,4 +37,6 @@ public String getCouleur(){ return this.couleur;}
 
 public String getPos(){ return this.posY + String.valueOf(this.posX); }
 
+public String getUrl(){return this.url;}
+
 }
