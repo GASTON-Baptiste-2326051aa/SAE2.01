@@ -15,6 +15,7 @@
             stylesheets="@../style.css">
 
     <HBox>
+        <Button fx:id="boutonAcc" minHeight="50" minWidth="500" styleClass="topButton"/>
         <VBox>
             <HBox>
                 <ImageView fitHeight="50" fitWidth="50">
