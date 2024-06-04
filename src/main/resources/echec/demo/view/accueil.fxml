@@ -23,21 +23,33 @@
     <center>
         <HBox alignment="CENTER">
             <VBox spacing="20">
-                <Label fx:id="topText" text="Choisi ton mode de jeu" textFill="white" wrapText="True" textAlignment="CENTER"/>
-                    <Button fx:id="boutton1" minHeight="50" minWidth="500" styleClass="topButton" text="JOUE CONTRE TON AMI">
-                        <graphic>
-                            <HBox>
-                                <children>
-                                    <ImageView>
-                                        <image>
-                                            <Image url="@../img/pion.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </HBox>
-                        </graphic>
-                    </Button>
-                <Label text="Item 3"/>
+                <Label  text="Choisi ton mode de jeu" textFill="white" wrapText="True" textAlignment="CENTER" styleClass="topText"/>
+                <Button fx:id="boutton1" minHeight="50" minWidth="500" styleClass="topButton" text="JOUER CONTRE JOUEUR">
+                    <graphic>
+                        <HBox>
+                            <children>
+                                <ImageView >
+                                    <image>
+                                        <Image url="@../img/pionBoutton.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </HBox>
+                    </graphic>
+                </Button>
+                <Button fx:id="boutton2" minHeight="50" minWidth="500" styleClass="botButton" text="JOUER CONTRE BOT">
+                    <graphic>
+                        <HBox>
+                            <children>
+                                <ImageView >
+                                    <image>
+                                        <Image url="@../img/robot.png" />
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </HBox>
+                    </graphic>
+                </Button>
             </VBox>
         </HBox>
     </center>
