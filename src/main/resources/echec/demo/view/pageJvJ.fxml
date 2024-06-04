@@ -8,14 +8,27 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.UnVController"
-            prefHeight="400.0" prefWidth="600.0"
+            prefHeight="1080" prefWidth="1920.0"
             stylesheets="@../style.css">
-
-    <HBox>
-        <Button fx:id="boutonAcc" minHeight="50" minWidth="500" styleClass="topButton"/>
+    <left>
+        <VBox>
+            <children>
+                <Button fx:id="boutonAcc" layoutX="100.0" layoutY="200.0">
+                    <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="200.0">
+                            <image>
+                                <Image url="@../img/logochess.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+    <center>
         <VBox>
             <HBox>
                 <ImageView fitHeight="50" fitWidth="50">
@@ -39,9 +52,5 @@
                 </VBox>
             </HBox>
         </VBox>
-        <VBox styleClass="VBox" spacing="20">
-            <Label text="On sait pas encore gg"/>
-        </VBox>
-    </HBox>
-
-</AnchorPane>
+    </center>
+</BorderPane>
