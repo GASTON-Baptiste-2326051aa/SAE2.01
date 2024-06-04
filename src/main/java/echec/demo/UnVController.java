@@ -1,5 +1,6 @@
 package echec.demo;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -35,36 +36,53 @@ public class UnVController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
         buttonController.initButton3(bouton3);
-        timerBox.getItems().addAll(1,5,10,15);
+
+        timerBox.getItems().addAll(1, 5, 10, 15);
         timerBox.getSelectionModel().selectFirst();
+
+        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            String timeText = newValue + "Minute";
+            timerLabel.setText(timeText);
+            timerLabel2.setText(timeText);
+        });
+
+        Button startButton = new Button("Jouer");
+        startButton.setOnAction(e -> startTimers());
     }
 
-    timerBox.valueProperty().addListener((observable, oldValue, NewValue) ->{
-        timerLabel.setTexte(NewValue + "Minute");
-        timerLabel2.setTexte(NewValue + "Minute");
-    });
-
-    Button startButton = new Button("Jouer");
-    startButton.setOnAction(e -> startTimers());
-
     private void startTimers() {
-        int tempsSelectionner = timerBox1.getValue();
+        int tempsSelectionne = timerBox.getValue() * 60;
+
+        tempsRestant1 = tempsSelectionne;
+        tempsRestant2 = tempsSelectionne;
 
         timer1 = new Timer();
         timer2 = new Timer();
 
-        timer2.schedule(new TimerTask() {
+        timer2.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Fin temps");
+                Platform.runLater(() -> updateTimer(timerLabel, --tempsRestant1));
             }
-        }, tempsSelectionner * 60 * 1000);
+        }, 1000, 1000);
 
-        timer1.schedule(new TimerTask(){
+        timer1.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run() {
-                System.out.println("Fin temps");
+                Platform.runLater(() -> updateTimer(timerLabel, --tempsRestant2));
             }
-        }, tempsSelectionner * 60 * 1000);
+        }, 1000, 1000);
+    }
+
+    private void updateTimer(Label timerLabel, int tempsRestant1) {
+        if (tempsRestant1 <= 0) {
+            timerLabel.setText("");
+            timer1.cancel();
+            timer2.cancel();
+        }else {
+            int minutes = tempsRestant1 / 60;
+            int seconds = tempsRestant1 % 60;
+            label.setText(String.format("%02d:%02d", minutes, seconds));
+        }
     }
 }
