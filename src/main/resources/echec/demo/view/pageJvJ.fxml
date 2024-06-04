@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.UnVController"
@@ -30,33 +31,43 @@
         </VBox>
     </left>
     <center>
-        <VBox>
-            <HBox>
-                <ImageView fitHeight="50" fitWidth="50">
-                    <image>
-                        <Image url="@../img/user_profile.jpg"/>
-                    </image>
-                </ImageView>
-                <VBox>
-                    <Label text="Joueur 1"/>
-                </VBox>
-            </HBox>
-            <fx:include source="plateau.fxml"/>
-            <HBox>
-                <ImageView fitHeight="50" fitWidth="50">
-                    <image>
-                        <Image url="@../img/user_profile.jpg"/>
-                    </image>
-                </ImageView>
-                <VBox>
-                    <Label text="Joueur 2"/>
-                </VBox>
-            </HBox>
-        </VBox>
+        <HBox spacing="50">
+            <VBox>
+                <HBox spacing="5">
+                    <ImageView fitHeight="50" fitWidth="50">
+                        <image>
+                            <Image url="@../img/user_profile.jpg"/>
+                        </image>
+                    </ImageView>
+                    <VBox>
+                        <Label text="Joueur 1" styleClass="textJ"/>
+                    </VBox>
+                </HBox>
+                <fx:include source="plateau.fxml"/>
+                <HBox spacing="5">
+                    <ImageView fitHeight="50" fitWidth="50">
+                        <image>
+                            <Image url="@../img/user_profile.jpg"/>
+                        </image>
+                    </ImageView>
+                    <VBox>
+                        <Label text="Joueur 2" styleClass="textJ"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+            <VBox styleClass="VBox" HBox.hgrow="ALWAYS">
+                <Label text="on sait pas encore" textFill="aliceblue"></Label>
+                <ComboBox fx:id="TimerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1 min"/>
+                            <String fx:value="5 min"/>
+                            <String fx:value="10 min"/>
+                            <String fx:value="15 min"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+        </HBox>
     </center>
-    <right>
-        <VBox styleClass="VBox" style="-fx-padding: 0 0 0 400;">
-            <Label text="on sait pas encore" textFill="aliceblue"></Label>
-        </VBox>
-    </right>
 </BorderPane>
