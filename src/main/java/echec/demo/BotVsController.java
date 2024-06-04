@@ -1,31 +1,30 @@
 package echec.demo;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 
-public class BotVsController {
-    @FXML
-    private Label welcomeText;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class BotVsController implements Initializable {
     @FXML
-    private GridPane chessboard;
-
-    public void initialize() {
-        // Initialization code if needed
-    }
-
+    private BorderPane borderPane;
+    /*
     @FXML
-    private void handleMouseClick(MouseEvent event) {
-        // Code to handle piece movements
-        // Use event.getSource() to get the clicked square
-        // Use chessboard.getRowIndex(node) and chessboard.getColumnIndex(node) to get the position
-    }
-
+    private Button bouton1;
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private Button bouton2;
+
+    private ButtonController buttonController;
+    */
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //buttonController = new ButtonController();
+        //buttonController.initButton(bouton1, bouton2);
     }
 }

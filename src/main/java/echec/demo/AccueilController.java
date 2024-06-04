@@ -27,6 +27,7 @@ public class AccueilController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
-        buttonController.initButton(bouton1, bouton2);
+        buttonController.initButton1(bouton1);
+        buttonController.initButton2(bouton2);
     }
 }

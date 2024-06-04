@@ -35,6 +35,8 @@
     -fx-border-radius: 10 10 10 10;
     -fx-background-radius: 10 10 10 10;
 }
-.boutonAcc{
-    -fx-background-color: rgb(44, 43, 41);
+
+.borderPane{
+    -fx-background-color: rgb(48, 46, 43);
 }
+

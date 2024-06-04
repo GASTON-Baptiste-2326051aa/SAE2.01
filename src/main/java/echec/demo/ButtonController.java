@@ -9,13 +9,21 @@ import java.io.IOException;
 
 public class ButtonController {
 
-    public void initButton(Button bouton1, Button bouton2) {
+    public void initButton1(Button bouton) {
 
-        bouton1.setOnMouseClicked(actionEvent -> {
-            changeScene("view/pageJvJ.fxml", bouton1);
+        bouton.setOnMouseClicked(actionEvent -> {
+            changeScene("view/pageJvJ.fxml", bouton);
         });
-        bouton2.setOnMouseClicked(actionEvent -> {
-            changeScene("view/pagebot.fxml", bouton2);
+    }
+    public void initButton2(Button bouton) {
+        bouton.setOnMouseClicked(actionEvent -> {
+            changeScene("view/pagebot.fxml", bouton);
+        });
+    }
+
+    public void initButton3(Button bouton) {
+        bouton.setOnMouseClicked(actionEvent -> {
+            changeScene("view/accueil.fxml", bouton);
         });
     }
 
@@ -24,6 +32,7 @@ public class ButtonController {
             FXMLLoader loader = new FXMLLoader(EchecApp.class.getResource(sceneName));
             Stage stage = (Stage) button.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
+            stage.getScene().getRoot().setStyle("-fx-background-color: rgb(48, 46, 43);");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

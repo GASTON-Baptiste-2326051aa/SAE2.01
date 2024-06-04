@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<?import javafx.scene.image.Image?>
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.BotVsController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="1080" prefWidth="1920.0"
+            stylesheets="@../style.css">
+    <!-- Top Section: Player Information -->
+    <top>
+        <HBox spacing="10" alignment="CENTER">
+            <ImageView fx:id="playerAvatar" fitHeight="50" fitWidth="50">
+                <!-- Set player avatar image here -->
+                <image>
+                    <Image url="@../img/robot.png"/>
+                </image>
+            </ImageView>
+            <Label text="Summer Martin (325)" fx:id="playerName"/>
+        </HBox>
+    </top>
 
-</AnchorPane>
+    <!-- Center Section: Chess Board -->
+    <center>
+        <StackPane>
+            <!-- Chess board can be implemented using a GridPane, custom drawing, or a canvas -->
+            <ImageView fx:id="chessBoard" fitHeight="400" fitWidth="400">
+                <!-- Set the chess board image here -->
+                <image>
+                    <Image url="@../img/robot.png"/>
+                </image>
+            </ImageView>
+        </StackPane>
+    </center>
+
+    <!-- Right Section: Player/Bot Selection -->
+    <right>
+        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Jouer contre..."/>
+            <ListView fx:id="botList" maxHeight="200">
+                <!-- Populate ListView with bot names and avatars -->
+            </ListView>
+            <Button text="Choisir" fx:id="chooseButton"/>
+        </VBox>
+    </right>
+
+    <!-- Bottom Section: Guest Information -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="Guest3065662868 (400)" fx:id="guestName"/>
+        </HBox>
+    </bottom>
+</BorderPane>
