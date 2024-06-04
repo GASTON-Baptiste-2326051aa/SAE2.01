@@ -17,7 +17,7 @@
     <left>
         <VBox styleClass="VBox" style="-fx-padding: 0 150 0 0;">
             <children>
-	       <Button fx:id="bouton3" layoutX="100.0" layoutY="200.0">
+	       <Button fx:id="bouton3" style="-fx-background-color: rgb(44, 43, 41);" layoutX="100.0" layoutY="200.0" >
                    <graphic>
                         <ImageView fitHeight="100.0" fitWidth="200.0">
                             <image>
