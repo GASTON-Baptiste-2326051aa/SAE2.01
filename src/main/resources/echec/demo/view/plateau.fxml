@@ -15,7 +15,7 @@
             fx:controller="echec.demo.JeuController"
             prefHeight="400.0" prefWidth="600.0">
     <children>
-        <GridPane xmlns:fx="http://javafx.com/fxml">
+        <GridPane fx:id="plateau" xmlns:fx="http://javafx.com/fxml">
             <!-- Creation des tableaux pour les echecs -->
             <children>
                 <!-- Lignes 1 a 8 -->

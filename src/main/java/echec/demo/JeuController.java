@@ -1,13 +1,19 @@
 package echec.demo;
 
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 
 import echec.Pions.*;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,6 +35,9 @@ public class JeuController implements Initializable {
     int dernierTimerJ1 = 300;
     int dernierTimerJ2 = 300;
     private Timer timerJ2 = new Timer();
+
+    Position positionDep= new Position();
+    Position positionFin= new Position();
 
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
@@ -75,7 +84,7 @@ public class JeuController implements Initializable {
             for (int j = 0; j < 8; j++) {
                 Pions pion = matriceJeu.get(i).get(j);
                 if (pion == null) {
-                    System.out.print("  .  ");
+                    System.out.print("  case vide  ");
                 } else {
                     System.out.print(" " + pion + " ");
                 }
@@ -84,21 +93,79 @@ public class JeuController implements Initializable {
         }
     }
 
+    public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice){
+        Position position = new Position();
+        for (int ligne = 0; ligne < 8; ligne++) {
+            for (int colonne = 0; colonne < 8; colonne++) {
+                Pions pion = matriceJeu.get(ligne).get(colonne);
+                if (pion == null) {
+                    continue;
+                } else {
+                    int posX = position.conversionLettreInt(pion.getPosX());
+                    String cheminImage = pion.getUrl();
+                    ImageView imageView = new ImageView(cheminImage);
+                    imageView.setFitHeight(100.0);
+                    imageView.setFitWidth(100.0);
+                    plateau.add(imageView, posX, pion.getPosY()-1);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void clic(){
+
+        plateau.setOnMouseClicked(e -> {
+            if (this.positionDep.getX() < 0 ){
+                this.positionDep.setX((int)e.getX());
+                this.positionDep.setY((int)e.getY());
+                this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
+            }
+            else{
+                this.positionFin.setX((int)e.getX());
+                this.positionFin.setY((int)e.getY());
+                this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
+            }
+
+            if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getI() >= 0){
+
+                System.out.println( this.positionDep.getI() + " " + this.positionDep.getJ());
+
+                Pions tmp = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
+                Pions tmp2 =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
+                //System.out.println(tmp.toString() + tmp2.toString());
+
+                this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), tmp2);
+                this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), tmp);
+
+                System.out.println(this.matriceJeu);
+
+                afficheMatriceAvecPlateau(this.matriceJeu);
+
+
+                positionDep.reset();
+                positionFin.reset();
+            }
+
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
         initMatrice();
-        afficheMatrice(this.matriceJeu);
-        timerJoueur1On();
+        System.out.println("Boucle?");
+        //afficheMatriceAvecPlateau(this.matriceJeu);
+        clic();
+
+        //timerJoueur1On();
 
 
     } // Marche avec le bouton JOUER
 
-    public void selectionCase(){
 
 
 
-    }
 
     public void deplacement(){
 
