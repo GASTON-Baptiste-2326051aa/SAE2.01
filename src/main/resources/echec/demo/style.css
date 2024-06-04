@@ -22,6 +22,7 @@
 
 }
 
+<<<<<<< HEAD
 .topText{
     -fx-text-fill: white;
     -fx-font-size: 40;
@@ -29,3 +30,10 @@
     -fx-font-weight: bold;
     -fx-text-alignment: center;
 }
+=======
+.VBox{
+    -fx-background-color: rgb(38, 37, 34);
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+>>>>>>> b604534 (Ajout d'un .VBox dans css + ajout d'éléments dans la jageJvJ)
