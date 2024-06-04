@@ -8,17 +8,18 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.UnVController"
             prefHeight="1080" prefWidth="1920.0"
             stylesheets="@../style.css">
     <left>
-        <VBox>
+        <VBox styleClass="VBox" style="-fx-padding: 0 150 0 0;">
             <children>
-                <Button fx:id="boutonAcc" layoutX="100.0" layoutY="200.0">
+                <Button styleClass="boutonAcc" layoutX="100.0" layoutY="200.0">
                     <graphic>
-                        <ImageView fitHeight="50.0" fitWidth="200.0">
+                        <ImageView fitHeight="100.0" fitWidth="200.0">
                             <image>
                                 <Image url="@../img/logochess.png" />
                             </image>
@@ -53,4 +54,9 @@
             </HBox>
         </VBox>
     </center>
+    <right>
+        <VBox styleClass="VBox" style="-fx-padding: 0 0 0 400;">
+            <Label text="on sait pas encore" textFill="aliceblue"></Label>
+        </VBox>
+    </right>
 </BorderPane>

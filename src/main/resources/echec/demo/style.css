@@ -31,7 +31,10 @@
 }
 
 .VBox{
-    -fx-background-color: rgb(38, 37, 34);
+    -fx-background-color: rgb(44, 43, 41);
     -fx-border-radius: 10 10 10 10;
     -fx-background-radius: 10 10 10 10;
+}
+.boutonAcc{
+    -fx-background-color: rgb(44, 43, 41);
 }
