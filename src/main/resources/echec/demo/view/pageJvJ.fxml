@@ -38,7 +38,7 @@
                 </VBox>
             </HBox>
         </VBox>
-        <VBox styleClass="VBox">
+        <VBox styleClass="VBox" spacing="20">
             <Label text="On sait pas encore gg"/>
         </VBox>
     </HBox>
