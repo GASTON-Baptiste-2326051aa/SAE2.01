@@ -34,15 +34,21 @@
         <HBox spacing="50">
             <VBox>
                 <HBox spacing="5">
-                    <ImageView fitHeight="50" fitWidth="50">
-                        <image>
-                            <Image url="@../img/user_profile.jpg"/>
-                        </image>
-                    </ImageView>
-                    <VBox>
-                        <Label text="Joueur 2" styleClass="textJ"/>
-                    </VBox>
-                    <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
+                    <HBox spacing="5">
+                        <ImageView fitHeight="50" fitWidth="50">
+                            <image>
+                                <Image url="@../img/user_profile.jpg"/>
+                            </image>
+                        </ImageView>
+                        <VBox>
+                            <Label text="Joueur 2" styleClass="textJ"/>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer1">
+                            <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
+                    </HBox>
                 </HBox>
                 <fx:include source="plateau.fxml"/>
                 <HBox spacing="5">
@@ -54,7 +60,10 @@
                     <VBox>
                         <Label text="Joueur 1" styleClass="textJ"/>
                     </VBox>
-                    <Label fx:id="timerLabel" text="00:00" style="-fx-text-fill: white"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer2">
+                        <Label fx:id="timerLabel" text="00:00" style="-fx-text-fill: white"/>
+                    </HBox>
                 </HBox>
             </VBox>
             <VBox styleClass="VBox" HBox.hgrow="ALWAYS">

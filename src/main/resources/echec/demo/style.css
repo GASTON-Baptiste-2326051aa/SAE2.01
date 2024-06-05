@@ -42,3 +42,16 @@
 .textJ{
     -fx-text-fill: white;
 }
+.LabelTimer1{
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-alignment: center_right;
+}
+
+.LabelTimer2{
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-alignment: center_right;
+}
