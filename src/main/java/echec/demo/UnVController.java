@@ -18,7 +18,7 @@ public class UnVController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private Button bouton3;
+    private Button boutonAcc;
     @FXML
     private ComboBox<Integer> timerBox;
     @FXML
@@ -47,7 +47,7 @@ public class UnVController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
-        buttonController.initButton3(bouton3);
+        buttonController.initButtonAcc(boutonAcc);
 
         timerBox.getItems().addAll(1, 5, 10, 15);
         timerBox.getSelectionModel().selectFirst();

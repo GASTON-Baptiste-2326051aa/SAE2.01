@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="echec.demo.LoginController"
+      alignment="center"
+      stylesheets="@../style.css"
+      spacing="10"
+    maxHeight="1000"
+    maxWidth="1080">
+
+    <Label text="INSCRIVEZ VOUS" styleClass="topText" />
+    <Label text="JOUEUR 1" styleClass="textLog" />
+    <TextField fx:id="joueur1Prenom" styleClass="textFieldLog"  promptText="Prenom"/>
+
+    <TextField fx:id="joueur1Nom" styleClass="textFieldLog" promptText="Nom"/>
+    <Label text="JOUEUR 2" styleClass="textLog" />
+    <TextField fx:id="joueur2Prenom" styleClass="textFieldLog" promptText="Prenom"/>
+
+    <TextField fx:id="joueur2Nom" styleClass="textFieldLog" promptText="Nom"/>
+
+
+    <Button fx:id="boutonJvJ"  text="Enregistrer" minWidth="400" minHeight="70" styleClass="topButton"/>
+</VBox>
