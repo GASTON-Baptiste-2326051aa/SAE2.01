@@ -40,9 +40,9 @@
                         </image>
                     </ImageView>
                     <VBox>
-                        <Label text="Joueur 1" styleClass="textJ"/>
+                        <Label text="Joueur 2" styleClass="textJ"/>
                     </VBox>
-                    <Label fx:id="timerLabel1"/>
+                    <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
                 </HBox>
                 <fx:include source="plateau.fxml"/>
                 <HBox spacing="5">
@@ -52,23 +52,20 @@
                         </image>
                     </ImageView>
                     <VBox>
-                        <Label text="Joueur 2" styleClass="textJ"/>
+                        <Label text="Joueur 1" styleClass="textJ"/>
                     </VBox>
-                    <Label fx:id="timerLabel2"/>
+                    <Label fx:id="timerLabel" text="00:00" style="-fx-text-fill: white"/>
                 </HBox>
             </VBox>
             <VBox styleClass="VBox" HBox.hgrow="ALWAYS">
                 <Label text="on sait pas encore" textFill="aliceblue"></Label>
-                <ComboBox fx:id="TimerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;">
+                <ComboBox fx:id="timerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;">
                     <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="1 min"/>
-                            <String fx:value="5 min"/>
-                            <String fx:value="10 min"/>
-                            <String fx:value="15 min"/>
-                        </FXCollections>
+                        <FXCollections fx:factory="observableArrayList"/>
                     </items>
                 </ComboBox>
+                <Button fx:id="startButton" text="JOUER" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
+                <Button fx:id="pauseButton" text="Joueur Suivant" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
             </VBox>
         </HBox>
     </center>
