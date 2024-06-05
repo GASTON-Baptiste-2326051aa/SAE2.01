@@ -18,7 +18,7 @@
     <left>
         <VBox styleClass="VBox" style="-fx-padding: 0 150 0 0;">
             <children>
-	       <Button fx:id="boutonAcc" layoutX="100.0" layoutY="200.0">
+	       <Button fx:id="boutonAcc" layoutX="100.0" layoutY="200.0" style="-fx-background-color: rgb(44, 43, 41)">
                    <graphic>
                         <ImageView fitHeight="100.0" fitWidth="200.0">
                             <image>
@@ -47,7 +47,7 @@
                     </HBox>
                     <Region HBox.hgrow="ALWAYS"/>
                     <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer1">
-                            <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
+                        <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
                     </HBox>
                 </HBox>
                 <fx:include source="plateau.fxml"/>
