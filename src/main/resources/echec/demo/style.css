@@ -3,7 +3,7 @@
     -fx-border-width: 0;
     -fx-text-fill: white;
     -fx-font-size: 20;
-    -fx-font-family: "cubik";
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
     -fx-effect: dropshadow( two-pass-box,rgba(69, 117, 60, 1.0), 2, 0.9, 0, 7);
@@ -25,7 +25,7 @@
 .topText{
     -fx-text-fill: white;
     -fx-font-size: 40;
-    -fx-font-family: "cubik";
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
     -fx-font-weight: bold;
     -fx-text-alignment: center;
 }
@@ -42,3 +42,24 @@
 .textJ{
     -fx-text-fill: white;
 }
+
+.textFieldLog{
+    -fx-background-color: #3c3a38;
+    -fx-text-fill: #9e9d9c;
+    -fx-spacing: 10;
+    -fx-font-size: 20;
+    -fx-alignment: CENTER;
+    -fx-max-height:30 ;
+    -fx-max-width: 400;
+    -fx-background-radius: 10;
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
+}
+
+.textLog{
+    -fx-text-fill: #9e9d9c;
+    -fx-font-size: 20;
+    -fx-alignment: CENTER;
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
+
+}
+
