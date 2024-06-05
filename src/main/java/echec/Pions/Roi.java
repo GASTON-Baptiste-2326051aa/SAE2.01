@@ -1,5 +1,7 @@
 package echec.Pions;
 
+import java.util.ArrayList;
+
 public class Roi extends Pions{
 
     public Roi(String couleur, String posX, int posY, String url) {
@@ -11,7 +13,7 @@ public class Roi extends Pions{
     }
 
     @Override
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
         int startX = posXDep.charAt(0) - 'a' + 1;
         int endX = posXFin.charAt(0) - 'a' + 1;
 

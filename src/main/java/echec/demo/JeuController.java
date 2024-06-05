@@ -111,8 +111,6 @@ public class JeuController implements Initializable {
                 }
             }
         }
-        System.out.println("\n");
-        afficheMatrice(this.matriceJeu);
     }
 
     public void clic(){
@@ -134,8 +132,8 @@ public class JeuController implements Initializable {
 
                 Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
                 Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
-                System.out.println(9-pionDep.getPosY() + pionDep.getPosX() +" "+ (8 - positionFin.getI()) + positionFin.conversionIntLettre(positionFin.getJ()));
-                if (pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+                if (pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()),this.matriceJeu) && (comparePionsMemeCouleur(pionDep, pionFin))) {
+                    System.out.println("ok");
                     this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), pionFin);
                     this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
                     if (pionFin != null){
@@ -175,14 +173,6 @@ public class JeuController implements Initializable {
 
 
 
-
-
-    public void deplacement(){
-
-
-
-    }
-
     /*public void deplacementJoueur1(){
 
 
@@ -203,10 +193,11 @@ public class JeuController implements Initializable {
      *
      * @version 1.0
      * */
-    public void comparePions(Pions pion1, Pions pion2){
-        if(pion1.getPosX() == pion2.getPosX() && pion1.getPosY() == pion2.getPosY() && !(pion1.getCouleur().equals(pion2.getCouleur()))){
-            pion2.setEtat(false);
-        }
+    public boolean comparePionsMemeCouleur(Pions pion1, Pions pion2){
+        System.out.println(pion2);
+        if (pion2 != null)
+            return !(pion1.getCouleur().equals(pion2.getCouleur()));
+        return true;
     }
 
     public void situationRoi(Roi roi){

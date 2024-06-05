@@ -3,6 +3,7 @@ package echec.Pions;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public abstract class Pions{
 
@@ -23,7 +24,7 @@ public Pions(String couleur,String posX,int posY,String fileName){
 
 public abstract void deplacement(String posXDep, int posYDep, String posXFin, int posYFin);
 
-public abstract boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin);
+public abstract boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice);
 
 public void setEtat(Boolean etat){ this.etat = etat; }
 

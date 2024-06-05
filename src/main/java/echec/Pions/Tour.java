@@ -1,5 +1,6 @@
 package echec.Pions;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Tour extends Pions{
@@ -11,7 +12,7 @@ public class Tour extends Pions{
 
     }
 
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
         return (Objects.equals(posXDep, posXFin) || posYDep == posYFin);
     }
 
