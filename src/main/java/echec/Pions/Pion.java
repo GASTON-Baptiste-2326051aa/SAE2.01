@@ -15,22 +15,26 @@ public class Pion extends Pions{
     }
 
     @Override
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
+        Position position = new Position();
+        int posXFinInt = position.conversionLettreInt(posXFin);
+        int posXDepInt = position.conversionLettreInt(posXDep);
+        boolean diagonaleEtDroit = Objects.equals(posXDep, posXFin) || (posXDepInt == posXFinInt - 1) || (posXDepInt == posXFinInt + 1);
         if (Objects.equals(super.getCouleur(), "noir")){
             if (this.deplacement == 0 ){
                 ++this.deplacement;
-                return ((posYDep - posYFin) == 2 || ( posYDep - posYFin) == 1) && Objects.equals(posXDep, posXFin);
+                return ((posYDep - posYFin) == 2 || ( posYDep - posYFin) == 1) && diagonaleEtDroit;
             }
             ++this.deplacement;
-            return ( posYDep - posYFin) == 1 && Objects.equals(posXDep, posXFin);
+            return ( posYDep - posYFin) == 1&& diagonaleEtDroit;
         }
         else{
             if (this.deplacement == 0 ){
                 ++this.deplacement;
-                return ((posYDep - posYFin) == -2 || ( posYDep - posYFin) == -1) && Objects.equals(posXDep, posXFin);
+                return ((posYDep - posYFin) == -2 || ( posYDep - posYFin) == -1) && diagonaleEtDroit;
             }
             ++this.deplacement;
-            return ( posYDep - posYFin) == -1 && Objects.equals(posXDep, posXFin);
+            return ( posYDep - posYFin) == -1 && diagonaleEtDroit;
         }
     }
 

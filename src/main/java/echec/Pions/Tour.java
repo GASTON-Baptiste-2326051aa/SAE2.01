@@ -12,7 +12,7 @@ public class Tour extends Pions{
 
     }
 
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
         return (Objects.equals(posXDep, posXFin) || posYDep == posYFin);
     }
 

@@ -12,7 +12,7 @@ public class Fou extends Pions{
 
     }
 
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
         int startX = posXDep.charAt(0) - 'a' + 1;
         int endX = posXFin.charAt(0) - 'a' + 1;
 

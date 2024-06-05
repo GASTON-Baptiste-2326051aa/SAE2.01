@@ -132,21 +132,19 @@ public class JeuController implements Initializable {
 
                 Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
                 Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
-                if (pionDep != null && pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()),this.matriceJeu) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,8 - positionFin.getI() ,positionFin.getJ())) {
+                if (pionDep != null && pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
 
 
                     if (pionFin != null){
                         pionDep.setPosY(pionFin.getPosY());
                         pionDep.setPosX(pionFin.getPosX());
-                        this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
-                        this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
                     }
                     else{
                         pionDep.setPosY(positionFin.getI()+1);
                         pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
-                        this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
-                        this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
                     }
+                    this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
+                    this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
 
                 }
 
@@ -201,39 +199,28 @@ public class JeuController implements Initializable {
         return true;
     }
 
-    public boolean comparePionsDirection(Pions pion1, int posI, int posJ){
+    public boolean comparePionsDirection(Pions pion1, int posI, String posJstr){
         Position position = new Position();
+        int posJ = position.conversionLettreInt(posJstr);
         int x = position.conversionLettreInt(pion1.getPosX());
         int y = pion1.getPosY();
 
         switch (pion1.getClass().getSimpleName()) {
             case "Fou" -> {
-                int xDirection = (posI - x) > 0 ? 1 : -1;
-                int yDirection = (posJ - y) > 0 ? 1 : -1;
-                int startX = x + xDirection;
-                int startY = y + yDirection;
 
-                // Parcourir les cases entre le pion de départ et la position d'arrivée
-                while (startX != posI && startY != posJ) {
-                    // Vérifier s'il y a un pion sur la case actuelle
-                    if (matriceJeu.get(startX).get(startY) != null) {
-                        return false;
-                    }
-                    startX += xDirection;
-                    startY += yDirection;
-                }
-                return true;
             }
             case "Tour" -> {
-                return true;
+
+            }
+            case "Pion" -> {
+                if (matriceJeu.get(posI).get(posJ) != null && (posJ == position.conversionLettreInt(pion1.getPosX()))){
+                    return false;
+                }
+                return matriceJeu.get(posI).get(posJ) != null || (posJ == position.conversionLettreInt(pion1.getPosX()));
             }
         }
 
         return true;
-    }
-
-    public void prendeLePion(Pions pion1, Pions pion2, ArrayList<ArrayList<Pions>> matrice){
-
     }
 
     public void situationRoi(Roi roi){

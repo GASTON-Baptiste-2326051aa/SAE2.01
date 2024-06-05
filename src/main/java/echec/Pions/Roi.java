@@ -13,7 +13,7 @@ public class Roi extends Pions{
     }
 
     @Override
-    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin, ArrayList<ArrayList<Pions>> matrice) {
+    public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
         int startX = posXDep.charAt(0) - 'a' + 1;
         int endX = posXFin.charAt(0) - 'a' + 1;
 
