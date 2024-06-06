@@ -48,8 +48,4 @@ public abstract class Pions{
 
     public String getUrl(){return this.url;}
 
-    public String toString(){return getClass().getSimpleName() + "." + this.couleur;}
-
-public String getUrl(){return this.url;}
-
-}
+    public String toString(){return getClass().getSimpleName() + "." + this.couleur;}}
