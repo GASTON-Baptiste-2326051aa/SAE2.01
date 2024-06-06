@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -36,6 +37,7 @@ public class UnVController implements Initializable {
     private Button pauseButton;
     @FXML
     private Button boutonFin;
+
 
     private ButtonController buttonController;
     private LoginController loginController;

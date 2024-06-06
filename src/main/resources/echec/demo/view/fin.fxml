@@ -10,7 +10,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="echec.demo.UnVController"
+            fx:controller="echec.demo.FinController"
             prefHeight="400.0" prefWidth="600.0">
     <VBox>
         <Label fx:id="LabelWin1V" text="Vous avez gagner face "/>
