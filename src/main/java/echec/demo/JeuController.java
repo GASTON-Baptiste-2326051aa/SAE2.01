@@ -56,8 +56,6 @@ public class JeuController implements Initializable {
     @FXML
     private javafx.scene.control.Button startButton;
     @FXML
-    private javafx.scene.control.Button pauseButton;
-    @FXML
     private Button boutonFin;
 
 
@@ -294,9 +292,7 @@ public class JeuController implements Initializable {
         });
 
 
-
         startButton.setOnAction(e -> startTimer1());
-        pauseButton.setOnAction(e -> toggleTimers());
 
         clic();
     }

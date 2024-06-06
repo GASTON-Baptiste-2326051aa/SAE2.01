@@ -300,7 +300,6 @@
                     </items>
                 </ComboBox>
                 <Button fx:id="startButton" text="JOUER" styleClass="topButton"/>
-                <Button fx:id="pauseButton" text="Joueur Suivant" styleClass="topButton"/>
                 <Button fx:id="boutonFin" text="Fin" styleClass="topButton"/>
             </VBox>
         </HBox>
