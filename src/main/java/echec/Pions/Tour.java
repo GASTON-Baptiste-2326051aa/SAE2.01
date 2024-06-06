@@ -1,5 +1,8 @@
 package echec.Pions;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class Tour extends Pions{
 
     public Tour(String couleur, String posX, int posY, String url) {
@@ -10,10 +13,7 @@ public class Tour extends Pions{
     }
 
     public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
-        int startX = posXDep.charAt(0) - 'a' + 1;
-        int endX = posXFin.charAt(0) - 'a' + 1;
-
-        return (startX == endX || posXDep == posXFin);
+        return (Objects.equals(posXDep, posXFin) || posYDep == posYFin);
     }
 
 }

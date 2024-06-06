@@ -1,5 +1,7 @@
 package echec.Pions;
 
+import java.util.ArrayList;
+
 public class Fou extends Pions{
 
     public Fou(String couleur, String posY, int posX, String url) {

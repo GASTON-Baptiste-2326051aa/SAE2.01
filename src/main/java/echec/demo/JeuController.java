@@ -82,7 +82,7 @@ public class JeuController implements Initializable {
     public void afficheMatrice(ArrayList<ArrayList<Pions>> matrice){
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Pions pion = matriceJeu.get(i).get(j);
+                Pions pion = matrice.get(i).get(j);
                 if (pion == null) {
                     System.out.print("  case vide  ");
                 } else {
@@ -94,6 +94,7 @@ public class JeuController implements Initializable {
     }
 
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice){
+        plateau.getChildren().removeIf(node -> node instanceof ImageView);
         Position position = new Position();
         for (int ligne = 0; ligne < 8; ligne++) {
             for (int colonne = 0; colonne < 8; colonne++) {
@@ -109,7 +110,6 @@ public class JeuController implements Initializable {
                     plateau.add(imageView, posX, pion.getPosY()-1);
                 }
             }
-            System.out.println();
         }
     }
 
@@ -129,33 +129,41 @@ public class JeuController implements Initializable {
 
             if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getI() >= 0){
 
-                System.out.println( this.positionDep.getI() + " " + this.positionDep.getJ());
 
-                Pions tmp = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
-                Pions tmp2 =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
-                //System.out.println(tmp.toString() + tmp2.toString());
+                Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
+                Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
+                if (pionDep != null && pionDep.peutDeplacer(9-pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
 
-                this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), tmp2);
-                this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), tmp);
 
-                System.out.println(this.matriceJeu);
+                    if (pionFin != null){
+                        pionDep.setPosY(pionFin.getPosY());
+                        pionDep.setPosX(pionFin.getPosX());
+                    }
+                    else{
+                        pionDep.setPosY(positionFin.getI()+1);
+                        pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
+                    }
+                    this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
+                    this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
+
+                }
 
                 afficheMatriceAvecPlateau(this.matriceJeu);
-
-
                 positionDep.reset();
                 positionFin.reset();
-            }
 
+
+            }
         });
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
         initMatrice();
         System.out.println("Boucle?");
-        //afficheMatriceAvecPlateau(this.matriceJeu);
+        afficheMatriceAvecPlateau(this.matriceJeu);
         clic();
 
         //timerJoueur1On();
@@ -164,14 +172,6 @@ public class JeuController implements Initializable {
     } // Marche avec le bouton JOUER
 
 
-
-
-
-    public void deplacement(){
-
-
-
-    }
 
     /*public void deplacementJoueur1(){
 
@@ -193,10 +193,34 @@ public class JeuController implements Initializable {
      *
      * @version 1.0
      * */
-    public void comparePions(Pions pion1, Pions pion2){
-        if(pion1.getPosX() == pion2.getPosX() && pion1.getPosY() == pion2.getPosY() && !(pion1.getCouleur().equals(pion2.getCouleur()))){
-            pion2.setEtat(false);
+    public boolean comparePionsMemeCouleur(Pions pion1, Pions pion2){
+        if (pion2 != null)
+            return !(pion1.getCouleur().equals(pion2.getCouleur()));
+        return true;
+    }
+
+    public boolean comparePionsDirection(Pions pion1, int posI, String posJstr){
+        Position position = new Position();
+        int posJ = position.conversionLettreInt(posJstr);
+        int x = position.conversionLettreInt(pion1.getPosX());
+        int y = pion1.getPosY();
+
+        switch (pion1.getClass().getSimpleName()) {
+            case "Fou" -> {
+
+            }
+            case "Tour" -> {
+
+            }
+            case "Pion" -> {
+                if (matriceJeu.get(posI).get(posJ) != null && (posJ == position.conversionLettreInt(pion1.getPosX()))){
+                    return false;
+                }
+                return matriceJeu.get(posI).get(posJ) != null || (posJ == position.conversionLettreInt(pion1.getPosX()));
+            }
         }
+
+        return true;
     }
 
     public void situationRoi(Roi roi){

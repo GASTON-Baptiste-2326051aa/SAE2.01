@@ -1,5 +1,7 @@
 package echec.Pions;
 
+import java.util.ArrayList;
+
 public class Roi extends Pions{
 
     public Roi(String couleur, String posX, int posY, String url) {
@@ -15,7 +17,7 @@ public class Roi extends Pions{
         int startX = posXDep.charAt(0) - 'a' + 1;
         int endX = posXFin.charAt(0) - 'a' + 1;
 
-        return (Math.abs(startX - endX) == 1 && posYDep == posYFin) || (Math.abs(posYDep - posYFin) == 1 && startX == endX);
+        return (Math.abs(startX - endX) == 1 && posYDep == posYFin) || (Math.abs(posYDep - posYFin) == 1 && startX == endX || Math.abs(posYDep - posYFin) == 1 && Math.abs(startX - endX) == 1);
     }
 
 }

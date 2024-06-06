@@ -1,5 +1,7 @@
 package echec.Pions;
 
+import java.util.ArrayList;
+
 public class Reine extends Pions{
 
     public Reine(String couleur, String posX, int posY, String url) {
