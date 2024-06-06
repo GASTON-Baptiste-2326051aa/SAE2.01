@@ -75,6 +75,7 @@
                 </ComboBox>
                 <Button fx:id="startButton" text="JOUER" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
                 <Button fx:id="pauseButton" text="Joueur Suivant" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
+                <Button fx:id="boutonFin" text="Fin" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
             </VBox>
         </HBox>
     </center>

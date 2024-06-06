@@ -29,6 +29,8 @@ public class UnVController implements Initializable {
     private Button startButton;
     @FXML
     private Button pauseButton;
+    @FXML
+    private Button boutonFin;
 
     private ButtonController buttonController;
 
@@ -48,6 +50,9 @@ public class UnVController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
         buttonController.initButtonAcc(boutonAcc);
+        if (boutonFin!= null){
+            buttonController.initButtonFin(boutonFin);
+        }
 
         timerBox.getItems().addAll(1, 5, 10, 15);
         timerBox.getSelectionModel().selectFirst();

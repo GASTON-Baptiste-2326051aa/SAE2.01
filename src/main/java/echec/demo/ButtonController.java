@@ -28,6 +28,9 @@ public class ButtonController {
     public void initButtonAcc(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/accueil.fxml", bouton));
     }
+    public void initButtonFin(Button bouton){
+        bouton.setOnMouseClicked(actionEvent -> changeScene("view/fin.fxml", bouton));
+    }
 
     public void changeScene(String sceneName, Button button) {
         try {
