@@ -66,15 +66,15 @@
                     </HBox>
                 </HBox>
             </VBox>
-            <VBox styleClass="VBox" HBox.hgrow="ALWAYS">
-                <Label text="on sait pas encore" textFill="aliceblue"></Label>
-                <ComboBox fx:id="timerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;">
+            <VBox styleClass="VBox" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="30">
+                <Label text="Veuillez a choisir ici dessous le temps de jeux !" textFill="aliceblue" styleClass="textJvJVbox"></Label>
+                <ComboBox fx:id="timerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;" prefHeight="40" prefWidth="200">
                     <items>
                         <FXCollections fx:factory="observableArrayList"/>
                     </items>
                 </ComboBox>
-                <Button fx:id="startButton" text="JOUER" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
-                <Button fx:id="pauseButton" text="Joueur Suivant" style="-fx-background-color: rgb(158, 204, 93); -fx-text-fill: white"/>
+                <Button fx:id="startButton" text="JOUER" styleClass="topButton"/>
+                <Button fx:id="pauseButton" text="Joueur Suivant" styleClass="topButton"/>
             </VBox>
         </HBox>
     </center>

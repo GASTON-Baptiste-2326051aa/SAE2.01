@@ -67,7 +67,7 @@ public class UnVController implements Initializable {
         timerBox.getSelectionModel().selectFirst();
 
         timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            String timeText = newValue + " Minutes";
+            String timeText = newValue + " Min";
             timerLabel.setText(timeText);
             timerLabel2.setText(timeText);
         });

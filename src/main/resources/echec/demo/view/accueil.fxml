@@ -16,7 +16,7 @@
     <left>
         <ImageView>
             <image>
-                <Image url="@../img/plateau.png" />
+                <Image url="@../img/plateau.png"/>
             </image>
         </ImageView>
     </left>

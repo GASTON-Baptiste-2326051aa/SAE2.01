@@ -52,7 +52,7 @@ public class ButtonController {
             currentStage.getScene().getRoot().setStyle("-fx-background-color: rgb(48, 46, 43);");
 
             // Définir la taille minimale en fonction de la scène
-            if (sceneName.equals("view/login.fxml") || sceneName.equals("view/login1J.fxml")) {
+            if (sceneName.equals("view/login.fxml") || sceneName.equals("view/login1J.fxml") || sceneName.equals("view/fin.fxml")) {
                 currentStage.setMinHeight(900);
                 currentStage.setMinWidth(500);
                 currentStage.setHeight(900);

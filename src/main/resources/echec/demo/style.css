@@ -41,6 +41,7 @@
 }
 .textJ{
     -fx-text-fill: white;
+    -fx-text-alignment: center;
 }
 .LabelTimer1{
     -fx-background-color: rgba(0, 0, 0, 0.2);
@@ -78,7 +79,28 @@
 
 .textFin{
     -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-max-width: 240px;
     -fx-text-fill: white;
-    -fx-font-size: 20;
+    -fx-wrap-text: true;
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
+}
+
+.textJF{
+    -fx-max-width: 80px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+
+.textJvJVbox{
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-max-width: 300px;
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
     -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
 }
