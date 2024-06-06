@@ -11,13 +11,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import java.awt.event.MouseAdapter;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Timer;
 
 public class JeuController implements Initializable {
 
@@ -129,7 +127,7 @@ public class JeuController implements Initializable {
 
                 // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
                 if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
-                    if((peutJouerJ1 && pionDep.getCouleur() == "blanc") || ((peutJouerJ2 && pionDep.getCouleur() == "noir"))){
+                    if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
 
                         if (pionFin != null){
                             pionDep.setPosY(pionFin.getPosY());
@@ -147,12 +145,10 @@ public class JeuController implements Initializable {
                         peutJouerJ1 = peutJouerJ2;
                         peutJouerJ2 = temp;
 
+                        /// jifdiosqhfb
+
                     }
-
                     afficheMatriceAvecPlateau(this.matriceJeu);
-
-
-
                 }
                 positionDep.reset();
                 positionFin.reset();
@@ -165,7 +161,6 @@ public class JeuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
         initMatrice();
-        System.out.println("Boucle?");
         afficheMatriceAvecPlateau(this.matriceJeu);
 
         peutJouerJ1 = true;
