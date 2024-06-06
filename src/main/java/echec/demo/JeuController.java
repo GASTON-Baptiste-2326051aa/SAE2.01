@@ -1,27 +1,20 @@
 package echec.demo;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import echec.Pions.*;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import java.awt.event.MouseAdapter;
+
 import java.util.*;
-import javax.swing.*;
-import java.awt.*;
 import java.net.URL;
 import java.util.Timer;
-import echec.demo.UnVController;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JeuController implements Initializable {
 
@@ -218,52 +211,66 @@ public class JeuController implements Initializable {
     public void clic(){
 
         plateau.setOnMouseClicked(e -> {
-            if (this.positionDep.getX() < 0 ){
+            if (this.positionDep.getX() < 0){
                 this.positionDep.setX((int)e.getX());
                 this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
+                if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null){
+                    positionDep.reset();
+                }
             }
-            else if (this.positionFin.getX() < 0){
+            else if (this.positionFin.getX() < 0 && this.positionDep.getJ() > 0){
                 this.positionFin.setX((int)e.getX());
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
             }
-
-            if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
-
-                Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
-                Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
-
-                // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-                if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
-                    if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
-
-                        if (pionFin != null){
-                            pionDep.setPosY(pionFin.getPosY());
-                            pionDep.setPosX(pionFin.getPosX());
-                        }
-                        else{
-                            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-                            pionDep.setPosY(8-positionFin.getI());
-                            pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
-                        }
-                        this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
-                        this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
-
-                        boolean temp = peutJouerJ1;
-                        peutJouerJ1 = peutJouerJ2;
-                        peutJouerJ2 = temp;
-
-                        toggleTimers();
-
-
-                    }
-                    afficheMatriceAvecPlateau(this.matriceJeu);
-                }
-                positionDep.reset();
-                positionFin.reset();
-            }
+            jeu();
         });
+
+    }
+
+    public void jeu(){
+        if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
+
+            Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
+            Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
+
+            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
+            if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+                if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
+                    deplacementPiece(pionDep, pionFin);
+                    if (pionFin instanceof Roi){
+                        peutJouerJ1 = false;
+                        peutJouerJ2 = false;
+                    }
+                }
+                afficheMatriceAvecPlateau(this.matriceJeu);
+            }
+            positionDep.reset();
+            positionFin.reset();
+        }
+    }
+
+    public void deplacementPiece(Pions pionDep, Pions pionFin){
+
+        if (pionFin != null){
+            pionDep.setPosY(pionFin.getPosY());
+            pionDep.setPosX(pionFin.getPosX());
+        }
+        else{
+            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
+            pionDep.setPosY(8-positionFin.getI());
+            pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
+        }
+        this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
+        this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
+
+        boolean temp = peutJouerJ1;
+        peutJouerJ1 = peutJouerJ2;
+        peutJouerJ2 = temp;
+
+        toggleTimers();
+
     }
 
     @Override
