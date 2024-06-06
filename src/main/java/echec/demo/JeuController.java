@@ -124,7 +124,7 @@ public class JeuController implements Initializable {
                 this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
             }
-            else{
+            else if (this.positionFin.getX() < 0){
                 this.positionFin.setX((int)e.getX());
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
@@ -228,6 +228,13 @@ public class JeuController implements Initializable {
             }
             case "Tour" -> {
                 return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
+
+            }
+            case "Reine" -> {
+                if (posX == posJ || posY == posI){
+                    return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
+                }
+                return directionDiagonale(pion1, posI, posJ, posX, posY);
 
             }
             case "Pion" -> {

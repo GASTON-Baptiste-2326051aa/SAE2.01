@@ -15,8 +15,6 @@ public class EchecApp extends Application {
 
     private static Scene scene;
 
-
-
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(EchecApp.class.getResource("view/accueil.fxml"));
