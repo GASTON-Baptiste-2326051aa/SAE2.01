@@ -21,6 +21,8 @@ public class EchecApp extends Application {
         FXMLLoader loader = new FXMLLoader(EchecApp.class.getResource("view/accueil.fxml"));
         scene = new Scene(loader.load());
         scene.getRoot().setStyle("-fx-background-color: rgb(48, 46, 43);");
+        Image image = new Image(getClass().getResourceAsStream("img/logo.png"));
+        stage.getIcons().add(image);
         stage.setMinHeight(1080);
         stage.setMinWidth(1920);
         stage.setTitle("Echec");
