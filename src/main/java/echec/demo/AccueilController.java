@@ -19,15 +19,20 @@ public class AccueilController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private Button bouton1;
+    private Button boutonJvJlog;
     @FXML
-    private Button bouton2;
+    private Button boutonJvBlog;
 
     private ButtonController buttonController;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
-        buttonController.initButton1(bouton1);
-        buttonController.initButton2(bouton2);
+        if (boutonJvJlog != null) {
+            buttonController.initButtonLogJvJ(boutonJvJlog);
+        }
+        if (boutonJvBlog != null) {
+            buttonController.initButtonLogJvB(boutonJvBlog);
+        }
+
     }
 }
