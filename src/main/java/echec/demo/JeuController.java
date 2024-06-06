@@ -1,14 +1,19 @@
 package echec.demo;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import echec.Pions.*;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import java.awt.event.MouseAdapter;
 import java.util.*;
@@ -16,15 +21,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 import java.util.Timer;
+import echec.demo.UnVController;
 
 public class JeuController implements Initializable {
 
     @FXML
     private GridPane plateau;
-    private Timer timerJ1 = new Timer();
-    int dernierTimerJ1 = 300;
-    int dernierTimerJ2 = 300;
-    private Timer timerJ2 = new Timer();
 
     Position positionDep = new Position();
     Position positionFin = new Position();
@@ -33,6 +35,129 @@ public class JeuController implements Initializable {
     private boolean peutJouerJ2;
 
     private ArrayList<ArrayList<Pions>> matriceJeu;
+
+    // Pour timer
+
+    @FXML
+    private BorderPane borderPane;
+
+    @FXML
+    private javafx.scene.control.Label j1;
+    @FXML
+    private javafx.scene.control.Label j2;
+    @FXML
+    private javafx.scene.control.Button boutonAcc;
+    @FXML
+    private ComboBox<Integer> timerBox;
+    @FXML
+    private javafx.scene.control.Label timerLabel;
+    @FXML
+    private javafx.scene.control.Label timerLabel2;
+    @FXML
+    private javafx.scene.control.Button startButton;
+    @FXML
+    private javafx.scene.control.Button pauseButton;
+    @FXML
+    private Button boutonFin;
+
+
+    private ButtonController buttonController;
+    private LoginController loginController;
+
+    private Timer timer1;
+    private Timer timer2;
+
+    private TimerTask timerTask1;
+    private TimerTask timerTask2;
+
+    private int tempsRestant1;
+    private int tempsRestant2;
+
+    private boolean isTimer1Running = false;
+    private boolean isTimer2Running = false;
+
+    @FXML
+    public void saveName(javafx.scene.control.TextField joueur1Prenom, javafx.scene.control.TextField joueur2Prenom, javafx.scene.control.TextField joueur1Nom, javafx.scene.control.TextField joueur2Nom) {
+        if (j1 != null){
+            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
+        }
+        if (j2 != null){
+            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
+        }
+
+    }
+    private void startTimer1() {
+        Integer selectedValue = timerBox.getValue();
+        if (selectedValue == null) {
+            throw new IllegalStateException("Timer value is not selected.");
+        }
+
+        int tempsSelectionne = selectedValue * 60;
+        tempsRestant1 = tempsSelectionne;
+        tempsRestant2 = tempsSelectionne;
+
+        timer1 = new Timer();
+        timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
+
+        timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
+        isTimer1Running = true;
+    }
+
+    private void toggleTimers() {
+        if (isTimer1Running) {
+            timer1.cancel();
+            isTimer1Running = false;
+            startTimer2();
+        } else if (isTimer2Running) {
+            timer2.cancel();
+            isTimer2Running = false;
+            resumeTimer1();
+        }
+    }
+
+    private void startTimer2() {
+        timer2 = new Timer();
+        timerTask2 = createTimerTask(timerLabel2, () -> --tempsRestant2);
+
+        timer2.scheduleAtFixedRate(timerTask2, 1000, 1000);
+        isTimer2Running = true;
+    }
+
+    private void resumeTimer1() {
+        timer1 = new Timer();
+        timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
+
+        timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
+        isTimer1Running = true;
+    }
+
+    private TimerTask createTimerTask(javafx.scene.control.Label timerLabel, Runnable updateRemainingTime) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    updateRemainingTime.run();
+                    updateTimer(timerLabel);
+                });
+            }
+        };
+    }
+
+    private void updateTimer(Label timerLabel) {
+        int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
+        if (tempsRestant <= 0) {
+            timerLabel.setText("00:00");
+            if (timerLabel == this.timerLabel && timer1 != null) {
+                timer1.cancel();
+            } else if (timerLabel == this.timerLabel2 && timer2 != null) {
+                timer2.cancel();
+            }
+        } else {
+            int minutes = tempsRestant / 60;
+            int seconds = tempsRestant % 60;
+            timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+        }
+    }
 
     public void initMatrice() {
         matriceJeu = new ArrayList<>(8);
@@ -70,20 +195,6 @@ public class JeuController implements Initializable {
         matriceJeu.get(7).set(5, new Fou("blanc", "f", 1, "img/fouBlanc.png"));
         matriceJeu.get(7).set(3, new Reine("blanc", "d", 1, "img/reineBlanche.png"));
         matriceJeu.get(7).set(4, new Roi("blanc", "e", 1, "img/roiBlanc.png"));
-    }
-
-    public void afficheMatrice(ArrayList<ArrayList<Pions>> matrice) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Pions pion = matrice.get(i).get(j);
-                if (pion == null) {
-                    System.out.print("  case vide  ");
-                } else {
-                    System.out.print(" " + pion + " ");
-                }
-            }
-            System.out.println();
-        }
     }
 
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice) {
@@ -145,7 +256,8 @@ public class JeuController implements Initializable {
                         peutJouerJ1 = peutJouerJ2;
                         peutJouerJ2 = temp;
 
-                        /// jifdiosqhfb
+                        toggleTimers();
+
 
                     }
                     afficheMatriceAvecPlateau(this.matriceJeu);
@@ -156,7 +268,6 @@ public class JeuController implements Initializable {
         });
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
@@ -166,29 +277,30 @@ public class JeuController implements Initializable {
         peutJouerJ1 = true;
         peutJouerJ2 = false;
 
+        buttonController = new ButtonController();
+        loginController = new LoginController();
+        buttonController.initButtonAcc(boutonAcc);
+        if (boutonFin!= null){
+            buttonController.initButtonFin(boutonFin);
+        }
+
+        timerBox.getItems().addAll(1, 5, 10, 15);
+        timerBox.getSelectionModel().selectFirst();
+
+        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            String timeText = newValue + " Min";
+            timerLabel.setText(timeText);
+            timerLabel2.setText(timeText);
+        });
+
+
+
+        startButton.setOnAction(e -> startTimer1());
+        pauseButton.setOnAction(e -> toggleTimers());
+
         clic();
-
-        //timerJoueur1On();
-        afficheMatrice(this.matriceJeu);
-
-
-    } // Marche avec le bouton JOUER
-
-
-
-    /*public void deplacementJoueur1(){
     }
 
-    public void deplacementJoueur2(){
-    }*/
-
-    /*
-     * @author Manon VERHILLE
-     *
-     * @return Le nouvel état du pion2 si le pion1 vient sur sa case.
-     *
-     * @version 1.0
-     * */
     public boolean comparePionsMemeCouleur(Pions pion1, Pions pion2) {
         if (pion2 != null)
             return !(pion1.getCouleur().equals(pion2.getCouleur()));

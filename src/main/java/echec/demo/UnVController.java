@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import echec.demo.JeuController;
 
 public class UnVController implements Initializable {
     @FXML
@@ -160,3 +161,4 @@ public class UnVController implements Initializable {
         }
     }
 }
+
