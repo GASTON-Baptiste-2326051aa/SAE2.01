@@ -41,7 +41,7 @@
                             </image>
                         </ImageView>
                         <VBox>
-                            <Label text="Joueur 2" styleClass="textJ"/>
+                            <Label fx:id="j2" text="Joueur 2" styleClass="textJ"/>
                         </VBox>
                         <Region HBox.hgrow="ALWAYS"/>
                     </HBox>
@@ -58,7 +58,7 @@
                         </image>
                     </ImageView>
                     <VBox>
-                        <Label text="Joueur 1" styleClass="textJ"/>
+                        <Label fx:id="j1" text="Joueur 1" styleClass="textJ"/>
                     </VBox>
                     <Region HBox.hgrow="ALWAYS"/>
                     <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer2">

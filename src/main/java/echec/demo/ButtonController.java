@@ -3,14 +3,19 @@ package echec.demo;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ButtonController {
 
+    private LoginController loginController = new LoginController();
+
     public void initButtonJvJ(Button bouton) {
-        bouton.setOnMouseClicked(actionEvent -> changeScene("view/pageJvJ.fxml", bouton));
+        bouton.setOnMouseClicked(actionEvent -> {
+            changeScene("view/pageJvJ.fxml", bouton);
+        });
     }
 
     public void initButtonLogJvJ(Button bouton) {
@@ -23,6 +28,7 @@ public class ButtonController {
 
     public void initButtonJvB(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/pagebot.fxml", bouton));
+
     }
 
     public void initButtonAcc(Button bouton) {

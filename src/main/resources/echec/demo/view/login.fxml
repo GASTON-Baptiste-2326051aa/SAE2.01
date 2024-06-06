@@ -27,5 +27,5 @@
     <TextField fx:id="joueur2Nom" styleClass="textFieldLog" promptText="Nom"/>
 
 
-    <Button fx:id="boutonJvJ"  text="Enregistrer" minWidth="400" minHeight="70" styleClass="topButton"/>
+    <Button fx:id="boutonJvJ" onAction="#bouttonJvJ" text="Enregistrer" minWidth="400" minHeight="70" styleClass="topButton"/>
 </VBox>

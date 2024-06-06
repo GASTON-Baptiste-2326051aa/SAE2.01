@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -17,6 +18,10 @@ public class UnVController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
+    @FXML
+    private Label j1;
+    @FXML
+    private Label j2;
     @FXML
     private Button boutonAcc;
     @FXML
@@ -33,6 +38,7 @@ public class UnVController implements Initializable {
     private Button boutonFin;
 
     private ButtonController buttonController;
+    private LoginController loginController;
 
     private Timer timer1;
     private Timer timer2;
@@ -49,6 +55,7 @@ public class UnVController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
+        loginController = new LoginController();
         buttonController.initButtonAcc(boutonAcc);
         if (boutonFin!= null){
             buttonController.initButtonFin(boutonFin);
@@ -63,10 +70,21 @@ public class UnVController implements Initializable {
             timerLabel2.setText(timeText);
         });
 
+
+
         startButton.setOnAction(e -> startTimer1());
         pauseButton.setOnAction(e -> toggleTimers());
     }
+    @FXML
+    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
+        if (j1 != null){
+            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
+        }
+        if (j2 != null){
+            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
+        }
 
+    }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {
