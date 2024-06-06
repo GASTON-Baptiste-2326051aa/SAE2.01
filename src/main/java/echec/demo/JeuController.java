@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -35,19 +36,19 @@ public class JeuController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private javafx.scene.control.Label j1;
+    private Label j1;
     @FXML
-    private javafx.scene.control.Label j2;
+    private Label j2;
     @FXML
-    private javafx.scene.control.Button boutonAcc;
+    private Button boutonAcc;
     @FXML
     private ComboBox<Integer> timerBox;
     @FXML
-    private javafx.scene.control.Label timerLabel;
+    private Label timerLabel;
     @FXML
-    private javafx.scene.control.Label timerLabel2;
+    private Label timerLabel2;
     @FXML
-    private javafx.scene.control.Button startButton;
+    private Button startButton;
     @FXML
     private Button boutonFin;
 
@@ -68,7 +69,7 @@ public class JeuController implements Initializable {
     private boolean isTimer2Running = false;
 
     @FXML
-    public void saveName(javafx.scene.control.TextField joueur1Prenom, javafx.scene.control.TextField joueur2Prenom, javafx.scene.control.TextField joueur1Nom, javafx.scene.control.TextField joueur2Nom) {
+    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
         if (j1 != null){
             j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
         }
@@ -140,8 +141,10 @@ public class JeuController implements Initializable {
             timerLabel.setText("00:00");
             if (timerLabel == this.timerLabel && timer1 != null) {
                 timer1.cancel();
+                ButtonController.changeScene("view/fin.fxml", boutonFin);
             } else if (timerLabel == this.timerLabel2 && timer2 != null) {
                 timer2.cancel();
+                ButtonController.changeScene("view/fin.fxml", boutonFin);
             }
         } else {
             int minutes = tempsRestant / 60;

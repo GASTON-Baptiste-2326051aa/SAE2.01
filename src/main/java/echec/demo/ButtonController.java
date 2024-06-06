@@ -38,7 +38,7 @@ public class ButtonController {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/fin.fxml", bouton));
     }
 
-    public void changeScene(String sceneName, Button button) {
+    public static void changeScene(String sceneName, Button button) {
         try {
             // Charger la nouvelle scène depuis le fichier FXML
             FXMLLoader loader = new FXMLLoader(EchecApp.class.getResource(sceneName));
