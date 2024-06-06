@@ -39,6 +39,9 @@ public class JeuController implements Initializable {
     Position positionDep = new Position();
     Position positionFin = new Position();
 
+    private boolean peutJouerJ1;
+    private boolean peutJouerJ2;
+
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
     public void initMatrice() {
@@ -113,45 +116,54 @@ public class JeuController implements Initializable {
         }
     }
 
-    public void clic() {
+    public void clic(){
 
         plateau.setOnMouseClicked(e -> {
-            if (this.positionDep.getX() < 0) {
-                this.positionDep.setX((int) e.getX());
-                this.positionDep.setY((int) e.getY());
+            if (this.positionDep.getX() < 0 ){
+                this.positionDep.setX((int)e.getX());
+                this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
-            } else {
-                this.positionFin.setX((int) e.getX());
-                this.positionFin.setY((int) e.getY());
+            }
+            else{
+                this.positionFin.setX((int)e.getX());
+                this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
             }
 
-            if (this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0) {
+            if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
 
                 Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
-                Pions pionFin = this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
+                Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
                 // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-                if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI(), positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep, positionFin.getI(), positionFin.conversionIntLettre(positionFin.getJ()))) {
+                if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+                    if((peutJouerJ1 && pionDep.getCouleur() == "blanc") || ((peutJouerJ2 && pionDep.getCouleur() == "noir"))){
 
-                    if (pionFin != null) {
-                        pionDep.setPosY(pionFin.getPosY());
-                        pionDep.setPosX(pionFin.getPosX());
-                    } else {
-                        // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-                        pionDep.setPosY(8 - positionFin.getI());
-                        pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
+                        if (pionFin != null){
+                            pionDep.setPosY(pionFin.getPosY());
+                            pionDep.setPosX(pionFin.getPosX());
+                        }
+                        else{
+                            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
+                            pionDep.setPosY(8-positionFin.getI());
+                            pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
+                        }
+                        this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
+                        this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
+
+                        boolean temp = peutJouerJ1;
+                        peutJouerJ1 = peutJouerJ2;
+                        peutJouerJ2 = temp;
+
                     }
-                    this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
-                    this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
+
+                    afficheMatriceAvecPlateau(this.matriceJeu);
+
+
 
                 }
-
-                afficheMatriceAvecPlateau(this.matriceJeu);
                 positionDep.reset();
                 positionFin.reset();
-
-
             }
         });
     }
@@ -163,6 +175,10 @@ public class JeuController implements Initializable {
         initMatrice();
         System.out.println("Boucle?");
         afficheMatriceAvecPlateau(this.matriceJeu);
+
+        peutJouerJ1 = true;
+        peutJouerJ2 = false;
+
         clic();
 
         //timerJoueur1On();
