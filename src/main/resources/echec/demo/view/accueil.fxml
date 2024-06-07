@@ -14,16 +14,20 @@
             prefHeight="1080" prefWidth="1920.0"
             stylesheets="@../style.css">
     <left>
-        <ImageView>
-            <image>
-                <Image url="@../img/plateau.png"/>
-            </image>
-        </ImageView>
+        <HBox style="-fx-padding: 50 0 0 100">
+            <VBox HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
+                <ImageView>
+                    <image>
+                        <Image url="@../img/plateau.png"/>
+                    </image>
+                </ImageView>
+            </VBox>
+        </HBox>
     </left>
     <center>
-        <HBox alignment="CENTER">
+        <HBox alignment="CENTER" style="-fx-padding: 100 0 0 0">
             <VBox spacing="20">
-                <Label  text="Choisi ton mode de jeu" textFill="white" wrapText="True" textAlignment="CENTER" styleClass="topText"/>
+                <Label  text="Choisi ton mode de jeu :" textFill="white" wrapText="True" textAlignment="CENTER" styleClass="topText"/>
                 <Button fx:id="boutonJvJlog" minHeight="50" minWidth="500" styleClass="topButton" text="JOUER CONTRE JOUEUR">
                     <graphic>
                         <HBox>
