@@ -56,7 +56,7 @@ public class UnVController implements Initializable {
     private boolean isTimer2Running = false;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { //initialisation des boutons + des timers
         buttonController = new ButtonController();
         loginController = new LoginController();
         buttonController.initButtonAcc(boutonAcc);
@@ -88,7 +88,7 @@ public class UnVController implements Initializable {
         }
 
     }
-    private void startTimer1() {
+    private void startTimer1() { //on lance le timer 1 a partir de la durée selectionner dans la ComboBox
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {
             throw new IllegalStateException("Timer value is not selected.");
@@ -105,7 +105,7 @@ public class UnVController implements Initializable {
         isTimer1Running = true;
     }
 
-    private void toggleTimers() {
+    private void toggleTimers() { // fonction pour mettre en pausse un timer et reprendre l'autre
         if (isTimer1Running) {
             timer1.cancel();
             isTimer1Running = false;
@@ -113,11 +113,11 @@ public class UnVController implements Initializable {
         } else if (isTimer2Running) {
             timer2.cancel();
             isTimer2Running = false;
-            resumeTimer1();
+            startTimer1();
         }
     }
 
-    private void startTimer2() {
+    private void startTimer2() { //on lance le timer 2 a partir de la durée selectionner dans la ComboBox
         timer2 = new Timer();
         timerTask2 = createTimerTask(timerLabel2, () -> --tempsRestant2);
 
@@ -125,15 +125,7 @@ public class UnVController implements Initializable {
         isTimer2Running = true;
     }
 
-    private void resumeTimer1() {
-        timer1 = new Timer();
-        timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
-
-        timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
-        isTimer1Running = true;
-    }
-
-    private TimerTask createTimerTask(Label timerLabel, Runnable updateRemainingTime) {
+    private TimerTask createTimerTask(Label timerLabel, Runnable updateRemainingTime) { //creation de la task pour le timer
         return new TimerTask() {
             @Override
             public void run() {
@@ -145,7 +137,7 @@ public class UnVController implements Initializable {
         };
     }
 
-    private void updateTimer(Label timerLabel) {
+    private void updateTimer(Label timerLabel) { //ici on va update le timer quand on change de valeur dans la combo box et quand il va etre a 0 on l'arrete.
         int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
         if (tempsRestant <= 0) {
             timerLabel.setText("00:00");

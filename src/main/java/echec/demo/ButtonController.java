@@ -12,26 +12,26 @@ public class ButtonController {
 
     private LoginController loginController = new LoginController();
 
-    public void initButtonJvJ(Button bouton) {
+    public void initButtonJvJ(Button bouton) { //initilisation du bouton JvJ(apres login) qui renvoi a la page JvJ quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> {
             changeScene("view/pageJvJ.fxml", bouton);
         });
     }
 
-    public void initButtonLogJvJ(Button bouton) {
+    public void initButtonLogJvJ(Button bouton) { //initilisation du bouton JvJLogin qui renvoi a la page Login pour les joueurs quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login.fxml", bouton));
     }
 
-    public void initButtonLogJvB(Button bouton) {
+    public void initButtonLogJvB(Button bouton) { //initilisation du bouton JvBLogin qui renvoi a la page Login pour le joueurs contre le bot quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login1J.fxml", bouton));
     }
 
-    public void initButtonJvB(Button bouton) {
+    public void initButtonJvB(Button bouton) { //initilisation du bouton JvB (apres login) qui renvoi a la page JvB quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/pagebot.fxml", bouton));
 
     }
 
-    public void initButtonAcc(Button bouton) {
+    public void initButtonAcc(Button bouton) { //initilisation du bouton Accueil qui renvoi a la page d'accueil quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/accueil.fxml", bouton));
     }
     public void initButtonFin(Button bouton){

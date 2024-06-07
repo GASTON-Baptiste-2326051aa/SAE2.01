@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
     private TextField joueur2Nom;
 
 
-    @Override
+    @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
         unVController = new UnVController();
@@ -52,7 +52,7 @@ public class LoginController implements Initializable {
         addCSV();
         unVController.saveName(joueur1Prenom,joueur2Prenom,joueur1Nom,joueur2Nom);
     }
-    private void addCSV() {
+    private void addCSV() { // stockage des Noms et Prenoms des joueurs dans un fichier csv
         String joueur1PrenomText = joueur1Prenom.getText();
         String joueur1NomText = joueur1Nom.getText();
         String joueur2PrenomText = joueur2Prenom.getText();
@@ -62,7 +62,7 @@ public class LoginController implements Initializable {
 
 
 
-    private void writeCsvFile(String joueur1Prenom, String joueur1Nom, String joueur2Prenom, String joueur2Nom) {
+    private void writeCsvFile(String joueur1Prenom, String joueur1Nom, String joueur2Prenom, String joueur2Nom) { // ecriture des noms dans le fichier csv
         String fileName = "joueurs.csv";
         try (FileWriter writer = new FileWriter(fileName, true)) {
             writer.append(joueur1Prenom)
