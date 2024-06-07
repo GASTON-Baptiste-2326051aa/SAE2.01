@@ -71,6 +71,7 @@ public class JeuController implements Initializable {
     @FXML
     public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
         if (j1 != null){
+            System.out.println("ok");
             j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
         }
         if (j2 != null){
@@ -153,6 +154,7 @@ public class JeuController implements Initializable {
         }
     }
 
+    // Fonction de génération de la matrice de Pions
     public void initMatrice() {
         matriceJeu = new ArrayList<>(8);
         for (int i = 0; i < 8; i++) {
@@ -222,7 +224,7 @@ public class JeuController implements Initializable {
                     positionDep.reset();
                 }
             }
-            else if (this.positionFin.getX() < 0 && this.positionDep.getJ() > 0){
+            else if (this.positionFin.getX() < 0 && this.positionDep.getJ() >= 0){
                 this.positionFin.setX((int)e.getX());
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
@@ -234,7 +236,6 @@ public class JeuController implements Initializable {
 
     public void jeu(){
         if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
-
             Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
             Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
@@ -243,9 +244,18 @@ public class JeuController implements Initializable {
                 if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
-                        peutJouerJ1 = false;
-                        peutJouerJ2 = false;
+                        if (peutJouerJ1){
+                            System.out.println("Bravo au joueur 1");
+                        }
+                        if (peutJouerJ2){
+                            System.out.println("Bravo au joueur 2");
+                        }
+                        ButtonController.changeScene("view/fin.fxml", boutonFin);
                     }
+                    boolean temp = peutJouerJ1;
+                    peutJouerJ1 = peutJouerJ2;
+                    peutJouerJ2 = temp;
+                    toggleTimers();
                 }
                 afficheMatriceAvecPlateau(this.matriceJeu);
             }
@@ -267,12 +277,6 @@ public class JeuController implements Initializable {
         }
         this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
         this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
-
-        boolean temp = peutJouerJ1;
-        peutJouerJ1 = peutJouerJ2;
-        peutJouerJ2 = temp;
-
-        toggleTimers();
 
     }
 
