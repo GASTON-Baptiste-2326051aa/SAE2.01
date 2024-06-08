@@ -80,7 +80,7 @@ public class JeuController implements Initializable {
         j1.setText(player1Prenom + " " + player1Nom);
     }
     public void Findejeu(String winnerName, String loserName) throws IOException {
-        var loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
         Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
         scene = new Scene(loader.load());
@@ -156,10 +156,18 @@ public class JeuController implements Initializable {
             timerLabel.setText("00:00");
             if (timerLabel == this.timerLabel && timer1 != null) {
                 timer1.cancel();
-                ButtonController.changeScene("view/fin.fxml", boutonFin);
+                try {
+                    Findejeu(j2.getText(), j1.getText());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else if (timerLabel == this.timerLabel2 && timer2 != null) {
                 timer2.cancel();
-                ButtonController.changeScene("view/fin.fxml", boutonFin);
+                try{
+                    Findejeu(j1.getText(), j2.getText());
+                }catch (IOException e){
+                    throw new RuntimeException(e);
+                }
             }
         } else {
             int minutes = tempsRestant / 60;
