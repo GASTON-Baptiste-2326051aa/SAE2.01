@@ -15,7 +15,8 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.JeuController"
             prefHeight="1080" prefWidth="1920.0"
-            stylesheets="@../style.css">
+            stylesheets="@../style.css"
+            style="-fx-background-color: rgb(48,46,43)">
     <left>
         <VBox styleClass="VBox" style="-fx-padding: 0 150 0 0;">
             <children>
@@ -284,7 +285,7 @@
                         </image>
                     </ImageView>
                     <VBox>
-                        <Label text="Joueur 2" styleClass="textJ"/>
+                        <Label fx:id="j1" text="Joueur 1" styleClass="textJ"/>
                     </VBox>
                     <Region HBox.hgrow="ALWAYS"/>
                     <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer2">

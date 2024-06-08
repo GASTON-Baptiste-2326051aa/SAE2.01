@@ -54,12 +54,41 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) boutonJvJ.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             JeuController jeuController = loader.getController();
-            jeuController.setPlayerNames(joueur1Prenom.getText(), joueur2Prenom.getText());
+            jeuController.setPlayerNamesJvJ(joueur1Prenom.getText(),joueur1Nom.getText(), joueur2Prenom.getText(),joueur2Nom.getText());
             stage.setScene(scene);
+            stage.setMinHeight(1080);
+            stage.setMinWidth(1920);
+            stage.setHeight(1080);
+            stage.setWidth(1920);
+            stage.centerOnScreen();
         } catch (IOException e){
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void bouttonJvB(ActionEvent actionEvent) {
+        //addCSV();
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pagebot.fxml"));
+            Stage stage = (Stage) boutonJvB.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            JeuController jeuController = loader.getController();
+            jeuController.setPlayerNamesJvB(joueur1Prenom.getText(),joueur1Nom.getText());
+            stage.setScene(scene);
+            stage.setMinHeight(1080);
+            stage.setMinWidth(1920);
+            stage.setHeight(1080);
+            stage.setWidth(1920);
+            stage.centerOnScreen();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void boutonFin(ActionEvent actionEvent) {}
+
     private void addCSV() { // stockage des Noms et Prenoms des joueurs dans un fichier csv
         String joueur1PrenomText = joueur1Prenom.getText();
         String joueur1NomText = joueur1Nom.getText();

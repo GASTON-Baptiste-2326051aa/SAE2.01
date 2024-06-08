@@ -72,11 +72,7 @@ public class UnVController implements Initializable {
             timerLabel.setText(timeText);
             timerLabel2.setText(timeText);
         });
-
-
-
         startButton.setOnAction(e -> startTimer1());
-        pauseButton.setOnAction(e -> toggleTimers());
     }
     @FXML
     public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {

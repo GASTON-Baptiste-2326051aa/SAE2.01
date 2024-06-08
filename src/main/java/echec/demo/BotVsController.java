@@ -21,10 +21,8 @@ public class BotVsController implements Initializable {
     private GridPane plateau;
     @FXML
     private BorderPane borderPane;
-    /*@FXML
-    private Label j1;
     @FXML
-    private Label j2;*/
+    private Label j1;
     @FXML
     private Button boutonAcc;
     @FXML
@@ -65,16 +63,6 @@ public class BotVsController implements Initializable {
     private boolean isTimer1Running = false;
     private boolean isTimer2Running = false;
 
-    /*@FXML
-    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
-        if (j1 != null){
-            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
-        }
-        if (j2 != null){
-            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
-        }
-
-    }*/
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {

@@ -15,7 +15,8 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.JeuController"
             prefHeight="1080" prefWidth="1920.0"
-            stylesheets="@../style.css">
+            stylesheets="@../style.css"
+            style="-fx-background-color: rgb(48,46,43)">
     <left>
         <VBox styleClass="VBox" style="-fx-padding: 0 150 0 0;">
             <children>
@@ -293,7 +294,7 @@
                 </HBox>
             </VBox>
             <VBox styleClass="VBox" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="30">
-                <Label text="Veuillez a choisir ici dessous le temps de jeux !" textFill="aliceblue" styleClass="textJvJVbox"></Label>
+                <Label text="Veuillez sélectionner ci-dessous le temps !" textFill="aliceblue" styleClass="textJvJVbox"></Label>
                 <ComboBox fx:id="timerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;" prefHeight="40" prefWidth="200">
                     <items>
                         <FXCollections fx:factory="observableArrayList"/>

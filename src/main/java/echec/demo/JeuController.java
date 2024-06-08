@@ -68,9 +68,12 @@ public class JeuController implements Initializable {
     private boolean isTimer1Running = false;
     private boolean isTimer2Running = false;
 
-    public void setPlayerNames(String player1, String player2){
-        j1.setText(player1);
-        j2.setText(player2);
+    public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){
+        j1.setText(player1Prenom + " " + player1Nom);
+        j2.setText(player2Prenom + " " + player2Nom);
+    }
+    public void setPlayerNamesJvB(String player1Prenom,String player1Nom){
+        j1.setText(player1Prenom + " " + player1Nom);
     }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
