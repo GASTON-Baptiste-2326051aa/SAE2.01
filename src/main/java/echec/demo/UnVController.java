@@ -19,11 +19,6 @@ import java.util.TimerTask;
 public class UnVController implements Initializable {
     @FXML
     private BorderPane borderPane;
-
-    @FXML
-    private Label j1;
-    @FXML
-    private Label j2;
     @FXML
     private Button boutonAcc;
     @FXML
@@ -74,16 +69,7 @@ public class UnVController implements Initializable {
         });
         startButton.setOnAction(e -> startTimer1());
     }
-    @FXML
-    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
-        if (j1 != null){
-            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
-        }
-        if (j2 != null){
-            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
-        }
 
-    }
     private void startTimer1() { //on lance le timer 1 a partir de la durée selectionner dans la ComboBox
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {

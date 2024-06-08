@@ -86,9 +86,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    @FXML
-    private void boutonFin(ActionEvent actionEvent) {}
-
     private void addCSV() { // stockage des Noms et Prenoms des joueurs dans un fichier csv
         String joueur1PrenomText = joueur1Prenom.getText();
         String joueur1NomText = joueur1Nom.getText();

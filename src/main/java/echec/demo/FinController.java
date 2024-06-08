@@ -22,6 +22,8 @@ public class FinController implements Initializable {
     @FXML
     private Label NomLoss1V;
     @FXML
+    private Label NomWin1V;
+    @FXML
     private Button boutonAcc;
 
     private ButtonController buttonController;
@@ -30,5 +32,10 @@ public class FinController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
         buttonController.initButtonAcc(boutonAcc);
+    }
+    public void setPlayerNames(String winnerName, String loserName) {
+        LabelWin1V.setText("Vous avez gagné face à " + loserName);
+        NomWin1V.setText(winnerName);
+        NomLoss1V.setText(loserName);
     }
 }

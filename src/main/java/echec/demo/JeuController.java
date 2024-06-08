@@ -3,7 +3,9 @@ package echec.demo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import echec.Pions.*;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -11,7 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 import java.net.URL;
 import java.util.Timer;
@@ -74,6 +78,20 @@ public class JeuController implements Initializable {
     }
     public void setPlayerNamesJvB(String player1Prenom,String player1Nom){
         j1.setText(player1Prenom + " " + player1Nom);
+    }
+    public void Findejeu(String winnerName, String loserName) throws IOException {
+        var loader = new FXMLLoader(getClass().getResource("view/fin.fxml")); // Use the correct FXML file name
+        Stage stage = (Stage) boutonFin.getScene().getWindow();
+        Scene scene;
+        scene = new Scene(loader.load());
+        FinController finController = loader.getController();
+        finController.setPlayerNames(winnerName, loserName);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.setMinHeight(900);
+        stage.setMinWidth(500);
+        stage.setHeight(900);
+        stage.setWidth(500);
     }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
@@ -241,12 +259,19 @@ public class JeuController implements Initializable {
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
                         if (peutJouerJ1){
-                            System.out.println("Bravo au joueur 1");
+                            try {
+                                Findejeu(j1.getText(), j2.getText());
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                         if (peutJouerJ2){
-                            System.out.println("Bravo au joueur 2");
+                            try {
+                                Findejeu(j2.getText(),j1.getText());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                        ButtonController.changeScene("view/fin.fxml", boutonFin);
                     }
                     boolean temp = peutJouerJ1;
                     peutJouerJ1 = peutJouerJ2;
