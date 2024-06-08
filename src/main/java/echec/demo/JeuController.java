@@ -87,11 +87,11 @@ public class JeuController implements Initializable {
         FinController finController = loader.getController();
         finController.setPlayerNames(winnerName, loserName);
         stage.setScene(scene);
-        stage.centerOnScreen();
         stage.setMinHeight(900);
         stage.setMinWidth(500);
         stage.setHeight(900);
         stage.setWidth(500);
+        stage.centerOnScreen();
     }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
