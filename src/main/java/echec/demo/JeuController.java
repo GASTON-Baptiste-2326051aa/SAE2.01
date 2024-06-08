@@ -58,7 +58,7 @@ public class JeuController implements Initializable {
 
 
     private ButtonController buttonController;
-    private LoginController loginController;
+    private LoginController loginController = new LoginController();
 
     private Timer timer1;
     private Timer timer2;
@@ -268,13 +268,18 @@ public class JeuController implements Initializable {
                     if (pionFin instanceof Roi){
                         if (peutJouerJ1){
                             try {
+                                String[] parts = j1.getText().split(" ");
+                                loginController.updateVictories(parts[0],parts[1]);
                                 Findejeu(j1.getText(), j2.getText());
+
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
                         }
                         if (peutJouerJ2){
                             try {
+                                String[] parts = j2.getText().split(" ");
+                                loginController.updateVictories(parts[0],parts[1]);
                                 Findejeu(j2.getText(),j1.getText());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

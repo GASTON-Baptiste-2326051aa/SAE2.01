@@ -48,8 +48,11 @@ public class ButtonController {
             Stage currentStage = (Stage) button.getScene().getWindow();
 
             // Définir la nouvelle scène sur le stage actuel
+
             currentStage.setScene(newScene);
             currentStage.getScene().getRoot().setStyle("-fx-background-color: rgb(48, 46, 43);");
+
+
 
             // Définir la taille minimale en fonction de la scène
             if (sceneName.equals("view/login.fxml") || sceneName.equals("view/login1J.fxml")) {
