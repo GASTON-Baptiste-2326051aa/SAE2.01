@@ -68,16 +68,9 @@ public class JeuController implements Initializable {
     private boolean isTimer1Running = false;
     private boolean isTimer2Running = false;
 
-    @FXML
-    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
-        if (j1 != null){
-            System.out.println("ok");
-            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
-        }
-        if (j2 != null){
-            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
-        }
-
+    public void setPlayerNames(String player1, String player2){
+        j1.setText(player1);
+        j2.setText(player2);
     }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();

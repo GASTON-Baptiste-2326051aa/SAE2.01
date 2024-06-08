@@ -2,10 +2,13 @@ package echec.demo;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -21,7 +24,6 @@ public class LoginController implements Initializable {
     private Button boutonJvB;
 
     private ButtonController buttonController;
-    private UnVController unVController;
 
     @FXML
     private TextField joueur1Prenom;
@@ -36,21 +38,27 @@ public class LoginController implements Initializable {
     @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
-        unVController = new UnVController();
         if (boutonJvJ != null) {
             buttonController.initButtonJvJ(boutonJvJ);
         }
         if (boutonJvB != null) {
             buttonController.initButtonJvB(boutonJvB);
         }
-
-
     }
 
     @FXML
     private void bouttonJvJ(ActionEvent actionEvent) {
         addCSV();
-        unVController.saveName(joueur1Prenom,joueur2Prenom,joueur1Nom,joueur2Nom);
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pageJvJ.fxml"));
+            Stage stage = (Stage) boutonJvJ.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            JeuController jeuController = loader.getController();
+            jeuController.setPlayerNames(joueur1Prenom.getText(), joueur2Prenom.getText());
+            stage.setScene(scene);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
     private void addCSV() { // stockage des Noms et Prenoms des joueurs dans un fichier csv
         String joueur1PrenomText = joueur1Prenom.getText();
@@ -59,8 +67,6 @@ public class LoginController implements Initializable {
         String joueur2NomText = joueur2Nom.getText();
         writeCsvFile(joueur1PrenomText, joueur1NomText, joueur2PrenomText, joueur2NomText);
     }
-
-
 
     private void writeCsvFile(String joueur1Prenom, String joueur1Nom, String joueur2Prenom, String joueur2Nom) { // ecriture des noms dans le fichier csv
         String fileName = "joueurs.csv";
