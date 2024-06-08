@@ -91,16 +91,16 @@ public class LoginController implements Initializable {
         String joueur1NomText = joueur1Nom.getText();
         if (joueur2Prenom == null) {
             if (!isPlayerInCsv(joueur1PrenomText, joueur1NomText)) {
-                writeCsvFile(joueur1PrenomText, joueur1NomText, 0);
+                writeCsvFile(joueur1PrenomText, joueur1NomText, 0, 0);
             }
         } else {
             String joueur2PrenomText = joueur2Prenom.getText();
             String joueur2NomText = joueur2Nom.getText();
             if (!isPlayerInCsv(joueur1PrenomText, joueur1NomText)) {
-                writeCsvFile(joueur1PrenomText, joueur1NomText, 0);
+                writeCsvFile(joueur1PrenomText, joueur1NomText, 0, 0);
             }
             if (!isPlayerInCsv(joueur2PrenomText, joueur2NomText)) {
-                writeCsvFile(joueur2PrenomText, joueur2NomText, 0);
+                writeCsvFile(joueur2PrenomText, joueur2NomText, 0, 0);
             }
         }
     }
@@ -111,7 +111,7 @@ public class LoginController implements Initializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3) {
+                if (parts.length >= 4) {
                     if (parts[0].equals(prenom) && parts[1].equals(nom)) {
                         return true;
                     }
@@ -123,21 +123,26 @@ public class LoginController implements Initializable {
         return false;
     }
 
-    private void writeCsvFile(String joueurPrenom, String joueurNom, int victoires) {
+    private void writeCsvFile(String joueurPrenom, String joueurNom, int matches, int victories) {
         String fileName = "joueurs.csv";
         try (FileWriter writer = new FileWriter(fileName, true)) {
+            if (new File(fileName).length() == 0) {
+                writer.append("Prénom,Nom,Nombre de matchs,Nombre de victoires\n");
+            }
             writer.append(joueurPrenom)
                     .append(',')
                     .append(joueurNom)
                     .append(',')
-                    .append(String.valueOf(victoires))
+                    .append(String.valueOf(matches))
+                    .append(',')
+                    .append(String.valueOf(victories))
                     .append('\n');
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateVictories(String prenom, String nom) {
+    public void updateMatches(String prenom, String nom) {
         String fileName = "joueurs.csv";
         List<String[]> players = new ArrayList<>();
 
@@ -146,11 +151,10 @@ public class LoginController implements Initializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3) {
+                if (parts.length >= 4) {
                     if (parts[0].equals(prenom) && parts[1].equals(nom)) {
-                        int victories = Integer.parseInt(parts[2]);
-                        victories++;
-                        parts[2] = String.valueOf(victories);
+                        int matches = Integer.parseInt(parts[2]) + 1; // Increment matches
+                        parts[2] = String.valueOf(matches);
                     }
                     players.add(parts);
                 }
@@ -167,11 +171,53 @@ public class LoginController implements Initializable {
                         .append(player[1])
                         .append(',')
                         .append(player[2])
+                        .append(',')
+                        .append(player[3])
                         .append('\n');
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void updateVictories(String prenom, String nom) {
+        String fileName = "joueurs.csv";
+        List<String[]> players = new ArrayList<>();
+
+        // Read the file and store the data
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    if (parts[0].equals(prenom) && parts[1].equals(nom)) {
+                        int victories = Integer.parseInt(parts[3]) + 1; // Increment victories
+                        parts[3] = String.valueOf(victories);
+                    }
+                    players.add(parts);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Write the data back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (String[] player : players) {
+                writer.append(player[0])
+                        .append(',')
+                        .append(player[1])
+                        .append(',')
+                        .append(player[2])
+                        .append(',')
+                        .append(player[3])
+                        .append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

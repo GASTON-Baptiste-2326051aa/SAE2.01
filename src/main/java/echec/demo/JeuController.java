@@ -266,10 +266,13 @@ public class JeuController implements Initializable {
                 if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
+                        String[] partsJ1 = j1.getText().split(" ");
+                        String[] partsJ2 = j2.getText().split(" ");
+                        loginController.updateMatches(partsJ2[0],partsJ2[1]);
+                        loginController.updateMatches(partsJ1[0],partsJ1[1]);
                         if (peutJouerJ1){
                             try {
-                                String[] parts = j1.getText().split(" ");
-                                loginController.updateVictories(parts[0],parts[1]);
+                                loginController.updateVictories(partsJ1[0],partsJ1[1]);
                                 Findejeu(j1.getText(), j2.getText());
 
                             } catch (Exception e) {
@@ -278,8 +281,7 @@ public class JeuController implements Initializable {
                         }
                         if (peutJouerJ2){
                             try {
-                                String[] parts = j2.getText().split(" ");
-                                loginController.updateVictories(parts[0],parts[1]);
+                                loginController.updateVictories(partsJ2[0],partsJ2[1]);
                                 Findejeu(j2.getText(),j1.getText());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
