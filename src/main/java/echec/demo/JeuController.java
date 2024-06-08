@@ -80,18 +80,18 @@ public class JeuController implements Initializable {
         j1.setText(player1Prenom + " " + player1Nom);
     }
     public void Findejeu(String winnerName, String loserName) throws IOException {
-        var loader = new FXMLLoader(getClass().getResource("view/fin.fxml")); // Use the correct FXML file name
-        Stage stage = (Stage) boutonFin.getScene().getWindow();
+        var loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
+        Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
         scene = new Scene(loader.load());
         FinController finController = loader.getController();
         finController.setPlayerNames(winnerName, loserName);
-        stage.setScene(scene);
-        stage.setMinHeight(900);
-        stage.setMinWidth(500);
-        stage.setHeight(900);
-        stage.setWidth(500);
-        stage.centerOnScreen();
+        fin.setScene(scene);
+        fin.setMinHeight(900);
+        fin.setMinWidth(500);
+        fin.setHeight(900);
+        fin.setWidth(500);
+        fin.centerOnScreen();
     }
     private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
