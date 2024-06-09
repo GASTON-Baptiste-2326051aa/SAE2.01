@@ -5,9 +5,9 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="echec.demo.AccueilController"
@@ -27,14 +27,14 @@
     <center>
         <HBox alignment="CENTER" style="-fx-padding: 100 0 0 0">
             <VBox spacing="20">
-                <Label  text="Choisi ton mode de jeu :" textFill="white" wrapText="True" textAlignment="CENTER" styleClass="topText"/>
+                <Label text="Choisi ton mode de jeu :" textFill="white" wrapText="True" textAlignment="CENTER" styleClass="topText"/>
                 <Button fx:id="boutonJvJlog" minHeight="50" minWidth="500" styleClass="topButton" text="JOUER CONTRE JOUEUR">
                     <graphic>
                         <HBox>
                             <children>
-                                <ImageView >
+                                <ImageView>
                                     <image>
-                                        <Image url="@../img/pionBoutton.png" />
+                                        <Image url="@../img/pionBoutton.png"/>
                                     </image>
                                 </ImageView>
                             </children>
@@ -45,25 +45,24 @@
                     <graphic>
                         <HBox>
                             <children>
-                                <ImageView >
+                                <ImageView>
                                     <image>
-                                        <Image url="@../img/robot.png" />
+                                        <Image url="@../img/robot.png"/>
                                     </image>
                                 </ImageView>
                             </children>
                         </HBox>
                     </graphic>
                 </Button>
+                <TableView fx:id="tableView" styleClass="tableau">
+                    <columns >
+                        <TableColumn fx:id="prenomColumn" text="Prénom" />
+                        <TableColumn fx:id="nomColumn" text="Nom" />
+                        <TableColumn fx:id="matchesColumn" text="Nombre de matchs"/>
+                        <TableColumn fx:id="victoriesColumn" text="Nombre de victoires"/>
+                    </columns>
+                </TableView>
             </VBox>
         </HBox>
     </center>
-
-    <top>
-        <Label text="Titre" />
-    </top>
-
-    <bottom>
-        <Label text="Footer" />
-    </bottom>
-
 </BorderPane>

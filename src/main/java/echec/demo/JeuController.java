@@ -412,7 +412,7 @@ public class JeuController implements Initializable {
                         loginController.updateMatches(partsJ1[0],partsJ1[1]);
                         if (peutJouerJ1){
                             try {
-                                loginController.updateVictories(partsJ1[0],partsJ1[1]);
+                                loginController.updateVictories(partsJ2[0],partsJ2[1]);
                                 Findejeu(j2.getText(), j1.getText());
 
                             } catch (Exception e) {
@@ -421,7 +421,7 @@ public class JeuController implements Initializable {
                         }
                         if (peutJouerJ2){
                             try {
-                                loginController.updateVictories(partsJ2[0],partsJ2[1]);
+                                loginController.updateVictories(partsJ1[0],partsJ1[1]);
                                 Findejeu(j1.getText(),j2.getText());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

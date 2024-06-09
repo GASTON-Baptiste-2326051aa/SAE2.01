@@ -28,7 +28,7 @@ public class BotVsController implements Initializable {
     @FXML
     private Label j1;
     @FXML
-    private Label j2 = new Label("BOT-David");
+    private Label j2 = new Label("BOT David");
     @FXML
     private Button boutonAcc;
     @FXML
@@ -41,6 +41,7 @@ public class BotVsController implements Initializable {
     private Button startButton;
     @FXML
     private Button boutonFin;
+
 
     private Position positionDep = new Position();
     private Position positionFin = new Position();
@@ -190,9 +191,16 @@ public class BotVsController implements Initializable {
                 deplacementPieceBot(pionDepBot, pionFinBot);
 
                 // Si le roi est en défaite, les joueurs sont mis à false.
+
+
                 if (pionFinBot instanceof Roi) {
+                    String[] partsJ1 = j1.getText().split(" ");
+                    String[] partsJ2 = j2.getText().split(" ");
+                    loginController.updateMatches(partsJ2[0],partsJ2[1]);
+                    loginController.updateMatches(partsJ1[0],partsJ1[1]);
                     if (peutJouerJ1) {
                         try {
+                            loginController.updateVictories(partsJ2[0],partsJ2[1]);
                             Findejeu(j2.getText(), j1.getText());
 
                         } catch (Exception e) {
@@ -201,6 +209,7 @@ public class BotVsController implements Initializable {
                     }
                     if (peutJouerJ2) {
                         try {
+                            loginController.updateVictories(partsJ1[0],partsJ1[1]);
                             Findejeu(j1.getText(),j2.getText());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -236,8 +245,13 @@ public class BotVsController implements Initializable {
                     && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
+                        String[] partsJ1 = j1.getText().split(" ");
+                        String[] partsJ2 = j2.getText().split(" ");
+                        loginController.updateMatches(partsJ2[0],partsJ2[1]);
+                        loginController.updateMatches(partsJ1[0],partsJ1[1]);
                         if (peutJouerJ1){
                             try {
+                                loginController.updateVictories(partsJ2[0],partsJ2[1]);
                                 Findejeu(j2.getText(), j1.getText());
 
                             } catch (Exception e) {
@@ -246,6 +260,7 @@ public class BotVsController implements Initializable {
                         }
                         if (peutJouerJ2){
                             try {
+                                loginController.updateVictories(partsJ1[0],partsJ1[1]);
                                 Findejeu(j1.getText(),j2.getText());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

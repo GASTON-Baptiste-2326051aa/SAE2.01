@@ -6,13 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,6 +44,7 @@ public class LoginController implements Initializable {
      * Initialisations de la classe.
      * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
      **/
+    private static final String CSV_FILE_PATH = "src/main/resources/joueurs.csv";
     @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
@@ -64,21 +65,21 @@ public class LoginController implements Initializable {
      * Et on a aussi juste avant la sauvegarder des informations des joueurs dans un fichier csv.
      **/
     @FXML
-    private void bouttonJvJ(ActionEvent actionEvent) { //changement de fenetre apres le login pour le mode de jeu JvJ.
+    private void bouttonJvJ(ActionEvent actionEvent) {
         addCSV();
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pageJvJ.fxml"));
             Stage stage = (Stage) boutonJvJ.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             JeuController jeuController = loader.getController();
-            jeuController.setPlayerNamesJvJ(joueur1Prenom.getText(),joueur1Nom.getText(), joueur2Prenom.getText(),joueur2Nom.getText());
+            jeuController.setPlayerNamesJvJ(joueur1Prenom.getText(), joueur1Nom.getText(), joueur2Prenom.getText(), joueur2Nom.getText());
             stage.setScene(scene);
             stage.setMinHeight(1080);
             stage.setMinWidth(1920);
             stage.setHeight(1080);
             stage.setWidth(1920);
             stage.centerOnScreen();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -94,20 +95,19 @@ public class LoginController implements Initializable {
     @FXML
     private void bouttonJvB(ActionEvent actionEvent) {
         addCSV();
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pagebot.fxml"));
-            BorderPane botVsJ = loader.load();
             Stage stage = (Stage) boutonJvB.getScene().getWindow();
-            Scene scene = new Scene(botVsJ);
+            Scene scene = new Scene(loader.load());
             BotVsController botVsController = loader.getController();
-            botVsController.setPlayerNamesJvB(joueur1Prenom.getText(),joueur1Nom.getText());
+            botVsController.setPlayerNamesJvB(joueur1Prenom.getText(), joueur1Nom.getText());
             stage.setScene(scene);
             stage.setMinHeight(1080);
             stage.setMinWidth(1920);
             stage.setHeight(1080);
             stage.setWidth(1920);
             stage.centerOnScreen();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -118,11 +118,20 @@ public class LoginController implements Initializable {
      *
      **/
     private void addCSV() {
+        // Create CSV file with headers if it doesn't exist
+        if (Files.notExists(Paths.get(CSV_FILE_PATH))) {
+            writeCsvFile("Prénom", "Nom", 0, 0); // Ajoute les en-têtes des colonnes
+        }
+
+        // Ajoute les joueurs s'ils n'existent pas déjà
         String joueur1PrenomText = joueur1Prenom.getText();
         String joueur1NomText = joueur1Nom.getText();
-        if (joueur2Prenom == null) {
+        if (joueur2Prenom == null || joueur2Prenom.getText().isEmpty()) {
             if (!isPlayerInCsv(joueur1PrenomText, joueur1NomText)) {
                 writeCsvFile(joueur1PrenomText, joueur1NomText, 0, 0);
+            }
+            if (!isPlayerInCsv("BOT","David")) {
+                writeCsvFile("BOT", "David", 0, 0);
             }
         } else {
             String joueur2PrenomText = joueur2Prenom.getText();
@@ -136,14 +145,14 @@ public class LoginController implements Initializable {
         }
     }
 
+
     /**
      * @author Baptiste GASTON
      *
      *
      **/
     private boolean isPlayerInCsv(String prenom, String nom) {
-        String fileName = "joueurs.csv";
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -189,37 +198,25 @@ public class LoginController implements Initializable {
      * @params
      **/
     public void updateMatches(String prenom, String nom) {
-        String fileName = "joueurs.csv";
-        List<String[]> players = new ArrayList<>();
-
-        // Read the file and store the data
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    if (parts[0].equals(prenom) && parts[1].equals(nom)) {
-                        int matches = Integer.parseInt(parts[2]) + 1; // Increment matches
-                        parts[2] = String.valueOf(matches);
-                    }
-                    players.add(parts);
+                if (parts.length >= 4 && parts[0].equals(prenom) && parts[1].equals(nom)) {
+                    int matches = Integer.parseInt(parts[2]) + 1; // Increment matches
+                    parts[2] = String.valueOf(matches);
+                    line = String.join(",", parts);
                 }
+                updatedLines.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Write the data back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (String[] player : players) {
-                writer.append(player[0])
-                        .append(',')
-                        .append(player[1])
-                        .append(',')
-                        .append(player[2])
-                        .append(',')
-                        .append(player[3])
-                        .append('\n');
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
+            for (String updatedLine : updatedLines) {
+                writer.append(updatedLine).append('\n');
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -232,43 +229,29 @@ public class LoginController implements Initializable {
      * @params
      **/
     public void updateVictories(String prenom, String nom) {
-        String fileName = "joueurs.csv";
-        List<String[]> players = new ArrayList<>();
-
-        // Read the file and store the data
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        List<String> updatedLines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    if (parts[0].equals(prenom) && parts[1].equals(nom)) {
-                        int victories = Integer.parseInt(parts[3]) + 1; // Increment victories
-                        parts[3] = String.valueOf(victories);
-                    }
-                    players.add(parts);
+                if (parts.length >= 4 && parts[0].equals(prenom) && parts[1].equals(nom)) {
+                    int victories = Integer.parseInt(parts[3]) + 1; // Increment victories
+                    parts[3] = String.valueOf(victories);
+                    line = String.join(",", parts);
                 }
+                updatedLines.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Write the data back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (String[] player : players) {
-                writer.append(player[0])
-                        .append(',')
-                        .append(player[1])
-                        .append(',')
-                        .append(player[2])
-                        .append(',')
-                        .append(player[3])
-                        .append('\n');
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
+            for (String updatedLine : updatedLines) {
+                writer.append(updatedLine).append('\n');
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
 }
-

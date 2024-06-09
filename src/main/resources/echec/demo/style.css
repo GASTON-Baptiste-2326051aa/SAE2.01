@@ -105,6 +105,26 @@
     -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
 }
 
+.tableau{
+    -fx-background-color: #454341;
+}
+.column-header {
+    -fx-background-color: #81b64c; /* Couleur de fond */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
+
+}
+.table-cell {
+    -fx-background-color: #454341; /* Couleur de fond pour les cellules */
+    -fx-text-fill: white; /* Couleur du texte pour les cellules */
+    -fx-font-family: Helvetica, Arial, Hiragino Sans GB, STXihei, Microsoft YaHei, WenQuanYi Micro Hei, Hind, MS Gothic, Apple SD Gothic Neo, NanumBarunGothic, sans-serif;
+
+}
+
+
+
+
+
 /*.rectangleVert{
     -fx-min-width: 100;
     -fx-max-width: 100;
