@@ -1,21 +1,19 @@
 package echec.Pions;
 
+// Class de conversion de position
 public class Position {
     private int i = -1;
     private int j = -1;
     private int x = -1;
     private int y = -1;
 
+    // COnvertion de coordonnée d'image en x et y en coordonnée de matrice i et j
     public void conversion(int x, int y){
         this.j = x/100;
         this.i = y/100;
     }
 
-    public void conversionInverse(int i, int j){
-        this.x = j*100;
-        this.y = i*100;
-    }
-
+    // Conversion des lettre de l'échiquier en chiffre
     public int conversionLettreInt(String lettre){
         int resultat;
         switch (lettre.toLowerCase()) {
@@ -50,6 +48,7 @@ public class Position {
         return resultat;
     }
 
+    // Conversion des chiffre en case d'échiquier
     public String conversionIntLettre(int chiffre){
         String resultat;
         switch (chiffre) {
@@ -117,6 +116,7 @@ public class Position {
         this.y = y;
     }
 
+    // reset des postions
     public void reset(){
         this.i = -1;
         this.j = -1;

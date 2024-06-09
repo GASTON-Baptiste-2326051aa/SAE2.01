@@ -10,6 +10,8 @@ public class Tour extends Pions{
     }
 
     public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
+
+        // On vérifie qu'il soit soit sur la même colonne soit sur la même ligne
         return (Objects.equals(posXDep, posXFin) || posYDep == posYFin);
     }
 
