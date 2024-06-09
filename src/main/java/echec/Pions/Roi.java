@@ -8,10 +8,6 @@ public class Roi extends Pions{
         super(couleur, posX, posY, url);
     }
 
-    public void deplacement(String posXDep, int posYDep, String posXFin, int posYFin){
-
-    }
-
     @Override
     public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
         int startX = posXDep.charAt(0) - 'a' + 1;

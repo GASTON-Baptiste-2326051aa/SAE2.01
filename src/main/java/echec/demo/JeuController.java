@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import echec.Pions.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -19,7 +20,6 @@ import java.io.IOException;
 import java.util.*;
 import java.net.URL;
 import java.util.Timer;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class JeuController implements Initializable {
 
@@ -38,6 +38,18 @@ public class JeuController implements Initializable {
 
     @FXML
     private BorderPane borderPane;
+
+    // Création des attributs correspondant aux position du roi
+
+    private int posRoiNoirMatriceI = 0;
+    private int posRoiNoirMatriceJ = 4;
+
+    private int posRoiBlancMatriceI = 7;
+    private int posRoiBlancMatriceJ = 4;
+
+    private int nbEchecRoiNoir = 0;
+    private int nbEchecRoiBlanc = 0;
+
 
     @FXML
     private Label j1;
@@ -249,18 +261,26 @@ public class JeuController implements Initializable {
     public void clic(){
 
         plateau.setOnMouseClicked(e -> {
+            afficheMatriceAvecPlateau(matriceJeu);
             if (this.positionDep.getX() < 0){
                 this.positionDep.setX((int)e.getX());
                 this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
+                String urlSelection = Objects.requireNonNull(getClass().getResource("img/selection.png")).toExternalForm();
+                ImageView selection = new ImageView(urlSelection);
+                selection.setFitHeight(100.0);
+                selection.setFitWidth(100.0);
+                plateau.add(selection, positionDep.getJ(),  positionDep.getI());
                 if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null){
                     positionDep.reset();
                 }
+
             }
             else if (this.positionFin.getX() < 0 && this.positionDep.getJ() >= 0){
                 this.positionFin.setX((int)e.getX());
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
+
             }
             jeu();
         });
@@ -276,7 +296,14 @@ public class JeuController implements Initializable {
             if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
                 if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
                     deplacementPiece(pionDep, pionFin);
-                    if (pionFin instanceof Roi){
+                    afficheMatriceAvecPlateau(this.matriceJeu);
+                    if (enEchec(posRoiNoirMatriceI, posRoiNoirMatriceJ)){
+                        System.out.println("Le roi noir est en échec");
+                    }
+                    if (enEchec(posRoiBlancMatriceI, posRoiBlancMatriceJ)){
+                        System.out.println("Le roi blanc est en échec");
+                    }
+                    if (nbEchecRoiNoir == 3 || nbEchecRoiBlanc == 3){
                         String[] partsJ1 = j1.getText().split(" ");
                         String[] partsJ2 = j2.getText().split(" ");
                         loginController.updateMatches(partsJ2[0],partsJ2[1]);
@@ -299,33 +326,92 @@ public class JeuController implements Initializable {
                             }
                         }
                     }
-                    boolean temp = peutJouerJ1;
-                    peutJouerJ1 = peutJouerJ2;
-                    peutJouerJ2 = temp;
-                    toggleTimers();
+
                 }
-                afficheMatriceAvecPlateau(this.matriceJeu);
             }
             positionDep.reset();
             positionFin.reset();
         }
     }
 
-    public void deplacementPiece(Pions pionDep, Pions pionFin){
+    public void deplacementPiece(Pions pionDep, Pions pionFin) {
+        // Sauvegarder l'état actuel de la matrice
+        ArrayList<ArrayList<Pions>> saveMatrice = new ArrayList<>();
+        for (ArrayList<Pions> row : matriceJeu) {
+            saveMatrice.add(new ArrayList<>(row));
+        }
 
-        if (pionFin != null){
+        Position position = new Position();
+        // Sauvegarder la position actuelle du pion
+        int savePosX = position.conversionLettreInt(pionDep.getPosX());
+        int savePosY = pionDep.getPosY();
+
+        // Effectuer le déplacement
+        if (pionFin != null) {
             pionDep.setPosY(pionFin.getPosY());
             pionDep.setPosX(pionFin.getPosX());
-        }
-        else{
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-            pionDep.setPosY(8-positionFin.getI());
+        } else {
+            pionDep.setPosY(8 - positionFin.getI());
             pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
         }
+
+        // Mettre à jour la position du roi si le pion déplacé est un roi
+        if (pionDep instanceof Roi) {
+            if ( pionDep.getCouleur().equals("noir")){
+                posRoiNoirMatriceI = positionFin.getI();
+                posRoiNoirMatriceJ = positionFin.getJ();
+            }
+            else{
+                posRoiBlancMatriceI = positionFin.getI();
+                posRoiBlancMatriceJ = positionFin.getJ();
+            }
+        }
+
+        // Mettre à jour la matrice
         this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
         this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
 
+        // Vérifier si le roi est en échec après le déplacement
+        boolean roiEnEchec = false;
+        if (peutJouerJ1 && enEchec(posRoiBlancMatriceI, posRoiBlancMatriceJ)) {
+            roiEnEchec = true;
+            ++nbEchecRoiBlanc;
+        } else if (peutJouerJ2 && enEchec(posRoiNoirMatriceI, posRoiNoirMatriceJ)) {
+            roiEnEchec = true;
+            ++nbEchecRoiNoir;
+        }
+
+        // Si le roi est en échec, restaurer l'état précédent de la matrice et du pion
+        if (roiEnEchec) {
+            // Remettre l'état précédent du roi
+            if (pionDep instanceof Roi) {
+                if ( pionDep.getCouleur().equals("noir")){
+                    posRoiNoirMatriceI = positionDep.getI();
+                    posRoiNoirMatriceJ = positionDep.getJ();
+                }
+                else{
+                    posRoiBlancMatriceI = positionDep.getI();
+                    posRoiBlancMatriceJ = positionDep.getJ();
+                }
+            }
+            matriceJeu = saveMatrice;
+            pionDep.setPosX(position.conversionIntLettre(savePosX));
+            pionDep.setPosY(savePosY);
+        } else {
+            // Changer de joueur et basculer les timers si le déplacement est valide
+            if (peutJouerJ1) {
+                nbEchecRoiBlanc = 0;
+            }
+            else if (peutJouerJ2) {
+                nbEchecRoiNoir = 0;
+            }
+            boolean temp = peutJouerJ1;
+            peutJouerJ1 = peutJouerJ2;
+            peutJouerJ2 = temp;
+            toggleTimers();
+        }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -455,8 +541,243 @@ public class JeuController implements Initializable {
         return true;
     }
 
-    public void situationRoi(Roi roi){
-        //TODO
+    // Cette fonction permet via des coordonnés indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
+    public boolean enEchec(int posIMatrice, int posJMatrice) {
+        // Nous allons tester a partir d'une coordonne toutes les direction. Si le premier pion trouvé est unbe piece le mettant en échecs alors
+
+        // Test du coté horizontal dans toutes les direction
+        for (int i = posIMatrice+1; i <= 7; ++i) {
+            if (this.matriceJeu.get(i).get(posJMatrice) != null) {
+                if (this.matriceJeu.get(i).get(posJMatrice) instanceof Tour || this.matriceJeu.get(i).get(posJMatrice) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        for (int i = posIMatrice-1; i >= 0; --i) {
+            if (this.matriceJeu.get(i).get(posJMatrice) != null) {
+                if (this.matriceJeu.get(i).get(posJMatrice) instanceof Tour || this.matriceJeu.get(i).get(posJMatrice) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        for (int j = posJMatrice - 1; j >= 0; --j) {
+            if (this.matriceJeu.get(posIMatrice).get(j) != null) {
+                if (this.matriceJeu.get(posIMatrice).get(j) instanceof Tour || this.matriceJeu.get(posIMatrice).get(j) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(posIMatrice).get(j).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        for (int j = posJMatrice + 1; j <= 7; ++j) {
+            if (this.matriceJeu.get(posIMatrice).get(j) != null) {
+                if (this.matriceJeu.get(posIMatrice).get(j) instanceof Tour || this.matriceJeu.get(posIMatrice).get(j) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(posIMatrice).get(j).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        // Test des digonales
+        // Conpteur de boucle pour incrémenter et le i et le j
+        int countBoucle = 0;
+        for (int i = posIMatrice+1; i <= 7 && posJMatrice + countBoucle +1  <= 7; ++i) {
+            ++countBoucle;
+            if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) != null) {
+                if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice+countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+
+        }
+
+        countBoucle = 0;
+        for (int i = posIMatrice-1; i >= 0 && posJMatrice - countBoucle-1>= 0; --i) {
+            ++countBoucle;
+            if (this.matriceJeu.get(i).get(posJMatrice-countBoucle) != null) {
+
+                if (this.matriceJeu.get(i).get(posJMatrice-countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice-countBoucle) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice-countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        countBoucle = 0;
+        for (int i = posIMatrice+1; i <= 7 && posJMatrice - countBoucle-1>= 0; ++i) {
+            ++countBoucle;
+            if (this.matriceJeu.get(i).get(posJMatrice-countBoucle) != null) {
+                if (this.matriceJeu.get(i).get(posJMatrice-countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice-countBoucle) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice-countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        countBoucle = 0;
+        for (int i = posIMatrice-1; i >= 0 && posJMatrice + countBoucle +1  <= 7; --i) {
+            ++countBoucle;
+            if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) != null) {
+                if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Reine) {
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice+countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
+                        return true;
+                    }
+                    else {
+                        break;
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+
+        // Test echecs par un cavalier.
+        try{
+            if(this.matriceJeu.get(posIMatrice-1).get(posJMatrice-2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 1).get(posJMatrice - 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice-1).get(posJMatrice+2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 1).get(posJMatrice + 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice+1).get(posJMatrice-2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice + 1).get(posJMatrice - 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice+1).get(posJMatrice+2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice + 1).get(posJMatrice + 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice-2).get(posJMatrice-1) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 2).get(posJMatrice - 1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice-2).get(posJMatrice+1) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 2).get(posJMatrice + 1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice+2).get(posJMatrice-1) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice + 2).get(posJMatrice - 1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        try{
+            if(this.matriceJeu.get(posIMatrice+2).get(posJMatrice+1) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice + 2).get(posJMatrice + 1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                return true;
+            }
+
+        } catch(Exception _){}
+
+        // Test echec par un Pion
+        // On commence par regarder la couleur du roi
+        if (this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur() == "noir"){
+            // Puis on vérifie les coordonné du roi
+            try{
+                if (this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                    return true;
+                }
+            }
+            catch(Exception _){}
+            try{
+                if (this.matriceJeu.get(posIMatrice+1).get(posJMatrice+1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice+1).get(posJMatrice+1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                    return true;
+                }
+            }
+            catch(Exception _){}
+        }
+        else {
+            try{
+                if (this.matriceJeu.get(posIMatrice-1).get(posJMatrice-1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice-1).get(posJMatrice-1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                    return true;
+                }
+            }
+            catch(Exception _){}
+            try{
+                if (this.matriceJeu.get(posIMatrice-1).get(posJMatrice+1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice-1).get(posJMatrice+1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
+                    return true;
+                }
+            }
+            catch(Exception _){}
+        }
+
+        // Test echec Roi entre eux
+        if (Math.abs(posRoiBlancMatriceI - posRoiNoirMatriceI) <= 1 && Math.abs(posRoiBlancMatriceJ - posRoiNoirMatriceJ) <= 1){
+            return true;
+        }
+
+        return false;
     }
 
 }
