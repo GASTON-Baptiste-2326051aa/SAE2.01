@@ -72,6 +72,8 @@ public class JeuController implements Initializable {
     private boolean isTimer1Running = false;
     private boolean isTimer2Running = false;
 
+    private boolean isTimerStarted = false;
+
     public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){
         j1.setText(player1Prenom + " " + player1Nom);
         j2.setText(player2Prenom + " " + player2Nom);
@@ -92,8 +94,15 @@ public class JeuController implements Initializable {
         fin.setHeight(900);
         fin.setWidth(500);
         fin.centerOnScreen();
+
+        isTimerStarted = false; //permet de re-activer le timer qpres la fin du jeu
+        startButton.setDisable(false); // pertmet de re-activé le bouton apres la fin du jeu
     }
     private void startTimer1() {
+        if (isTimerStarted) { //verrification pour savoir si le timer est deja lancé
+            return;
+        }
+
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {
             throw new IllegalStateException("Timer value is not selected.");
@@ -108,6 +117,8 @@ public class JeuController implements Initializable {
 
         timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
         isTimer1Running = true;
+        isTimerStarted = true; // on enleve l'option pour relancer le timer
+        startButton.setDisable(true); // on desactive le bouton play si la partie est deja lancé
     }
 
     private void toggleTimers() {
