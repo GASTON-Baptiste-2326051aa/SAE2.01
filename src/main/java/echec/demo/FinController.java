@@ -29,11 +29,11 @@ public class FinController implements Initializable {
     private ButtonController buttonController;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { //initialisation du bouton Acceuil
         buttonController = new ButtonController();
         buttonController.initButtonAcc(boutonAcc);
     }
-    public void setPlayerNames(String winnerName, String loserName) {
+    public void setPlayerNames(String winnerName, String loserName) { //Creation d'une fonction pour mettre les noms du perdant et du gagnant a la fin.
         LabelWin1V.setText("Vous avez gagné face à " + loserName);
         NomWin1V.setText(winnerName);
         NomLoss1V.setText(loserName);

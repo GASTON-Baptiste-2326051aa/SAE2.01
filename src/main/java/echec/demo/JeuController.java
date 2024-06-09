@@ -86,14 +86,14 @@ public class JeuController implements Initializable {
 
     private boolean isTimerStarted = false;
 
-    public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){
-        j1.setText(player1Prenom + " " + player1Nom);
+    public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){ //fonction permettant de set les noms des joueurs dans
+        j1.setText(player1Prenom + " " + player1Nom);                                                              // le mode Joueur vs Joueurs
         j2.setText(player2Prenom + " " + player2Nom);
     }
-    public void setPlayerNamesJvB(String player1Prenom,String player1Nom){
+    public void setPlayerNamesJvB(String player1Prenom,String player1Nom){ //fonction permettant de set le nom du joueur dans le mode Joueur vs Bot
         j1.setText(player1Prenom + " " + player1Nom);
     }
-    public void Findejeu(String winnerName, String loserName) throws IOException {
+    public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
         Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
@@ -133,7 +133,7 @@ public class JeuController implements Initializable {
         startButton.setDisable(true); // on desactive le bouton play si la partie est deja lancé
     }
 
-    private void toggleTimers() {
+    private void toggleTimers() { // permet de faire les switch de timer entre le 1er et le 2eme
         if (isTimer1Running) {
             timer1.cancel();
             isTimer1Running = false;
@@ -145,7 +145,7 @@ public class JeuController implements Initializable {
         }
     }
 
-    private void startTimer2() {
+    private void startTimer2() { //creation du timer 2
         timer2 = new Timer();
         timerTask2 = createTimerTask(timerLabel2, () -> --tempsRestant2);
 
@@ -153,7 +153,7 @@ public class JeuController implements Initializable {
         isTimer2Running = true;
     }
 
-    private void resumeTimer1() {
+    private void resumeTimer1() { //creation du timer 1
         timer1 = new Timer();
         timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
 
@@ -173,7 +173,7 @@ public class JeuController implements Initializable {
         };
     }
 
-    private void updateTimer(Label timerLabel) {
+    private void updateTimer(Label timerLabel) { //fonction permettant de faire la verification du timer voir si il est null pour arrete le jeu.
         int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
         if (tempsRestant <= 0) {
             timerLabel.setText("00:00");
@@ -311,7 +311,7 @@ public class JeuController implements Initializable {
                         if (peutJouerJ1){
                             try {
                                 loginController.updateVictories(partsJ1[0],partsJ1[1]);
-                                Findejeu(j1.getText(), j2.getText());
+                                Findejeu(j2.getText(), j1.getText());
 
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
@@ -320,7 +320,7 @@ public class JeuController implements Initializable {
                         if (peutJouerJ2){
                             try {
                                 loginController.updateVictories(partsJ2[0],partsJ2[1]);
-                                Findejeu(j2.getText(),j1.getText());
+                                Findejeu(j1.getText(),j2.getText());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -429,17 +429,16 @@ public class JeuController implements Initializable {
             buttonController.initButtonFin(boutonFin);
         }
 
-        timerBox.getItems().addAll(1, 5, 10, 15);
-        timerBox.getSelectionModel().selectFirst();
+        timerBox.getItems().addAll(1, 5, 10, 15); // Combo box selection des temps
+        timerBox.getSelectionModel().selectFirst(); // par defaut le temps est celui de 1min
 
-        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> { //On regarde ce que la personne choisis comme temps et on l'affiche dans le timmer
             String timeText = newValue + " Min";
             timerLabel.setText(timeText);
             timerLabel2.setText(timeText);
         });
 
-
-        startButton.setOnAction(e -> startTimer1());
+        startButton.setOnAction(e -> startTimer1()); // on start le timmer 1 avec la valeur affecté
 
         clic();
     }
