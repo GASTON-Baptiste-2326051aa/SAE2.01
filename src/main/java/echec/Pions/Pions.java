@@ -24,22 +24,84 @@ public abstract class Pions{
         this.image = new ImageView(this.url);
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param posYDep étant une position sur les lignes
+     * @param posXDep étant une position sur les colonnes
+     * @param posYFin étant une position sur les lignes
+     * @param posYFin étant une position sur les colonnes
+     *
+     * Méthode pour vérifier si un pion peut se déplacer selon ses propriétées cette méthode est abstraite et donc implémenté par toutes les classes filles et cela selon leur comportement aux échecs
+     *
+     * @return boolean true si le pion peut se déplacer, false sinon
+     **/
     public abstract boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin);
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * getter de posY
+     *
+     * @return posY
+     **/
     public int getPosY(){ return this.posY; }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * @param posY valeur à initialiser
+     * setter de posY
+     *
+     **/
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * getter de posX
+     *
+     * @return posX
+     **/
     public String getPosX(){ return this.posX; }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * @param posX valeur à initialiser
+     * setter de posY
+     *
+     **/
     public void setPosX(String posX) {
         this.posX = posX;
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * getter de couleur
+     *
+     * @return couleur
+     **/
     public String getCouleur(){ return this.couleur;}
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * getter de url
+     *
+     * @return url
+     **/
     public String getUrl(){return this.url;}
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * Methode to string
+     *
+     * @return Un string avec le nom et la couleur.
+     **/
     public String toString(){return getClass().getSimpleName() + "." + this.couleur;}}
