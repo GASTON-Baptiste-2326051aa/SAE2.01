@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="echec.demo.JeuController"
+            fx:controller="echec.demo.BotVsController"
             prefHeight="1080" prefWidth="1920.0"
             stylesheets="@../style.css">
     <left>

@@ -27,9 +27,9 @@ public class BotVsController implements Initializable {
     private Label j2;*/
     @FXML
     private Button boutonAcc;
-    @FXML
-    private ComboBox<Integer> timerBox;
-    @FXML
+    //    @FXML
+//    private ComboBox<Integer> timerBox;
+//    @FXML
     private Label timerLabel;
     @FXML
     private Label timerLabel2;
@@ -38,8 +38,8 @@ public class BotVsController implements Initializable {
 
     private Button buttonFin;
 
-    Position positionDep = new Position();
-    Position positionFin = new Position();
+    private Position positionDep = new Position();
+    private Position positionFin = new Position();
     private Position positionDepBot = new Position();
     private Position positionFinBot = new Position();
 
@@ -52,6 +52,7 @@ public class BotVsController implements Initializable {
 
     private ButtonController buttonController;
     private LoginController loginController;
+    private Button boutonFin;
 
     private Timer timer1;
     private Timer timer2;
@@ -75,7 +76,7 @@ public class BotVsController implements Initializable {
         }
 
     }*/
-    private void startTimer1() {
+    /*private void startTimer1() {
         Integer selectedValue = timerBox.getValue();
         if (selectedValue == null) {
             throw new IllegalStateException("Timer value is not selected.");
@@ -148,7 +149,7 @@ public class BotVsController implements Initializable {
             int seconds = tempsRestant % 60;
             timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
         }
-    }
+    }*/
 
     public void initMatrice() {
         matriceJeu = new ArrayList<>(8);
@@ -210,82 +211,84 @@ public class BotVsController implements Initializable {
 
     public void clic(){
         plateau.setOnMouseClicked(e -> {
-            if (this.positionDep.getX() < 0) {
-                this.positionDep.setX((int) e.getX());
-                this.positionDep.setY((int) e.getY());
+            if (this.positionDep.getX() < 0){
+                this.positionDep.setX((int)e.getX());
+                this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
-                if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null) {
+                if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null){
                     positionDep.reset();
                 }
-            } else if (this.positionFin.getX() < 0 && this.positionDep.getJ() >= 0) {
-                this.positionFin.setX((int) e.getX());
-                this.positionFin.setY((int) e.getY());
+            }
+            else if (this.positionFin.getX() < 0 && this.positionDep.getJ() >= 0){
+                this.positionFin.setX((int)e.getX());
+                this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
             }
+            System.out.println("PionDep : " + positionDep.getX() + " " + positionDep.getY());
+            System.out.println("PionFin : " + positionFin.getX() + " " + positionFin.getY());
             jeu();
-            jeuBot();
         });
     }
 
-
     public void jeuBot(){
-        if ( this.positionDep.getI() < 0 && this.positionDep.getJ() < 0 && this.positionFin.getI() < 0 && this.positionFin.getJ() < 0){
-            System.out.println("On y es");
+        if(peutJouerJ2) {
+            System.out.println("peutJouer2");
+            // Création d'une variable random : permet de choisir aléatoirement les coordonnées des cases.
             Random random = new Random();
 
-            int randomX = random.nextInt(8);
-            int randomY = random.nextInt(8);
-            this.positionDepBot.setX(randomX);
-            this.positionDepBot.setY(randomY);
+            // Modification des valeurs X et Y des deux variables de position et conversion en coordonnées de matrice.
+            this.positionDepBot.setX(random.nextInt(800));
+            this.positionDepBot.setY(random.nextInt(800));
+            this.positionDepBot.conversion(this.positionDepBot.getX(), this.positionDepBot.getY());
 
-            int randomXFin = random.nextInt(8);
-            int randomYFin = random.nextInt(8);
-            this.positionFinBot.setX(randomXFin);
-            this.positionFinBot.setY(randomYFin);
+            this.positionFinBot.setX(random.nextInt(800));
+            this.positionFinBot.setY(random.nextInt(800));
+            this.positionFinBot.conversion(this.positionFinBot.getX(), this.positionFinBot.getY());
 
-            Pions pionDep = this.matriceJeu.get(positionDepBot.getX()).get(positionDepBot.getY());
-            Pions pionFin =this.matriceJeu.get(positionFinBot.getX()).get(positionFinBot.getY());
+            // Création de deux pions.
+            Pions pionDepBot = this.matriceJeu.get(positionDepBot.getI()).get(positionDepBot.getJ());
+            Pions pionFinBot = this.matriceJeu.get(positionFinBot.getI()).get(positionFinBot.getJ());
 
-            while ((matriceJeu.get(this.positionDepBot.getX()).get(this.positionDepBot.getY()) == null || !matriceJeu.get(this.positionDepBot.getX()).get(this.positionDepBot.getY()).getCouleur().equals("noir"))
-                    && (!pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), positionFinBot.getX() ,positionFinBot.conversionIntLettre( 8 - positionFinBot.getY())) || !(comparePionsMemeCouleur(pionDep, pionFin)) || !comparePionsDirection(pionDep,positionFinBot.getI() ,positionFinBot.conversionIntLettre(positionFinBot.getJ())))){
-                System.out.println("go");
-                positionDepBot.reset();
-                randomX = random.nextInt(8);
-                randomY = random.nextInt(8);
-                this.positionDepBot.setX(randomX);
-                this.positionDepBot.setY(randomY);
+            /* Si le pion de départ n'est pas null ET est de couleur noire,
+             * ET que le pion de départ peut être déplacé,
+             * ET que le pion de fin est de couleur différente,
+             * ET que le pion de départ peut se déplacer dans la direction voulu.
+             * */
+            if (pionDepBot != null && pionDepBot.getCouleur().equals("noir")
+                    && pionDepBot.peutDeplacer(pionDepBot.getPosY(), pionDepBot.getPosX(), 8 -positionFinBot.getI(), positionFinBot.conversionIntLettre(positionFinBot.getJ()))
+                    && (comparePionsMemeCouleur(pionDepBot, pionFinBot))
+                    && comparePionsDirection(pionDepBot, positionFinBot.getI(), positionFinBot.conversionIntLettre(positionFinBot.getJ()))) {
+                // Nous pouvons à présent déplacer les pions.
+                System.out.println("PionDepBot : " + positionDepBot.getI() + " " + positionDepBot.getJ());
+                System.out.println("PionFinBot : " + positionFinBot.getI() + " " + positionFinBot.getJ());
+                deplacementPieceBot(pionDepBot, pionFinBot);
 
-                System.out.println("do");
-                positionFinBot.reset();
-                randomX = random.nextInt(8);
-                randomY = random.nextInt(8);
-                this.positionFinBot.setX(randomX);
-                this.positionFinBot.setY(randomY);
-                pionDep = this.matriceJeu.get(positionDepBot.getX()).get(positionDepBot.getY());
-                pionFin =this.matriceJeu.get(positionFinBot.getX()).get(positionFinBot.getY());
-            }
-
-            System.out.println(pionDep.getPosY()+" "+ pionDep.getPosX()+" "+ positionFinBot.getX() +" " +positionFinBot.conversionIntLettre( 8 - positionFinBot.getY()));
-
-            System.out.println(pionDep);
-            System.out.println(pionFin);
-            System.out.println(pionDep.getPosY()+" "+ pionDep.getPosX()+" "+ positionFinBot.getX() +" " +positionFinBot.conversionIntLettre(positionFinBot.getY()));
-            System.out.println(positionDepBot.getX() + " " + positionDepBot.getY());
-            System.out.println(positionFinBot.getX() + " " + positionFinBot.getY());
-
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-            if(Objects.equals(pionDep.getCouleur(), "noir")){
-                deplacementPieceBot(pionDep, pionFin);
-                if (pionFin instanceof Roi){
-                    peutJouerJ1 = false;
-                    peutJouerJ2 = false;
+                // Si le roi est en défaite, les joueurs sont mis à false.
+                if (pionFinBot instanceof Roi) {
+                    if (peutJouerJ1) {
+                        System.out.println("Bravo au joueur 1");
+                    }
+                    if (peutJouerJ2) {
+                        System.out.println("Bravo au joueur 2");
+                    }
+                    ButtonController.changeScene("view/fin.fxml", boutonAcc);
                 }
-            }
-            afficheMatriceAvecPlateau(this.matriceJeu);
 
-            positionDepBot.reset();
-            positionFinBot.reset();
-        }}
+                // Affichage de la matrice du jeu dans l'interface graphique.
+                afficheMatriceAvecPlateau(matriceJeu);
+
+                // Les positions de départ et de fin sont réinitialisées.
+                positionDepBot.reset();
+                positionFinBot.reset();
+
+            } else { // Sinon, on reprend au début de la fonction.
+                // Les positions de départ et de fin sont réinitialisées.
+                positionDepBot.reset();
+                positionFinBot.reset();
+                jeuBot();
+            }
+        }
+    }
 
     public void jeu(){
         if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
@@ -293,22 +296,26 @@ public class BotVsController implements Initializable {
             Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
             // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-            if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
-                if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
+            if (peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")
+                    && pionDep != null
+                    && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() , positionFin.conversionIntLettre(positionFin.getJ()))
+                    && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
-                        peutJouerJ1 = false;
-                        peutJouerJ2 = false;
+                        if (peutJouerJ1){
+                            System.out.println("Bravo au joueur 1");
+                        }
+                        if (peutJouerJ2){
+                            System.out.println("Bravo au joueur 2");
+                        }
+                        ButtonController.changeScene("view/fin.fxml", boutonFin);
                     }
-                }
                 afficheMatriceAvecPlateau(this.matriceJeu);
             }
             positionDep.reset();
             positionFin.reset();
+            if(peutJouerJ2) jeuBot();
         }
-        /*
-        if(peutJouerJ1) clic();
-        else clicBot();*/
     }
 
     public void deplacementPiece(Pions pionDep, Pions pionFin){
@@ -317,7 +324,7 @@ public class BotVsController implements Initializable {
             pionDep.setPosX(pionFin.getPosX());
         }
         else{
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
+            // On soustrait 8 à la position de fin pour la convertir en coordonnées de matrice
             pionDep.setPosY(8-positionFin.getI());
             pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
         }
@@ -328,7 +335,7 @@ public class BotVsController implements Initializable {
         peutJouerJ1 = peutJouerJ2;
         peutJouerJ2 = temp;
 
-        toggleTimers();
+        //toggleTimers();
     }
 
     public void deplacementPieceBot(Pions pionDep, Pions pionFin){
@@ -337,7 +344,7 @@ public class BotVsController implements Initializable {
             pionDep.setPosX(pionFin.getPosX());
         }
         else{
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
+            // On soustrait 8 à la position de fin pour la convertir en coordonnées de matrice.
             pionDep.setPosY(8-positionFinBot.getI());
             pionDep.setPosX(positionFinBot.conversionIntLettre(positionFinBot.getJ()));
         }
@@ -347,8 +354,6 @@ public class BotVsController implements Initializable {
         boolean temp = peutJouerJ1;
         peutJouerJ1 = peutJouerJ2;
         peutJouerJ2 = temp;
-
-        toggleTimers();
     }
 
     @Override
@@ -367,7 +372,7 @@ public class BotVsController implements Initializable {
             buttonController.initButtonFin(buttonFin);
         }
 
-        timerBox.getItems().addAll(1, 5, 10, 15);
+        /*timerBox.getItems().addAll(1, 5, 10, 15);
         timerBox.getSelectionModel().selectFirst();
 
         timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -376,7 +381,7 @@ public class BotVsController implements Initializable {
             timerLabel2.setText(timeText);
         });
 
-        startButton.setOnAction(e -> startTimer1());
+        startButton.setOnAction(e -> startTimer1());*/
 
         clic();
     }
@@ -417,8 +422,6 @@ public class BotVsController implements Initializable {
                 return matriceJeu.get(posI).get(posJ) != null || (posJ == position.conversionLettreInt(pion1.getPosX()));
             }
         }
-
-
         return true;
     }
 
