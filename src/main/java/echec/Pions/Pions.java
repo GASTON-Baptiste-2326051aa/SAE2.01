@@ -5,12 +5,13 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.ArrayList;
 
+// Création d'une class Pions
 public abstract class Pions{
 
+    // Attribut divers de la class, couleur du pion, position en échéquier,
     private String couleur;
     private String posX;
     private int posY;
-    private boolean etat = true;
     private String url;
     private ImageView image;
 
@@ -22,11 +23,7 @@ public abstract class Pions{
         this.image = new ImageView(this.url);
     }
 
-    public abstract void deplacement(String posXDep, int posYDep, String posXFin, int posYFin);
-
     public abstract boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin);
-
-    public void setEtat(Boolean etat){ this.etat = etat; }
 
     public int getPosY(){ return this.posY; }
 
@@ -40,7 +37,6 @@ public abstract class Pions{
         this.posX = posX;
     }
 
-    public boolean getEtat(){ return this.etat; }
 
     public String getCouleur(){ return this.couleur;}
 

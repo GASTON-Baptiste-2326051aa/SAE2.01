@@ -9,11 +9,6 @@ public class Reine extends Pions{
     }
 
     @Override
-    public void deplacement(String posXDep, int posYDep, String posXFin, int posYFin){
-
-    }
-
-    @Override
     public boolean peutDeplacer(int posYDep, String posXDep, int posYFin, String posXFin) {
         int startX = posXDep.charAt(0) - 'a' + 1;
         int endX = posXFin.charAt(0) - 'a' + 1;
