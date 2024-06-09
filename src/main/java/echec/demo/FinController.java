@@ -9,8 +9,6 @@ import javafx.scene.image.Image;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
 public class FinController implements Initializable {
 
     @FXML
@@ -28,6 +26,10 @@ public class FinController implements Initializable {
 
     private ButtonController buttonController;
 
+    /**
+     * Initialisations de la classe.
+     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { //initialisation du bouton Acceuil
         buttonController = new ButtonController();

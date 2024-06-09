@@ -17,6 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Classe Controller pour le Login dans le jeux d'echec.
+ * Cette classe gere certains bouton pour aller vers d'autres pages, la sauvegarde des Noms, Prenoms, parties gagnées et les parties jouées par chaques joueurs.
+**/
+
 public class LoginController implements Initializable {
     @FXML
     private Button boutonJvJ;
@@ -35,7 +40,10 @@ public class LoginController implements Initializable {
     @FXML
     private TextField joueur2Nom;
 
-
+    /**
+     * Initialisations de la classe.
+     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     **/
     @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
@@ -47,6 +55,14 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * @params actionEvent, quand le bouton va etre cliqué, le code va etre executé
+     *
+     * Ici, quand le bouton va etre cliqué, la scene va etre change par celle du mode Joueur vs Joueur.
+     * Et on a aussi juste avant la sauvegarder des informations des joueurs dans un fichier csv.
+     **/
     @FXML
     private void bouttonJvJ(ActionEvent actionEvent) { //changement de fenetre apres le login pour le mode de jeu JvJ.
         addCSV();
@@ -67,6 +83,14 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * @params actionEvent, quand le bouton va etre cliqué, le code va etre executé
+     *
+     * Ici, quand le bouton va etre cliqué, la scene va etre change par celle du mode Joueur vs Bot..
+     * Et on a aussi juste avant la sauvegarder des informations des joueurs dans un fichier csv.
+     **/
     @FXML
     private void bouttonJvB(ActionEvent actionEvent) {
         addCSV();
@@ -88,6 +112,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Baptiste GASTON
+     *
+     *
+     **/
     private void addCSV() {
         String joueur1PrenomText = joueur1Prenom.getText();
         String joueur1NomText = joueur1Nom.getText();
@@ -107,6 +136,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Baptiste GASTON
+     *
+     *
+     **/
     private boolean isPlayerInCsv(String prenom, String nom) {
         String fileName = "joueurs.csv";
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -125,6 +159,11 @@ public class LoginController implements Initializable {
         return false;
     }
 
+    /**
+     * @author Baptiste GASTON
+     *
+     * @params
+     **/
     private void writeCsvFile(String joueurPrenom, String joueurNom, int matches, int victories) {
         String fileName = "joueurs.csv";
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -144,6 +183,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Baptiste GASTON
+     *
+     * @params
+     **/
     public void updateMatches(String prenom, String nom) {
         String fileName = "joueurs.csv";
         List<String[]> players = new ArrayList<>();
@@ -182,6 +226,11 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * @author Baptiste GASTON
+     *
+     * @params
+     **/
     public void updateVictories(String prenom, String nom) {
         String fileName = "joueurs.csv";
         List<String[]> players = new ArrayList<>();

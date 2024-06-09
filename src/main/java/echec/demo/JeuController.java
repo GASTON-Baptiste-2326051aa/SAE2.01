@@ -84,17 +84,31 @@ public class JeuController implements Initializable {
 
     private boolean isTimerStarted = false;
 
-    public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){ //fonction permettant de set les noms des joueurs dans
-        j1.setText(player1Prenom + " " + player1Nom);                                                              // le mode Joueur vs Joueurs
-        j2.setText(player2Prenom + " " + player2Nom);
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * Fonction permettant de set les noms des joueurs dans le mode JvJ.
+     **/
+    public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){
+        j1.setText(player1Prenom + " " + player1Nom); //on met le prenom et le nom du joueur 1 dans le label 1
+        j2.setText(player2Prenom + " " + player2Nom); //on met le prenom et le nom du joueur 2 dans le label 2
     }
+
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * @params String WinnerName = noms du gagnant et String LoserName = nom du perdant
+     *
+     * Cette fonction, quand elle est appellée, elle va changer la fenetre et mettre celle de la fin tout en mettant les noms des joueurs
+     * correspondant a leurs resultat de la partie.
+     **/
     public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
         Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
         scene = new Scene(loader.load());
-        FinController finController = loader.getController();
-        finController.setPlayerNames(winnerName, loserName);
+        FinController finController = loader.getController(); //on va chercher dans fincontroller des controller
+        finController.setPlayerNames(winnerName, loserName); // on utilise la fonction dans finController pour mettres les noms des joueurs a leurs resultats
         fin.setScene(scene);
         fin.setMinHeight(900);
         fin.setMinWidth(500);
@@ -105,13 +119,19 @@ public class JeuController implements Initializable {
         isTimerStarted = false; //permet de re-activer le timer qpres la fin du jeu
         startButton.setDisable(false); // pertmet de re-activé le bouton apres la fin du jeu
     }
+
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * startTimer1 nous permet de lancer les timers quand les joueurs sont pret.
+     **/
     private void startTimer1() {
         if (isTimerStarted) { //verrification pour savoir si le timer est deja lancé
             return;
         }
 
-        Integer selectedValue = timerBox.getValue();
-        if (selectedValue == null) {
+        Integer selectedValue = timerBox.getValue(); //on recup la valeur de la Combo Box et on la met dans selectedValue
+        if (selectedValue == null) { //on regarde si la valeur selectionner est null (sauf que par defaut elle est a 1) juste une assistances au cas ou
             throw new IllegalStateException("Timer value is not selected.");
         }
 
@@ -123,12 +143,17 @@ public class JeuController implements Initializable {
         timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
 
         timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
-        isTimer1Running = true;
+        isTimer1Running = true; // on lance le premier timmer
         isTimerStarted = true; // on enleve l'option pour relancer le timer
         startButton.setDisable(true); // on desactive le bouton play si la partie est deja lancé
     }
 
-    private void toggleTimers() { // permet de faire les switch de timer entre le 1er et le 2eme
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * Ici, cette fonction nous permet de faire switch le timer entre le premier et le deuxieme.
+     **/
+    private void toggleTimers() {
         if (isTimer1Running) {
             timer1.cancel();
             isTimer1Running = false;
@@ -140,7 +165,12 @@ public class JeuController implements Initializable {
         }
     }
 
-    private void startTimer2() { //creation du timer 2
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * On crée dans cette fonction le timer 2, reduissant de 1 a 1 par secondes.
+     **/
+    private void startTimer2() {
         timer2 = new Timer();
         timerTask2 = createTimerTask(timerLabel2, () -> --tempsRestant2);
 
@@ -148,7 +178,12 @@ public class JeuController implements Initializable {
         isTimer2Running = true;
     }
 
-    private void resumeTimer1() { //creation du timer 1
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * On crée dans cette fonction le timer 1, reduissant de 1 a 1 par secondes.
+     **/
+    private void resumeTimer1() {
         timer1 = new Timer();
         timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
 
@@ -156,6 +191,14 @@ public class JeuController implements Initializable {
         isTimer1Running = true;
     }
 
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * @params le Label du timer et la fonction update.
+     * @params updateRemainingTime qui permet de met a jour le timer
+     *
+     * Cette fonction permet de crée un tache qui celle ci est de mettre a jour le timer et de l'afficher dans le Label.
+     **/
     private TimerTask createTimerTask(javafx.scene.control.Label timerLabel, Runnable updateRemainingTime) {
         return new TimerTask() {
             @Override
@@ -168,14 +211,22 @@ public class JeuController implements Initializable {
         };
     }
 
-    private void updateTimer(Label timerLabel) { //fonction permettant de faire la verification du timer voir si il est null pour arrete le jeu.
+    /**
+     * @author Alex GONCALVES RODRIGUES
+     *
+     * @params Label du timer present dans le fxml.
+     *
+     * Dans cette classe, on met a jour les timers pour l'affichage et on verifie si les timers sont nuls (<=0), si c'est le cas
+     * alors le jeu est fini car il ne reste plus de temps a un joueur.
+     **/
+    private void updateTimer(Label timerLabel) {
         int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
         if (tempsRestant <= 0) {
-            timerLabel.setText("00:00");
-            if (timerLabel == this.timerLabel && timer1 != null) {
-                timer1.cancel();
+            timerLabel.setText("00:00"); //Mise a 0 du label
+            if (timerLabel == this.timerLabel && timer1 != null) { // verifications du timer 1 voir s'il est null
+                timer1.cancel(); //on arrete le timer
                 try {
-                    Findejeu(j2.getText(), j1.getText());
+                    Findejeu(j2.getText(), j1.getText()); //on met la fenetre fin de jeu avec les noms qui corresponde au gagant et perdant
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -407,7 +458,10 @@ public class JeuController implements Initializable {
         }
     }
 
-
+    /**
+     * Initialisations de la classe.
+     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
