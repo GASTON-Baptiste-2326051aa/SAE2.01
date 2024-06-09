@@ -25,7 +25,7 @@ public class AccueilController implements Initializable {
 
     private ButtonController buttonController;
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
         buttonController = new ButtonController();
         if (boutonJvJlog != null) {
             buttonController.initButtonLogJvJ(boutonJvJlog);

@@ -47,7 +47,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void bouttonJvJ(ActionEvent actionEvent) {
+    private void bouttonJvJ(ActionEvent actionEvent) { //changement de fenetre apres le login pour le mode de jeu JvJ.
         addCSV();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pageJvJ.fxml"));
