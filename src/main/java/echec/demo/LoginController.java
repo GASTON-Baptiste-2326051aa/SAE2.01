@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -71,10 +72,11 @@ public class LoginController implements Initializable {
         addCSV();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/pagebot.fxml"));
+            BorderPane botVsJ = loader.load();
             Stage stage = (Stage) boutonJvB.getScene().getWindow();
-            Scene scene = new Scene(loader.load());
-            JeuController jeuController = loader.getController();
-            jeuController.setPlayerNamesJvB(joueur1Prenom.getText(),joueur1Nom.getText());
+            Scene scene = new Scene(botVsJ);
+            BotVsController botVsController = loader.getController();
+            botVsController.setPlayerNamesJvB(joueur1Prenom.getText(),joueur1Nom.getText());
             stage.setScene(scene);
             stage.setMinHeight(1080);
             stage.setMinWidth(1920);

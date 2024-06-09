@@ -3,7 +3,9 @@ package echec.demo;
 import echec.Pions.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -12,7 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -21,22 +25,22 @@ public class BotVsController implements Initializable {
     private GridPane plateau;
     @FXML
     private BorderPane borderPane;
-    /*@FXML
+    @FXML
     private Label j1;
     @FXML
-    private Label j2;*/
+    private Label j2;
     @FXML
     private Button boutonAcc;
-    //    @FXML
-//    private ComboBox<Integer> timerBox;
-//    @FXML
+    @FXML
+    private ComboBox<Integer> timerBox;
+    @FXML
     private Label timerLabel;
     @FXML
     private Label timerLabel2;
     @FXML
     private Button startButton;
-
-    private Button buttonFin;
+    @FXML
+    private Button boutonFin;
 
     private Position positionDep = new Position();
     private Position positionFin = new Position();
@@ -48,108 +52,29 @@ public class BotVsController implements Initializable {
 
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
-    // Pour timer
-
     private ButtonController buttonController;
     private LoginController loginController;
-    private Button boutonFin;
 
-    private Timer timer1;
-    private Timer timer2;
-
-    private TimerTask timerTask1;
-    private TimerTask timerTask2;
-
-    private int tempsRestant1;
-    private int tempsRestant2;
-
-    private boolean isTimer1Running = false;
-    private boolean isTimer2Running = false;
-
-    /*@FXML
-    public void saveName(TextField joueur1Prenom, TextField joueur2Prenom, TextField joueur1Nom, TextField joueur2Nom) {
-        if (j1 != null){
-            j1.setText(joueur1Prenom.getText() +joueur1Nom.getText());
-        }
-        if (j2 != null){
-            j2.setText(joueur2Prenom.getText() +joueur2Nom.getText());
-        }
-
-    }*/
-    /*private void startTimer1() {
-        Integer selectedValue = timerBox.getValue();
-        if (selectedValue == null) {
-            throw new IllegalStateException("Timer value is not selected.");
-        }
-
-        int tempsSelectionne = selectedValue * 60;
-        tempsRestant1 = tempsSelectionne;
-        tempsRestant2 = tempsSelectionne;
-
-        timer1 = new Timer();
-        timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
-
-        timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
-        isTimer1Running = true;
+    public void setPlayerNamesJvB(String player1Prenom,String player1Nom){ //fonction permettant de set le nom du joueur dans le mode Joueur vs Bot
+        j1.setText(player1Prenom + " " + player1Nom);
     }
 
-    private void toggleTimers() {
-        if (isTimer1Running) {
-            timer1.cancel();
-            isTimer1Running = false;
-            startTimer2();
-        } else if (isTimer2Running) {
-            timer2.cancel();
-            isTimer2Running = false;
-            resumeTimer1();
-        }
+    public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
+        Stage fin = (Stage) boutonFin.getScene().getWindow();
+        Scene scene;
+        scene = new Scene(loader.load());
+        FinController finController = loader.getController();
+        finController.setPlayerNames(winnerName, loserName);
+        fin.setScene(scene);
+        fin.setMinHeight(900);
+        fin.setMinWidth(500);
+        fin.setHeight(900);
+        fin.setWidth(500);
+        fin.centerOnScreen();
+
+        startButton.setDisable(false); // pertmet de re-activé le bouton apres la fin du jeu
     }
-
-    private void startTimer2() {
-        timer2 = new Timer();
-        timerTask2 = createTimerTask(timerLabel2, () -> --tempsRestant2);
-
-        timer2.scheduleAtFixedRate(timerTask2, 1000, 1000);
-        isTimer2Running = true;
-    }
-
-    private void resumeTimer1() {
-        timer1 = new Timer();
-        timerTask1 = createTimerTask(timerLabel, () -> --tempsRestant1);
-
-        timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
-        isTimer1Running = true;
-    }
-
-    private TimerTask createTimerTask(javafx.scene.control.Label timerLabel, Runnable updateRemainingTime) {
-        return new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> {
-                    updateRemainingTime.run();
-                    updateTimer(timerLabel);
-                });
-            }
-        };
-    }
-
-    private void updateTimer(Label timerLabel) {
-        int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
-        if (tempsRestant <= 0) {
-            timerLabel.setText("00:00");
-            if (timerLabel == this.timerLabel && timer1 != null) {
-                timer1.cancel();
-                ButtonController.changeScene("view/fin.fxml", buttonFin);
-            } else if (timerLabel == this.timerLabel2 && timer2 != null) {
-                timer2.cancel();
-                ButtonController.changeScene("view/fin.fxml", buttonFin);
-            }
-        } else {
-            int minutes = tempsRestant / 60;
-            int seconds = tempsRestant % 60;
-            timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
-        }
-    }*/
 
     public void initMatrice() {
         matriceJeu = new ArrayList<>(8);
@@ -266,12 +191,20 @@ public class BotVsController implements Initializable {
                 // Si le roi est en défaite, les joueurs sont mis à false.
                 if (pionFinBot instanceof Roi) {
                     if (peutJouerJ1) {
-                        System.out.println("Bravo au joueur 1");
+                        try {
+                            Findejeu(j2.getText(), j1.getText());
+
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     if (peutJouerJ2) {
-                        System.out.println("Bravo au joueur 2");
+                        try {
+                            Findejeu(j1.getText(),j2.getText());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                    ButtonController.changeScene("view/fin.fxml", boutonAcc);
                 }
 
                 // Affichage de la matrice du jeu dans l'interface graphique.
@@ -303,12 +236,20 @@ public class BotVsController implements Initializable {
                     deplacementPiece(pionDep, pionFin);
                     if (pionFin instanceof Roi){
                         if (peutJouerJ1){
-                            System.out.println("Bravo au joueur 1");
+                            try {
+                                Findejeu(j2.getText(), j1.getText());
+
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                         if (peutJouerJ2){
-                            System.out.println("Bravo au joueur 2");
+                            try {
+                                Findejeu(j1.getText(),j2.getText());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                        ButtonController.changeScene("view/fin.fxml", boutonFin);
                     }
                 afficheMatriceAvecPlateau(this.matriceJeu);
             }
@@ -334,8 +275,6 @@ public class BotVsController implements Initializable {
         boolean temp = peutJouerJ1;
         peutJouerJ1 = peutJouerJ2;
         peutJouerJ2 = temp;
-
-        //toggleTimers();
     }
 
     public void deplacementPieceBot(Pions pionDep, Pions pionFin){
@@ -368,21 +307,9 @@ public class BotVsController implements Initializable {
         buttonController = new ButtonController();
         loginController = new LoginController();
         buttonController.initButtonAcc(boutonAcc);
-        if (buttonFin!= null){
-            buttonController.initButtonFin(buttonFin);
+        if (boutonFin!= null){
+            buttonController.initButtonFin(boutonFin);
         }
-
-        /*timerBox.getItems().addAll(1, 5, 10, 15);
-        timerBox.getSelectionModel().selectFirst();
-
-        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            String timeText = newValue + " Min";
-            timerLabel.setText(timeText);
-            timerLabel2.setText(timeText);
-        });
-
-        startButton.setOnAction(e -> startTimer1());*/
-
         clic();
     }
 

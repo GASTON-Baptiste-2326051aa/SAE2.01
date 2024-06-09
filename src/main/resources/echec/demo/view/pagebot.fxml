@@ -47,10 +47,6 @@
                         </VBox>
                         <Region HBox.hgrow="ALWAYS"/>
                     </HBox>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer1">
-                        <Label fx:id="timerLabel2" text="00:00" style="-fx-text-fill: white"/>
-                    </HBox>
                 </HBox>
                 <AnchorPane prefHeight="400.0" prefWidth="600.0">
                     <children>
@@ -287,21 +283,12 @@
                     <VBox>
                         <Label fx:id="j1" text="Joueur 1" styleClass="textJ"/>
                     </VBox>
-                    <Region HBox.hgrow="ALWAYS"/>
-                    <HBox alignment="CENTER" prefWidth="60" styleClass="LabelTimer2">
-                        <Label fx:id="timerLabel" text="00:00" style="-fx-text-fill: white"/>
-                    </HBox>
                 </HBox>
             </VBox>
             <VBox styleClass="VBox" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="30">
-                <Label text="Veuillez a choisir ici dessous le temps de jeux !" textFill="aliceblue" styleClass="textJvJVbox"></Label>
-                <ComboBox fx:id="timerBox" style="-fx-background-color: #333333; -fx-text-fill: #A8FF60;" prefHeight="40" prefWidth="200">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList"/>
-                    </items>
-                </ComboBox>
+                <Label text="Voici le mode de jeu avec le bot ! Nous espérons que vous prendrez du plaisir !" textFill="aliceblue" styleClass="textJvJVbox"></Label>
                 <Button fx:id="startButton" text="JOUER" styleClass="topButton"/>
-                <Button fx:id="pauseButton" text="Joueur Suivant" styleClass="topButton"/>
+                <Button fx:id="boutonFin" text="Fin" styleClass="topButton"/>
             </VBox>
         </HBox>
     </center>

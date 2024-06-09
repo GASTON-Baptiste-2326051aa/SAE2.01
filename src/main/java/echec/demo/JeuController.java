@@ -34,8 +34,6 @@ public class JeuController implements Initializable {
 
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
-    // Pour timer
-
     @FXML
     private BorderPane borderPane;
 
@@ -89,9 +87,6 @@ public class JeuController implements Initializable {
     public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){ //fonction permettant de set les noms des joueurs dans
         j1.setText(player1Prenom + " " + player1Nom);                                                              // le mode Joueur vs Joueurs
         j2.setText(player2Prenom + " " + player2Nom);
-    }
-    public void setPlayerNamesJvB(String player1Prenom,String player1Nom){ //fonction permettant de set le nom du joueur dans le mode Joueur vs Bot
-        j1.setText(player1Prenom + " " + player1Nom);
     }
     public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
