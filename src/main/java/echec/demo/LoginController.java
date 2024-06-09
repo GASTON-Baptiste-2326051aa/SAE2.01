@@ -40,11 +40,15 @@ public class LoginController implements Initializable {
     @FXML
     private TextField joueur2Nom;
 
-    /**
-     * Initialisations de la classe.
-     * @params  passe en paramètres l'url et les ressources utilisées pour localisé les objets utilisés par le root.
-     **/
+
     private static final String CSV_FILE_PATH = "src/main/resources/joueurs.csv";
+    /**
+     * Initialise les boutons du contrôleur pour déterminer le mode de jeu sélectionné.
+     * Cette méthode est appelée lors de l'initialisation de la classe.
+     *
+     * @param url            L'URL utilisée pour initialiser le contrôleur (non utilisé dans cette implémentation).
+     * @param resourceBundle Le ResourceBundle utilisé pour localiser l'objet racine (non utilisé dans cette implémentation).
+     */
     @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonController = new ButtonController();
@@ -57,7 +61,7 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * @author Alex GONCALVES RODRIGUES
+     * @authors Alex GONCALVES RODRIGUES Baptiste Gaston
      *
      * @params actionEvent, quand le bouton va âtre cliqué, le code va âtre exécuté
      *
@@ -85,7 +89,7 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * @author Alex GONCALVES RODRIGUES
+     * @authors Alex GONCALVES RODRIGUES, Baptiste Gaston
      *
      * @params actionEvent, quand le bouton va être cliqué, le code va être exécuté
      *
@@ -113,10 +117,12 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * @author Baptiste GASTON
+     * Ajoute des entrées au fichier CSV.
+     * Crée un fichier CSV avec des en-têtes si celui-ci n'existe pas encore.
+     * Vérifie et ajoute les joueurs au fichier CSV s'ils n'existent pas déjà.
      *
-     *
-     **/
+     * @author Baptiste Gaston
+     */
     private void addCSV() {
         // Create CSV file with headers if it doesn't exist
         if (Files.notExists(Paths.get(CSV_FILE_PATH))) {
@@ -147,10 +153,14 @@ public class LoginController implements Initializable {
 
 
     /**
-     * @author Baptiste GASTON
+     * Vérifie si un joueur est déjà présent dans le fichier CSV.
      *
-     *
-     **/
+     * @param prenom Le prénom du joueur à vérifier.
+     * @param nom    Le nom du joueur à vérifier.
+     * @return true si le joueur est présent dans le fichier CSV, sinon false.
+     * @throws IOException En cas d'erreur lors de la lecture du fichier CSV.
+     * @author Baptiste Gaston
+     */
     private boolean isPlayerInCsv(String prenom, String nom) {
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
@@ -167,12 +177,16 @@ public class LoginController implements Initializable {
         }
         return false;
     }
-
     /**
-     * @author Baptiste GASTON
+     * Écrit une entrée dans un fichier CSV contenant les informations d'un joueur, y compris son prénom, son nom, le nombre de matchs et le nombre de victoires.
      *
-     * @params
-     **/
+     * @param joueurPrenom Le prénom du joueur.
+     * @param joueurNom    Le nom du joueur.
+     * @param matches      Le nombre de matchs joués par le joueur.
+     * @param victories    Le nombre de victoires remportées par le joueur.
+     * @throws IOException En cas d'erreur lors de l'écriture dans le fichier CSV.
+     * @author Baptiste Gaston
+     */
     private void writeCsvFile(String joueurPrenom, String joueurNom, int matches, int victories) {
         String fileName = "joueurs.csv";
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -193,10 +207,14 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * @author Baptiste GASTON
+     * Met à jour le nombre de matchs joués par un joueur dans le fichier CSV.
      *
-     * @params
-     **/
+     * @param prenom Le prénom du joueur dont les matchs doivent être mis à jour.
+     * @param nom    Le nom du joueur dont les matchs doivent être mis à jour.
+     * @throws IOException En cas d'erreur lors de la lecture ou de l'écriture dans le fichier CSV.
+     * @throws NumberFormatException En cas d'erreur lors de la conversion du nombre de matchs en entier.
+     * @author Baptiste Gaston
+     */
     public void updateMatches(String prenom, String nom) {
         List<String> updatedLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
@@ -224,10 +242,14 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * @author Baptiste GASTON
+     * Met à jour le nombre de victoires remportées par un joueur dans le fichier CSV.
      *
-     * @params
-     **/
+     * @param prenom Le prénom du joueur dont les victoires doivent être mises à jour.
+     * @param nom    Le nom du joueur dont les victoires doivent être mises à jour.
+     * @throws IOException En cas d'erreur lors de la lecture ou de l'écriture dans le fichier CSV.
+     * @throws NumberFormatException En cas d'erreur lors de la conversion du nombre de victoires en entier.
+     * @author Baptiste Gaston
+     */
     public void updateVictories(String prenom, String nom) {
         List<String> updatedLines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {

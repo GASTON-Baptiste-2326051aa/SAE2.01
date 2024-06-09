@@ -88,7 +88,15 @@ public class AccueilController implements Initializable {
 
 
     }
-
+    /**
+     * Charge les données à partir d'un fichier CSV spécifié.
+     *
+     * @param fileName Le nom du fichier CSV à partir duquel les données doivent être chargées.
+     * @return Une liste observable de cartes (Map) où chaque carte représente une ligne de données du fichier CSV.
+     *         Chaque carte associe le nom d'une colonne à la valeur correspondante de cette ligne.
+     *         Les colonnes sont représentées par des clés de type chaîne de caractères (String).
+     * @author Baptiste Gaston
+     */
     private ObservableList<Map<String, String>> loadDataFromCSV(String fileName) {
         ObservableList<Map<String, String>> data = FXCollections.observableArrayList();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {

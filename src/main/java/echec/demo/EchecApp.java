@@ -15,6 +15,15 @@ public class EchecApp extends Application {
 
     private static Scene scene;
 
+    /**
+     * Méthode appelée lors du démarrage de l'application JavaFX.
+     * Cette méthode configure et affiche la scène principale de l'application.
+     *
+     * @param stage Le stage principal de l'application JavaFX.
+     * @throws Exception Si une erreur se produit lors du chargement de la scène depuis le fichier FXML.
+     * @see Application#start(Stage)
+     * @author Baptiste Gaston
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Screen screen = Screen.getPrimary();

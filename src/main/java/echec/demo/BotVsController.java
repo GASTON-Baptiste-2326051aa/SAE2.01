@@ -218,10 +218,12 @@ public class BotVsController implements Initializable {
                 if (pionFinBot instanceof Roi) {
                     String[] partsJ1 = j1.getText().split(" ");
                     String[] partsJ2 = j2.getText().split(" ");
+                    // Mets à jour le nombre de matches effectués
                     loginController.updateMatches(partsJ2[0],partsJ2[1]);
                     loginController.updateMatches(partsJ1[0],partsJ1[1]);
                     if (peutJouerJ1) {
                         try {
+                            //ajoute une victoire au joueur gagnant
                             loginController.updateVictories(partsJ2[0],partsJ2[1]);
                             Findejeu(j2.getText(), j1.getText());
 
@@ -231,6 +233,7 @@ public class BotVsController implements Initializable {
                     }
                     if (peutJouerJ2) {
                         try {
+                            //ajoute une victoire au joueur gagnant
                             loginController.updateVictories(partsJ1[0],partsJ1[1]);
                             Findejeu(j1.getText(),j2.getText());
                         } catch (IOException e) {
@@ -274,10 +277,12 @@ public class BotVsController implements Initializable {
                     if (pionFin instanceof Roi){
                         String[] partsJ1 = j1.getText().split(" ");
                         String[] partsJ2 = j2.getText().split(" ");
+                        // Mets à jour le nombre de matches effectués
                         loginController.updateMatches(partsJ2[0],partsJ2[1]);
                         loginController.updateMatches(partsJ1[0],partsJ1[1]);
                         if (peutJouerJ1){
                             try {
+                                //ajoute une victoire au joueur gagnant
                                 loginController.updateVictories(partsJ2[0],partsJ2[1]);
                                 Findejeu(j2.getText(), j1.getText());
 
@@ -287,6 +292,7 @@ public class BotVsController implements Initializable {
                         }
                         if (peutJouerJ2){
                             try {
+                                //ajoute une victoire au joueur gagnant
                                 loginController.updateVictories(partsJ1[0],partsJ1[1]);
                                 Findejeu(j1.getText(),j2.getText());
                             } catch (IOException e) {

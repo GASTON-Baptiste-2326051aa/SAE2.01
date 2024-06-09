@@ -12,32 +12,88 @@ public class ButtonController {
 
     private LoginController loginController = new LoginController();
 
-    public void initButtonJvJ(Button bouton) { //initilisation du bouton JvJ(apres login) qui renvoie à la page JvJ quand il est appuyé
+
+    /**
+     * Initialise le bouton JvJ (Joueur contre Joueur) après la connexion.
+     * Ce bouton redirige vers la page JvJ lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton JvJ à initialiser.
+     * @author Baptiste Gaston
+     */
+    public void initButtonJvJ(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> {
             changeScene("view/pageJvJ.fxml", bouton);
         });
     }
 
-    public void initButtonLogJvJ(Button bouton) { //initilisation du bouton JvJLogin qui renvoie à la page Login pour les joueurs quand il est appuyé
+
+    /**
+     * Initialise le bouton JvJLogin (Joueur contre Joueur - Connexion).
+     * Ce bouton redirige vers la page de connexion pour les joueurs lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton JvJLogin à initialiser.
+     * @author Baptiste Gaston
+     */
+    public void initButtonLogJvJ(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login.fxml", bouton));
     }
 
-    public void initButtonLogJvB(Button bouton) { //initilisation du bouton JvBLogin qui renvoie à la page Login pour le joueur contre le bot quand il est appuyé
+    /**
+     * Initialise le bouton JvBLogin (Joueur contre Bot - Connexion).
+     * Ce bouton redirige vers la page de connexion pour le joueur contre le bot lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton JvBLogin à initialiser.
+     * @author Baptiste Gaston
+     */
+    public void initButtonLogJvB(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login1J.fxml", bouton));
     }
 
-    public void initButtonJvB(Button bouton) { //initilisation du bouton JvB (apres login) qui renvoie a la page JvB quand il est appuyé
+    /**
+     * Initialise le bouton JvB (Joueur contre Bot) après la connexion.
+     * Ce bouton redirige vers la page JvB lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton JvB à initialiser.
+     * @author Baptiste Gaston
+     */
+    public void initButtonJvB(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/pagebot.fxml", bouton));
-
     }
 
-    public void initButtonAcc(Button bouton) { //initilisation du bouton Accueil qui renvoie a la page d'accueil quand il est appuyé
+
+    /**
+     * Initialise le bouton Accueil.
+     * Ce bouton redirige vers la page d'accueil lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton Accueil à initialiser.
+     * @author Baptiste Gaston
+     */
+    public void initButtonAcc(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/accueil.fxml", bouton));
     }
-    public void initButtonFin(Button bouton){ //initilisation du bouton Fin qui renvoie a la page de fin de partie quand il est appuyé
+
+    /**
+     * Initialise le bouton de fin.
+     * Ce bouton redirige vers la page de fin lorsqu'il est appuyé.
+     *
+     * @param bouton Le bouton de fin à initialiser.
+     * @author Alex Gonçalves
+     */
+    public void initButtonFin(Button bouton) {
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/fin.fxml", bouton));
     }
 
+    /**
+     * Change la scène affichée dans la fenêtre actuelle.
+     * Cette fonction permet de charger une nouvelle scène à partir d'un fichier FXML spécifié
+     * et de l'afficher dans la fenêtre actuelle.
+     *
+     * @param sceneName Le nom du fichier FXML de la nouvelle scène à charger.
+     * @param button Le bouton à partir duquel l'action de changement de scène est déclenchée.
+     *               Ce bouton est utilisé pour obtenir la fenêtre actuelle.
+     * @throws IOException Si une erreur d'entrée/sortie se produit lors du chargement de la nouvelle scène.
+     * @author Baptiste Gaston
+     */
     public static void changeScene(String sceneName, Button button) {
         try {
             // Charger la nouvelle scène depuis le fichier FXML
