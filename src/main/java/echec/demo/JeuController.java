@@ -197,7 +197,7 @@ public class JeuController implements Initializable {
      * @author Alex GONCALVES RODRIGUES
      *
      * @params le Label du timer et la fonction update.
-     * @params updateRemainingTime qui permet de met a jour le timer
+     * @params updateRemainingTime qui permet de mettre a jour le timer
      *
      * Cette fonction permet de crée un tache qui celle ci est de mettre a jour le timer et de l'afficher dans le Label.
      **/
@@ -247,6 +247,11 @@ public class JeuController implements Initializable {
         }
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * Cette méthode permet d'initier un échiquier dans une matrice
+     **/
     // Fonction de génération de la matrice de Pions
     public void initMatrice() {
         // On définit la taille de la matrice
@@ -289,7 +294,13 @@ public class JeuController implements Initializable {
         matriceJeu.get(7).set(4, new Roi("blanc", "e", 1, "img/roiBlanc.png"));
     }
 
-
+    /**
+     * @author Garrigues Ronan
+     *
+     * @params une arraylist étant une matrice de Pions
+     *
+     * Cette méthode permet d'afficher l'échiquier
+     **/
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice) {
         // On commence par supprimer tous les imagesView de la grille
         plateau.getChildren().removeIf(node -> node instanceof ImageView);
@@ -318,6 +329,12 @@ public class JeuController implements Initializable {
         }
     }
 
+
+    /**
+     * @author Garrigues Ronan
+     *
+     * Cette méthode permet de gérer l'évenement du clic de l'utilisateur
+     **/
     public void clic(){
 
         // On récupere l'évènement du clic de souris
@@ -356,6 +373,12 @@ public class JeuController implements Initializable {
 
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
+     *
+     * Cette méthode permet de lancer le jeu, c'est à dire les déplacements du pion, les conditions de déplacements, les conditions de victoires
+     **/
     public void jeu(){
         // On vérifie que nous avons bien une position de départ et de fin
         if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
@@ -414,6 +437,14 @@ public class JeuController implements Initializable {
         }
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
+     * @param pionDep : le pion correspondant au clic de départ
+     * @param pionFin : Le pion correspondant au clic de fin
+     *
+     * Cette fonction permet d'effectuer le déplacement d'un pion,  si il ne se mets pas en échec
+     **/
     public void deplacementPiece(Pions pionDep, Pions pionFin) {
         // Sauvegarder l'état actuel de la matrice
         ArrayList<ArrayList<Pions>> saveMatrice = new ArrayList<>();
@@ -492,6 +523,8 @@ public class JeuController implements Initializable {
     }
 
     /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
      * Initialisations de la classe.
      * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
      **/
@@ -525,12 +558,36 @@ public class JeuController implements Initializable {
         clic();
     }
 
+
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param pion1 étant le premier pion à comparer
+     * @param pion2 étant le deuxième pion à comparer
+     *
+     * Fonction permettant de regarder si les couleurs sont différentes
+     *
+     * @return boolean true si ils sont de couleur différentes, false sinon
+     **/
     public boolean comparePionsCouleurDifferente(Pions pion1, Pions pion2) {
         if (pion2 != null)
             return !(pion1.getCouleur().equals(pion2.getCouleur()));
         return true;
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param pion1 étant pion de départ
+     * @param posI étant la postion de la ligne correspondant au clic de fin, à la où on souhaite aller
+     * @param posJstr étant la postion de la colonne
+     *
+     * Methodes permettant de vérifier si le pion rencontre un obstacle. Et ceci selon de quelle classe est le pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
     public boolean comparePionsDirection(Pions pion1, int posI, String posJstr) {
         Position position = new Position();
         // On récupere les coordonnées du pion et de l'arrivée, tout ça en position de matrice
@@ -542,20 +599,20 @@ public class JeuController implements Initializable {
         switch (pion1.getClass().getSimpleName()) {
             case "Fou" -> {
                 // Si c'est le fou on effectue une vérification diagonale
-                return directionDiagonale(pion1, posI, posJ, posX, posY);
+                return directionDiagonale( posI, posJ, posX, posY);
 
             }
             case "Tour" -> {
                 // Si c'est la tour on regarde les directions horizontaux et verticaux
-                return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
+                return directionHorizontalVertical( posI, posJ, posX, posY);
 
             }
             case "Reine" -> {
                 // Si c'est la reine on regarde par rapport au pion ceux qui faut choisir.
                 if (posX == posJ || posY == posI){
-                    return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
+                    return directionHorizontalVertical( posI, posJ, posX, posY);
                 }
-                return directionDiagonale(pion1, posI, posJ, posX, posY);
+                return directionDiagonale( posI, posJ, posX, posY);
 
             }
             case "Pion" -> {
@@ -571,7 +628,21 @@ public class JeuController implements Initializable {
         return true;
     }
 
-    public boolean directionDiagonale(Pions pion, int posI, int posJ, int posX, int posY) {
+
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param posI étant la position initial des lignes
+     * @param posJ étant la position initial des colonnes
+     * @param posX étant la position final des lignes
+     * @param posY étant la position final des colonnes
+     *
+     * Fonction pour vérifier si entre deux case de matrice le chemin diagonal est libre, c'est à dire il ne possède aucun pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
+    public boolean directionDiagonale( int posI, int posJ, int posX, int posY) {
         if (Math.abs(posX - posJ) == Math.abs(posY - posI)) {
             // On détermine la direction de la diagonale
             int xDirection = (posJ - posX > 0) ? 1 : -1;
@@ -593,7 +664,20 @@ public class JeuController implements Initializable {
         return true;
     }
 
-    public boolean directionHorizontalVertical(Pions pion, int posI, int posJ, int posX, int posY){
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param posI étant la position initial des lignes
+     * @param posJ étant la position initial des colonnes
+     * @param posX étant la position final des lignes
+     * @param posY étant la position final des colonnes
+     *
+     * Fonction pour vérifier si entre deux case de matrice le chemin horizontal et vertical est libre, c'est à dire il ne possède aucun pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
+    public boolean directionHorizontalVertical( int posI, int posJ, int posX, int posY){
         // On regarde si la direction est une direction Vertical
         if (posY == posI) {
             // Puis on regarde la direction
@@ -637,6 +721,18 @@ public class JeuController implements Initializable {
         return true;
     }
 
+
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param posIMatrice étant la position des lignes du pion à vérifier
+     * @param posJMatrice étant la position des colonnes du pion à vérifier
+     *
+     * Fonction pour vérifier si un pion est en échec
+     *
+     * @return boolean true si le pion est echec, false sinon
+     **/
     // Cette fonction permet via des coordonnés indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
     public boolean enEchec(int posIMatrice, int posJMatrice) {
         // Cette fonction permet via des coordonnées indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant

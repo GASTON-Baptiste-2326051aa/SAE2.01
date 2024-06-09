@@ -140,6 +140,12 @@ public class BotVsController implements Initializable {
                 this.positionDep.setX((int)e.getX());
                 this.positionDep.setY((int)e.getY());
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
+                String urlSelection = Objects.requireNonNull(getClass().getResource("img/selection.png")).toExternalForm();
+                ImageView selection = new ImageView(urlSelection);
+                selection.setFitHeight(100.0);
+                selection.setFitWidth(100.0);
+                plateau.add(selection, positionDep.getJ(),  positionDep.getI());
+                // Si la position de départ n'est pas un pion on annule le clic de départ
                 if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null){
                     positionDep.reset();
                 }
