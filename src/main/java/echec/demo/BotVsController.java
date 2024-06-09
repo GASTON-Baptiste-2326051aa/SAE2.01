@@ -28,7 +28,7 @@ public class BotVsController implements Initializable {
     @FXML
     private Label j1;
     @FXML
-    private Label j2;
+    private Label j2 = new Label("BOT");
     @FXML
     private Button boutonAcc;
     @FXML
@@ -149,15 +149,12 @@ public class BotVsController implements Initializable {
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
             }
-            System.out.println("PionDep : " + positionDep.getX() + " " + positionDep.getY());
-            System.out.println("PionFin : " + positionFin.getX() + " " + positionFin.getY());
             jeu();
         });
     }
 
     public void jeuBot(){
         if(peutJouerJ2) {
-            System.out.println("peutJouer2");
             // Création d'une variable random : permet de choisir aléatoirement les coordonnées des cases.
             Random random = new Random();
 
@@ -184,27 +181,15 @@ public class BotVsController implements Initializable {
                     && (comparePionsMemeCouleur(pionDepBot, pionFinBot))
                     && comparePionsDirection(pionDepBot, positionFinBot.getI(), positionFinBot.conversionIntLettre(positionFinBot.getJ()))) {
                 // Nous pouvons à présent déplacer les pions.
-                System.out.println("PionDepBot : " + positionDepBot.getI() + " " + positionDepBot.getJ());
-                System.out.println("PionFinBot : " + positionFinBot.getI() + " " + positionFinBot.getJ());
                 deplacementPieceBot(pionDepBot, pionFinBot);
 
-                // Si le roi est en défaite, les joueurs sont mis à false.
+                // Si le roi est en défaite :
                 if (pionFinBot instanceof Roi) {
-                    if (peutJouerJ1) {
-                        try {
-                            Findejeu(j2.getText(), j1.getText());
-
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    if (peutJouerJ2) {
-                        try {
+                    try {
                             Findejeu(j1.getText(),j2.getText());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    }
                 }
 
                 // Affichage de la matrice du jeu dans l'interface graphique.
@@ -228,28 +213,15 @@ public class BotVsController implements Initializable {
             Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
             Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
             if (peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")
                     && pionDep != null
                     && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() , positionFin.conversionIntLettre(positionFin.getJ()))
                     && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
                     deplacementPiece(pionDep, pionFin);
-                    if (pionFin instanceof Roi){
-                        if (peutJouerJ1){
-                            try {
-                                Findejeu(j2.getText(), j1.getText());
-
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        if (peutJouerJ2){
-                            try {
-                                Findejeu(j1.getText(),j2.getText());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
+                    if (pionFin instanceof Roi) try {
+                        Findejeu(j2.getText(), j1.getText());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
                 afficheMatriceAvecPlateau(this.matriceJeu);
             }

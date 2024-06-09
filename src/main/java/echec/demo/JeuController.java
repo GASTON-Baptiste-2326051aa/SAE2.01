@@ -425,7 +425,7 @@ public class JeuController implements Initializable {
         }
 
         timerBox.getItems().addAll(1, 5, 10, 15); // Combo box selection des temps
-        timerBox.getSelectionModel().selectFirst(); // par defaut le temps est celui de 1min
+        timerBox.getSelectionModel().selectFirst(); // par défaut le temps est celui de 1min
 
         timerBox.valueProperty().addListener((observable, oldValue, newValue) -> { //On regarde ce que la personne choisis comme temps et on l'affiche dans le timmer
             String timeText = newValue + " Min";
@@ -433,7 +433,7 @@ public class JeuController implements Initializable {
             timerLabel2.setText(timeText);
         });
 
-        startButton.setOnAction(e -> startTimer1()); // on start le timmer 1 avec la valeur affecté
+        startButton.setOnAction(e -> startTimer1()); // on start le timer 1 avec la valeur affecté
 
         clic();
     }
