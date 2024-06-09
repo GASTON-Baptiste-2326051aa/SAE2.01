@@ -8,13 +8,14 @@ import java.util.ArrayList;
 // Création d'une class Pions
 public abstract class Pions{
 
-    // Attribut divers de la class, couleur du pion, position en échéquier,
+    // Attribut divers de la class, couleur du pion, position en échéquier, url pour l'image
     private String couleur;
     private String posX;
     private int posY;
     private String url;
     private ImageView image;
 
+    // Constructeur du Pions
     public Pions(String couleur,String posX,int posY,String fileName){
         this.couleur = couleur;
         this.posY = posY;
@@ -37,10 +38,7 @@ public abstract class Pions{
         this.posX = posX;
     }
 
-
     public String getCouleur(){ return this.couleur;}
-
-    public String getPos(){ return this.posY + String.valueOf(this.posX); }
 
     public String getUrl(){return this.url;}
 

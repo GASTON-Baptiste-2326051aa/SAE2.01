@@ -29,15 +29,17 @@ public class JeuController implements Initializable {
     Position positionDep = new Position();
     Position positionFin = new Position();
 
+    // Ajout de deux boolean controllant la personne qui doit jouer
     private boolean peutJouerJ1;
     private boolean peutJouerJ2;
 
+    // Variable contenant la matrice du jeu d'échec
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
     @FXML
     private BorderPane borderPane;
 
-    // Création des attributs correspondant aux position du roi
+    // Création des attributs correspondant aux position du roi et leur nombre d'echec
 
     private int posRoiNoirMatriceI = 0;
     private int posRoiNoirMatriceJ = 4;
@@ -247,7 +249,9 @@ public class JeuController implements Initializable {
 
     // Fonction de génération de la matrice de Pions
     public void initMatrice() {
+        // On définit la taille de la matrice
         matriceJeu = new ArrayList<>(8);
+        // Puis on la parcours avec un itérateur i et j
         for (int i = 0; i < 8; i++) {
             matriceJeu.add(new ArrayList<>(8));
             for (int j = 0; j < 8; j++) {
@@ -255,9 +259,10 @@ public class JeuController implements Initializable {
             }
         }
 
+        // On initialise une liste de position
         String[] colonnes = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
-        // Pions noirs
+        // On mets les valeurs des Pions noir dans la matrice
         for (int i = 0; i < 8; i++) {
             matriceJeu.get(1).set(i, new Pion("noir", colonnes[i], 7, "img/pionNoir.png"));
         }
@@ -270,7 +275,7 @@ public class JeuController implements Initializable {
         matriceJeu.get(0).set(3, new Reine("noir", "d", 8, "img/reineNoire.png"));
         matriceJeu.get(0).set(4, new Roi("noir", "e", 8, "img/roiNoir.png"));
 
-        // Pions blancs
+        // On mets les valeurs des Pions blanc dans la matrice
         for (int i = 0; i < 8; i++) {
             matriceJeu.get(6).set(i, new Pion("blanc", colonnes[i], 2, "img/pionBlanc.png"));
         }
@@ -284,20 +289,29 @@ public class JeuController implements Initializable {
         matriceJeu.get(7).set(4, new Roi("blanc", "e", 1, "img/roiBlanc.png"));
     }
 
+
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice) {
+        // On commence par supprimer tous les imagesView de la grille
         plateau.getChildren().removeIf(node -> node instanceof ImageView);
+
+        // Puis on parcours la matrice de jeu
         Position position = new Position();
         for (int ligne = 0; ligne < 8; ligne++) {
             for (int colonne = 0; colonne < 8; colonne++) {
+                // On récupere le pion se trouvant au coordonnés I,J de la Matrice
                 Pions pion = matriceJeu.get(ligne).get(colonne);
+                // Si il est nul on ne fait rien
                 if (pion == null) {
                     continue;
-                } else {
+                }
+                // Sinon on pose l'image du pion, obtenu par son url, sur le gridPane d'affichage
+                else {
                     int posX = position.conversionLettreInt(pion.getPosX());
                     String cheminImage = pion.getUrl();
                     ImageView imageView = new ImageView(cheminImage);
                     imageView.setFitHeight(100.0);
                     imageView.setFitWidth(100.0);
+                    // On ajoute ici sur le plateau image suivis de ses coordonnées i et j
                     plateau.add(imageView, posX, 8 - pion.getPosY());
                 }
             }
@@ -306,43 +320,62 @@ public class JeuController implements Initializable {
 
     public void clic(){
 
+        // On récupere l'évènement du clic de souris
         plateau.setOnMouseClicked(e -> {
+            // On affiche la matrice
             afficheMatriceAvecPlateau(matriceJeu);
+            // On vérifie si le clic est le clic de départ c'est à dire que la position de depart est inférieur à 0
             if (this.positionDep.getX() < 0){
+                // On mets les coordonnées du clic
                 this.positionDep.setX((int)e.getX());
                 this.positionDep.setY((int)e.getY());
+                // On effectue une conversion
                 this.positionDep.conversion(this.positionDep.getX(), this.positionDep.getY());
+                // On affiche l'image de sélection
                 String urlSelection = Objects.requireNonNull(getClass().getResource("img/selection.png")).toExternalForm();
                 ImageView selection = new ImageView(urlSelection);
                 selection.setFitHeight(100.0);
                 selection.setFitWidth(100.0);
                 plateau.add(selection, positionDep.getJ(),  positionDep.getI());
+                // Si la position de départ n'est pas un pion on annule le clic de départ
                 if (matriceJeu.get(positionDep.getI()).get(positionDep.getJ()) == null){
                     positionDep.reset();
                 }
 
             }
+            // Sinon si on a une position de début on mets à jour la position de fin
             else if (this.positionFin.getX() < 0 && this.positionDep.getJ() >= 0){
                 this.positionFin.setX((int)e.getX());
                 this.positionFin.setY((int)e.getY());
                 this.positionFin.conversion(this.positionFin.getX(), this.positionFin.getY());
 
             }
+            // On lance le jeu
             jeu();
         });
 
     }
 
     public void jeu(){
+        // On vérifie que nous avons bien une position de départ et de fin
         if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
+            // On récupere les pions de la position de départ et de fin
             Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
             Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
-            // On soustrait 8 à la position de fin pour la convertir en coordonne de matrice
-            if (pionDep != null && pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) && (comparePionsMemeCouleur(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+            // On effectue une série de test. On regarde si le pion de départ peut se déplacer selon son propore comportement. On n'oublie pas de soustraire à 8 la position de fin pour la convertir en coordonne de matrice
+            // Ensuite on vérifie qu'il ne soit pas de la même couleur
+            // Puis si aucun pion ne gêne le déplacement
+            if (pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) &&
+                    (comparePionsCouleurDifferente(pionDep, pionFin)) && comparePionsDirection(pionDep,positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ()))) {
+
+                // On regarde que le joueur déplace bien un pion à lui
                 if((peutJouerJ1 && Objects.equals(pionDep.getCouleur(), "blanc")) || ((peutJouerJ2 && Objects.equals(pionDep.getCouleur(), "noir")))){
+                    // On effectue le déplacement du pion
                     deplacementPiece(pionDep, pionFin);
+                    // Puis on réaffiche la matrice
                     afficheMatriceAvecPlateau(this.matriceJeu);
+                    // On mets un message si un des deux roi est en échec
                     if (enEchec(posRoiNoirMatriceI, posRoiNoirMatriceJ)){
                         System.out.println("Le roi noir est en échec");
                     }
@@ -375,6 +408,7 @@ public class JeuController implements Initializable {
 
                 }
             }
+            // On remets à -1 les positions pour pouvoir rejouer
             positionDep.reset();
             positionFin.reset();
         }
@@ -393,13 +427,9 @@ public class JeuController implements Initializable {
         int savePosY = pionDep.getPosY();
 
         // Effectuer le déplacement
-        if (pionFin != null) {
-            pionDep.setPosY(pionFin.getPosY());
-            pionDep.setPosX(pionFin.getPosX());
-        } else {
-            pionDep.setPosY(8 - positionFin.getI());
-            pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
-        }
+        // On attribut les nouvelles coordonnées
+        pionDep.setPosY(8 - positionFin.getI());
+        pionDep.setPosX(positionFin.conversionIntLettre(positionFin.getJ()));
 
         // Mettre à jour la position du roi si le pion déplacé est un roi
         if (pionDep instanceof Roi) {
@@ -413,11 +443,11 @@ public class JeuController implements Initializable {
             }
         }
 
-        // Mettre à jour la matrice
+        // On mets à jour la matrice
         this.matriceJeu.get(positionDep.getI()).set(positionDep.getJ(), null);
         this.matriceJeu.get(positionFin.getI()).set(positionFin.getJ(), pionDep);
 
-        // Vérifier si le roi est en échec après le déplacement
+        // On vérifie si le roi est en échec après le déplacement
         boolean roiEnEchec = false;
         if (peutJouerJ1 && enEchec(posRoiBlancMatriceI, posRoiBlancMatriceJ)) {
             roiEnEchec = true;
@@ -427,7 +457,7 @@ public class JeuController implements Initializable {
             ++nbEchecRoiNoir;
         }
 
-        // Si le roi est en échec, restaurer l'état précédent de la matrice et du pion
+        // Si le roi est en échec on restaure l'état précédent de la matrice et du pion
         if (roiEnEchec) {
             // Remettre l'état précédent du roi
             if (pionDep instanceof Roi) {
@@ -440,17 +470,20 @@ public class JeuController implements Initializable {
                     posRoiBlancMatriceJ = positionDep.getJ();
                 }
             }
+
             matriceJeu = saveMatrice;
             pionDep.setPosX(position.conversionIntLettre(savePosX));
             pionDep.setPosY(savePosY);
+
         } else {
-            // Changer de joueur et basculer les timers si le déplacement est valide
+            // Changer de joueur et basculer les timers si le déplacement est valide ainsi que remettre les compteurs du roi à 0
             if (peutJouerJ1) {
                 nbEchecRoiBlanc = 0;
             }
             else if (peutJouerJ2) {
                 nbEchecRoiNoir = 0;
             }
+            // On change de joueur
             boolean temp = peutJouerJ1;
             peutJouerJ1 = peutJouerJ2;
             peutJouerJ2 = temp;
@@ -492,7 +525,7 @@ public class JeuController implements Initializable {
         clic();
     }
 
-    public boolean comparePionsMemeCouleur(Pions pion1, Pions pion2) {
+    public boolean comparePionsCouleurDifferente(Pions pion1, Pions pion2) {
         if (pion2 != null)
             return !(pion1.getCouleur().equals(pion2.getCouleur()));
         return true;
@@ -500,21 +533,25 @@ public class JeuController implements Initializable {
 
     public boolean comparePionsDirection(Pions pion1, int posI, String posJstr) {
         Position position = new Position();
+        // On récupere les coordonnées du pion et de l'arrivée, tout ça en position de matrice
         int posJ = position.conversionLettreInt(posJstr);
         int posX = position.conversionLettreInt(pion1.getPosX());
         int posY = 8 - pion1.getPosY();
 
-
+        // On regarde quel est le pion
         switch (pion1.getClass().getSimpleName()) {
             case "Fou" -> {
+                // Si c'est le fou on effectue une vérification diagonale
                 return directionDiagonale(pion1, posI, posJ, posX, posY);
 
             }
             case "Tour" -> {
+                // Si c'est la tour on regarde les directions horizontaux et verticaux
                 return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
 
             }
             case "Reine" -> {
+                // Si c'est la reine on regarde par rapport au pion ceux qui faut choisir.
                 if (posX == posJ || posY == posI){
                     return directionHorizontalVertical(pion1, posI, posJ, posX, posY);
                 }
@@ -522,6 +559,7 @@ public class JeuController implements Initializable {
 
             }
             case "Pion" -> {
+                // Si c'est le pion on regarde si il se trouve à une case en diagonale pour pouvoir prendre le pion
                 if (matriceJeu.get(posI).get(posJ) != null && (posJ == position.conversionLettreInt(pion1.getPosX()))) {
                     return false;
                 }
@@ -535,12 +573,15 @@ public class JeuController implements Initializable {
 
     public boolean directionDiagonale(Pions pion, int posI, int posJ, int posX, int posY) {
         if (Math.abs(posX - posJ) == Math.abs(posY - posI)) {
+            // On détermine la direction de la diagonale
             int xDirection = (posJ - posX > 0) ? 1 : -1;
             int yDirection = (posI - posY > 0) ? 1 : -1;
 
+            // Intialise les positions de fin
             int x = posX + xDirection;
             int y = posY + yDirection;
 
+            // Tant que la position n'est pas atteint on regarde si il y a un pion
             while (x != posJ && y != posI) {
                 if (this.matriceJeu.get(y).get(x) != null) {
                     return false;
@@ -553,14 +594,19 @@ public class JeuController implements Initializable {
     }
 
     public boolean directionHorizontalVertical(Pions pion, int posI, int posJ, int posX, int posY){
+        // On regarde si la direction est une direction Vertical
         if (posY == posI) {
+            // Puis on regarde la direction
             if (posX > posJ) {
+                // On parcours jusqu'au dernier indice à partir de la case qui suis notre pion
                 for (int i = posX - 1; i >= posJ + 1; --i) {
+                    // S'il y a un pion on renvoi false
                     if (this.matriceJeu.get(posI).get(i) != null) {
                         return false;
                     }
                 }
             }
+            // Même situation dans la direction opposé
             if (posX < posJ) {
                 for (int i = posX + 1; i <= posJ - 1; ++i) {
                     if (this.matriceJeu.get(posI).get(i) != null) {
@@ -570,6 +616,7 @@ public class JeuController implements Initializable {
             }
         }
 
+        // Même situations cette fois ci à l'horizontal
         if (posX == posJ) {
             if (posY > posI) {
                 for (int i = posY - 1; i >= posI + 1; --i) {
@@ -586,17 +633,21 @@ public class JeuController implements Initializable {
                 }
             }
         }
+        // Si aucun des cas est trouvé on renvoi true
         return true;
     }
 
     // Cette fonction permet via des coordonnés indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
     public boolean enEchec(int posIMatrice, int posJMatrice) {
+        // Cette fonction permet via des coordonnées indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
         // Nous allons tester a partir d'une coordonne toutes les direction. Si le premier pion trouvé est unbe piece le mettant en échecs alors
 
-        // Test du coté horizontal dans toutes les direction
-        for (int i = posIMatrice+1; i <= 7; ++i) {
-            if (this.matriceJeu.get(i).get(posJMatrice) != null) {
+        // Test du coté horizontal et vertical dans toutes les directions
+        for (int i = posIMatrice+1; i <= 7; ++i) { // On parcours à partir de la case de départ en incrémentant la position i jusqu'au bord du plateau de jeu
+            if (this.matriceJeu.get(i).get(posJMatrice) != null) { // Si il y a un pion
+                // On regarde si c'est une reine ou une tour sinon on sort de la boucle
                 if (this.matriceJeu.get(i).get(posJMatrice) instanceof Tour || this.matriceJeu.get(i).get(posJMatrice) instanceof Reine) {
+                    // On vérifie maintenant si la couleur est celle de l'adversaire
                     if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
                         return true;
                     }
@@ -609,6 +660,8 @@ public class JeuController implements Initializable {
                 }
             }
         }
+
+        // On effectue le même principe en desincrémentant la valeur de la position i
         for (int i = posIMatrice-1; i >= 0; --i) {
             if (this.matriceJeu.get(i).get(posJMatrice) != null) {
                 if (this.matriceJeu.get(i).get(posJMatrice) instanceof Tour || this.matriceJeu.get(i).get(posJMatrice) instanceof Reine) {
@@ -624,6 +677,8 @@ public class JeuController implements Initializable {
                 }
             }
         }
+
+        // On effectue le même principe en desincrémentant la valeur de la position j
         for (int j = posJMatrice - 1; j >= 0; --j) {
             if (this.matriceJeu.get(posIMatrice).get(j) != null) {
                 if (this.matriceJeu.get(posIMatrice).get(j) instanceof Tour || this.matriceJeu.get(posIMatrice).get(j) instanceof Reine) {
@@ -639,6 +694,8 @@ public class JeuController implements Initializable {
                 }
             }
         }
+
+        // On effectue le même principe en incrémentant la valeur de la position j
         for (int j = posJMatrice + 1; j <= 7; ++j) {
             if (this.matriceJeu.get(posIMatrice).get(j) != null) {
                 if (this.matriceJeu.get(posIMatrice).get(j) instanceof Tour || this.matriceJeu.get(posIMatrice).get(j) instanceof Reine) {
@@ -656,14 +713,16 @@ public class JeuController implements Initializable {
         }
 
         // Test des digonales
-        // Conpteur de boucle pour incrémenter et le i et le j
+        // On initialise un compteur de boucle afin d'avancer en diagonale
         int countBoucle = 0;
+        // Effectue une boucle allant jusqu'au bord de l'échiquier
         for (int i = posIMatrice+1; i <= 7 && posJMatrice + countBoucle +1  <= 7; ++i) {
-            ++countBoucle;
-            if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) != null) {
-                if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Reine) {
-                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice+countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) {
-                        return true;
+            ++countBoucle; // On augmente le nombre du compteur de boucle
+            // L'instruction this.matriceJeu.get(i).get(posJMatrice+countBoucle) permet d'avancer en diagonale, en augmentant le i et le j de même manière
+            if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) != null) {  // Si il y a un pion
+                if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Reine) { // On regarde si c'est une reine ou un fou
+                    if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice+countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) { // Puis si la couleur est celle de l'adversaire
+                        return true; // Dans ce cas le pion est échec, dans les autres cas non
                     }
                     else {
                         break;
@@ -675,6 +734,8 @@ public class JeuController implements Initializable {
             }
 
         }
+
+        // Puis on effectue cela pour chacune des directions de diagonales.
 
         countBoucle = 0;
         for (int i = posIMatrice-1; i >= 0 && posJMatrice - countBoucle-1>= 0; --i) {
@@ -732,12 +793,14 @@ public class JeuController implements Initializable {
         }
 
         // Test echecs par un cavalier.
-        try{
+        try{ // On essaie d'accéder à une position de la matrice ou un cavalier pourrait mettre en echec la pièce. On vérifie donc si la case est bien un cavalier
             if(this.matriceJeu.get(posIMatrice-1).get(posJMatrice-2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 1).get(posJMatrice - 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
                 return true;
             }
 
-        } catch(Exception _){}
+        } catch(Exception _){} // En cas d'exception c'est à dire que la case dépasse du tableau on ignore le cas de figure
+
+        // Puis on répete le processus pour toutes les positions du possible du cavalier
 
         try{
             if(this.matriceJeu.get(posIMatrice-1).get(posJMatrice+2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 1).get(posJMatrice + 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
@@ -788,11 +851,13 @@ public class JeuController implements Initializable {
 
         } catch(Exception _){}
 
+
         // Test echec par un Pion
         // On commence par regarder la couleur du roi
         if (this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur() == "noir"){
             // Puis on vérifie les coordonné du roi
             try{
+                // Cette vérification permet de regarder si un pion se trouve devant le roi noir donc plus bas sur l'échiquier. Si c'est le cas et qui s'agit de une case en diagonale et que de plus le pion est de la couleur adverse alors le roi est en échec
                 if (this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
                     return true;
                 }
@@ -805,6 +870,8 @@ public class JeuController implements Initializable {
             }
             catch(Exception _){}
         }
+
+        // On fait la même procédure pour cette fois ci le roi blanc, donc si le pion se trouve plus haut sur l'échiquier donc plus bas dans la matrice
         else {
             try{
                 if (this.matriceJeu.get(posIMatrice-1).get(posJMatrice-1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice-1).get(posJMatrice-1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
@@ -821,6 +888,7 @@ public class JeuController implements Initializable {
         }
 
         // Test echec Roi entre eux
+        // On effectue le calcul entre la position des 2 rois. Pour établir si il y a échec.
         if (Math.abs(posRoiBlancMatriceI - posRoiNoirMatriceI) <= 1 && Math.abs(posRoiBlancMatriceJ - posRoiNoirMatriceJ) <= 1){
             return true;
         }
