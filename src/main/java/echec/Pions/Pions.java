@@ -33,7 +33,7 @@ public abstract class Pions{
      * @param posYFin étant une position sur les lignes
      * @param posYFin étant une position sur les colonnes
      *
-     * Méthode pour vérifier si un pion peut se déplacer selon ses propriétées cette méthode est abstraite et donc implémenté par toutes les classes filles et cela selon leur comportement aux échecs
+     * Méthode pour vérifier si un pion peut se déplacer selon ses propriétés cette méthode est abstraite et donc implémenté par toutes les classes filles et cela selon leur comportement aux échecs
      *
      * @return boolean true si le pion peut se déplacer, false sinon
      **/

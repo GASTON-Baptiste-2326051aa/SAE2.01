@@ -28,7 +28,7 @@ public class FinController implements Initializable {
 
     /**
      * Initialisations de la classe.
-     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     * @params  passe en paramètres l'url et les ressources utilisées pour localiser les objets utilisés par le root.
      **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { //initialisation du bouton Acceuil

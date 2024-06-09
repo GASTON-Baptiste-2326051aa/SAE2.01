@@ -12,29 +12,29 @@ public class ButtonController {
 
     private LoginController loginController = new LoginController();
 
-    public void initButtonJvJ(Button bouton) { //initilisation du bouton JvJ(apres login) qui renvoi a la page JvJ quand il est appuyé
+    public void initButtonJvJ(Button bouton) { //initilisation du bouton JvJ(apres login) qui renvoie à la page JvJ quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> {
             changeScene("view/pageJvJ.fxml", bouton);
         });
     }
 
-    public void initButtonLogJvJ(Button bouton) { //initilisation du bouton JvJLogin qui renvoi a la page Login pour les joueurs quand il est appuyé
+    public void initButtonLogJvJ(Button bouton) { //initilisation du bouton JvJLogin qui renvoie à la page Login pour les joueurs quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login.fxml", bouton));
     }
 
-    public void initButtonLogJvB(Button bouton) { //initilisation du bouton JvBLogin qui renvoi a la page Login pour le joueurs contre le bot quand il est appuyé
+    public void initButtonLogJvB(Button bouton) { //initilisation du bouton JvBLogin qui renvoie à la page Login pour le joueur contre le bot quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/login1J.fxml", bouton));
     }
 
-    public void initButtonJvB(Button bouton) { //initilisation du bouton JvB (apres login) qui renvoi a la page JvB quand il est appuyé
+    public void initButtonJvB(Button bouton) { //initilisation du bouton JvB (apres login) qui renvoie a la page JvB quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/pagebot.fxml", bouton));
 
     }
 
-    public void initButtonAcc(Button bouton) { //initilisation du bouton Accueil qui renvoi a la page d'accueil quand il est appuyé
+    public void initButtonAcc(Button bouton) { //initilisation du bouton Accueil qui renvoie a la page d'accueil quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/accueil.fxml", bouton));
     }
-    public void initButtonFin(Button bouton){
+    public void initButtonFin(Button bouton){ //initilisation du bouton Fin qui renvoie a la page de fin de partie quand il est appuyé
         bouton.setOnMouseClicked(actionEvent -> changeScene("view/fin.fxml", bouton));
     }
 
@@ -48,11 +48,8 @@ public class ButtonController {
             Stage currentStage = (Stage) button.getScene().getWindow();
 
             // Définir la nouvelle scène sur le stage actuel
-
             currentStage.setScene(newScene);
             currentStage.getScene().getRoot().setStyle("-fx-background-color: rgb(48, 46, 43);");
-
-
 
             // Définir la taille minimale en fonction de la scène
             if (sceneName.equals("view/login.fxml") || sceneName.equals("view/login1J.fxml")) {

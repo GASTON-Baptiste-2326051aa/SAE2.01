@@ -33,14 +33,13 @@ public class JeuController implements Initializable {
     private boolean peutJouerJ1;
     private boolean peutJouerJ2;
 
-    // Variable contenant la matrice du jeu d'échec
+    // Variable contenant la matrice du jeu d'échecs
     private ArrayList<ArrayList<Pions>> matriceJeu;
 
     @FXML
     private BorderPane borderPane;
 
-    // Création des attributs correspondant aux position du roi et leur nombre d'echec
-
+    // Création des attributs correspondant aux positions du roi et leur nombre d'echec
     private int posRoiNoirMatriceI = 0;
     private int posRoiNoirMatriceJ = 4;
 
@@ -49,7 +48,6 @@ public class JeuController implements Initializable {
 
     private int nbEchecRoiNoir = 0;
     private int nbEchecRoiBlanc = 0;
-
 
     @FXML
     private Label j1;
@@ -67,7 +65,6 @@ public class JeuController implements Initializable {
     private Button startButton;
     @FXML
     private Button boutonFin;
-
 
     private ButtonController buttonController;
     private LoginController loginController = new LoginController();
@@ -92,8 +89,8 @@ public class JeuController implements Initializable {
      * Fonction permettant de set les noms des joueurs dans le mode JvJ.
      **/
     public void setPlayerNamesJvJ(String player1Prenom,String player1Nom ,String player2Prenom,String player2Nom){
-        j1.setText(player1Prenom + " " + player1Nom); //on met le prenom et le nom du joueur 1 dans le label 1
-        j2.setText(player2Prenom + " " + player2Nom); //on met le prenom et le nom du joueur 2 dans le label 2
+        j1.setText(player1Prenom + " " + player1Nom); //on met le prénom et le nom du joueur 1 dans le label 1
+        j2.setText(player2Prenom + " " + player2Nom); //on met le prénom et le nom du joueur 2 dans le label 2
     }
 
     /**
@@ -101,16 +98,16 @@ public class JeuController implements Initializable {
      *
      * @params String WinnerName = noms du gagnant et String LoserName = nom du perdant
      *
-     * Cette fonction, quand elle est appellée, elle va changer la fenetre et mettre celle de la fin tout en mettant les noms des joueurs
-     * correspondant a leurs resultat de la partie.
+     * Cette fonction, quand elle est appellée, elle va changer la fenêtre et mettre celle de la fin tout en mettant les noms des joueurs
+     * correspondant a leur resultat de la partie.
      **/
     public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
         Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
         scene = new Scene(loader.load());
-        FinController finController = loader.getController(); //on va chercher dans fincontroller des controller
-        finController.setPlayerNames(winnerName, loserName); // on utilise la fonction dans finController pour mettres les noms des joueurs a leurs resultats
+        FinController finController = loader.getController(); //on va chercher dans finController des controllers
+        finController.setPlayerNames(winnerName, loserName); // on utilise la fonction dans finController pour mettre les noms des joueurs à leurs resultats
         fin.setScene(scene);
         fin.setMinHeight(900);
         fin.setMinWidth(500);
@@ -118,22 +115,22 @@ public class JeuController implements Initializable {
         fin.setWidth(500);
         fin.centerOnScreen();
 
-        isTimerStarted = false; //permet de re-activer le timer qpres la fin du jeu
-        startButton.setDisable(false); // pertmet de re-activé le bouton apres la fin du jeu
+        isTimerStarted = false; //permet de re-activer le timer après la fin du jeu
+        startButton.setDisable(false); // permet de re-activé le bouton après la fin du jeu
     }
 
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * startTimer1 nous permet de lancer les timers quand les joueurs sont pret.
+     * startTimer1 nous permet de lancer les timers quand les joueurs sont prêts.
      **/
     private void startTimer1() {
         if (isTimerStarted) { //verrification pour savoir si le timer est deja lancé
             return;
         }
 
-        Integer selectedValue = timerBox.getValue(); //on recup la valeur de la Combo Box et on la met dans selectedValue
-        if (selectedValue == null) { //on regarde si la valeur selectionner est null (sauf que par defaut elle est a 1) juste une assistances au cas ou
+        Integer selectedValue = timerBox.getValue(); //on récupère la valeur de la Combo Box et on la met dans selectedValue
+        if (selectedValue == null) { //on regarde si la valeur selectionnée est null (sauf que par défaut elle est a 1) : il s'agit juste d'une assistance au cas où
             throw new IllegalStateException("Timer value is not selected.");
         }
 
@@ -146,14 +143,14 @@ public class JeuController implements Initializable {
 
         timer1.scheduleAtFixedRate(timerTask1, 1000, 1000);
         isTimer1Running = true; // on lance le premier timmer
-        isTimerStarted = true; // on enleve l'option pour relancer le timer
-        startButton.setDisable(true); // on desactive le bouton play si la partie est deja lancé
+        isTimerStarted = true; // on enlève l'option pour relancer le timer
+        startButton.setDisable(true); // on désactive le bouton play si la partie est déjà lancé
     }
 
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * Ici, cette fonction nous permet de faire switch le timer entre le premier et le deuxieme.
+     * Ici, cette fonction nous permet de faire switch le timer entre le premier et le deuxième joueur.
      **/
     private void toggleTimers() {
         if (isTimer1Running) {
@@ -170,7 +167,7 @@ public class JeuController implements Initializable {
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * On crée dans cette fonction le timer 2, reduissant de 1 a 1 par secondes.
+     * On crée dans cette fonction le timer 2, réduissant de 1 à 1 par seconde.
      **/
     private void startTimer2() {
         timer2 = new Timer();
@@ -183,7 +180,7 @@ public class JeuController implements Initializable {
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * On crée dans cette fonction le timer 1, reduissant de 1 a 1 par secondes.
+     * On crée dans cette fonction le timer 1, réduissant de 1 a 1 par seconde.
      **/
     private void resumeTimer1() {
         timer1 = new Timer();
@@ -197,9 +194,9 @@ public class JeuController implements Initializable {
      * @author Alex GONCALVES RODRIGUES
      *
      * @params le Label du timer et la fonction update.
-     * @params updateRemainingTime qui permet de mettre a jour le timer
+     * @params updateRemainingTime qui permet de mettre à jour le timer
      *
-     * Cette fonction permet de crée un tache qui celle ci est de mettre a jour le timer et de l'afficher dans le Label.
+     * Cette fonction permet de créer un tâche qui est de mettre à jour le timer et de l'afficher dans le Label.
      **/
     private TimerTask createTimerTask(javafx.scene.control.Label timerLabel, Runnable updateRemainingTime) {
         return new TimerTask() {
@@ -216,19 +213,19 @@ public class JeuController implements Initializable {
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * @params Label du timer present dans le fxml.
+     * @params Label du timer présent dans le FXML.
      *
-     * Dans cette classe, on met a jour les timers pour l'affichage et on verifie si les timers sont nuls (<=0), si c'est le cas
-     * alors le jeu est fini car il ne reste plus de temps a un joueur.
+     * Dans cette classe, on met à jour les timers pour l'affichage et on vérifie si les timers sont nuls (<=0), si c'est le cas
+     * alors le jeu est fini car il ne reste plus de temps à l'un des joueurs.
      **/
     private void updateTimer(Label timerLabel) {
         int tempsRestant = (timerLabel == this.timerLabel) ? tempsRestant1 : tempsRestant2;
         if (tempsRestant <= 0) {
             timerLabel.setText("00:00"); //Mise a 0 du label
-            if (timerLabel == this.timerLabel && timer1 != null) { // verifications du timer 1 voir s'il est null
-                timer1.cancel(); //on arrete le timer
+            if (timerLabel == this.timerLabel && timer1 != null) { // vérification du timer 1 voir s'il est null
+                timer1.cancel(); //on arrête le timer
                 try {
-                    Findejeu(j2.getText(), j1.getText()); //on met la fenetre fin de jeu avec les noms qui corresponde au gagant et perdant
+                    Findejeu(j2.getText(), j1.getText()); //on met la fenêtre fin de jeu avec les noms qui correspondent au gagnant et perdant
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -250,13 +247,13 @@ public class JeuController implements Initializable {
     /**
      * @author Garrigues Ronan
      *
-     * Cette méthode permet d'initier un échiquier dans une matrice
+     * Cette méthode permet d'initialiser un échiquier dans une matrice
      **/
     // Fonction de génération de la matrice de Pions
     public void initMatrice() {
         // On définit la taille de la matrice
         matriceJeu = new ArrayList<>(8);
-        // Puis on la parcours avec un itérateur i et j
+        // Puis on la parcourt avec un itérateur i et j
         for (int i = 0; i < 8; i++) {
             matriceJeu.add(new ArrayList<>(8));
             for (int j = 0; j < 8; j++) {
@@ -376,7 +373,6 @@ public class JeuController implements Initializable {
     /**
      * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
      *
-     *
      * Cette méthode permet de lancer le jeu, c'est à dire les déplacements du pion, les conditions de déplacements, les conditions de victoires
      **/
     public void jeu(){
@@ -386,7 +382,7 @@ public class JeuController implements Initializable {
             Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
             Pions pionFin =this.matriceJeu.get(positionFin.getI()).get(positionFin.getJ());
 
-            // On effectue une série de test. On regarde si le pion de départ peut se déplacer selon son propore comportement. On n'oublie pas de soustraire à 8 la position de fin pour la convertir en coordonne de matrice
+            // On effectue une série de test. On regarde si le pion de départ peut se déplacer selon son propre comportement. On n'oublie pas de soustraire à 8 la position de fin pour la convertir en coordonnées de matrice
             // Ensuite on vérifie qu'il ne soit pas de la même couleur
             // Puis si aucun pion ne gêne le déplacement
             if (pionDep.peutDeplacer(pionDep.getPosY(), pionDep.getPosX(), 8 - positionFin.getI() ,positionFin.conversionIntLettre(positionFin.getJ())) &&
@@ -398,7 +394,7 @@ public class JeuController implements Initializable {
                     deplacementPiece(pionDep, pionFin);
                     // Puis on réaffiche la matrice
                     afficheMatriceAvecPlateau(this.matriceJeu);
-                    // On mets un message si un des deux roi est en échec
+                    // On met un message si un des deux roi est en échec
                     if (enEchec(posRoiNoirMatriceI, posRoiNoirMatriceJ)){
                         System.out.println("Le roi noir est en échec");
                     }
@@ -431,7 +427,7 @@ public class JeuController implements Initializable {
 
                 }
             }
-            // On remets à -1 les positions pour pouvoir rejouer
+            // On remet à -1 les positions pour pouvoir rejouer
             positionDep.reset();
             positionFin.reset();
         }
@@ -443,7 +439,7 @@ public class JeuController implements Initializable {
      * @param pionDep : le pion correspondant au clic de départ
      * @param pionFin : Le pion correspondant au clic de fin
      *
-     * Cette fonction permet d'effectuer le déplacement d'un pion,  si il ne se mets pas en échec
+     * Cette fonction permet d'effectuer le déplacement d'un pion, si il ne se met pas en échec
      **/
     public void deplacementPiece(Pions pionDep, Pions pionFin) {
         // Sauvegarder l'état actuel de la matrice
@@ -526,7 +522,7 @@ public class JeuController implements Initializable {
      * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
      *
      * Initialisations de la classe.
-     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     * @params passe en parametres l'url et les ressources utilisé pour localiser les objets utilisé par le root.
      **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -547,7 +543,7 @@ public class JeuController implements Initializable {
         timerBox.getItems().addAll(1, 5, 10, 15); // Combo box selection des temps
         timerBox.getSelectionModel().selectFirst(); // par défaut le temps est celui de 1min
 
-        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> { //On regarde ce que la personne choisis comme temps et on l'affiche dans le timmer
+        timerBox.valueProperty().addListener((observable, oldValue, newValue) -> { //On regarde ce que la personne choisit comme temps et on l'affiche dans le timmer
             String timeText = newValue + " Min";
             timerLabel.setText(timeText);
             timerLabel2.setText(timeText);
@@ -568,7 +564,7 @@ public class JeuController implements Initializable {
      *
      * Fonction permettant de regarder si les couleurs sont différentes
      *
-     * @return boolean true si ils sont de couleur différentes, false sinon
+     * @return boolean true si ils sont de couleur différente, false sinon
      **/
     public boolean comparePionsCouleurDifferente(Pions pion1, Pions pion2) {
         if (pion2 != null)
@@ -632,13 +628,12 @@ public class JeuController implements Initializable {
     /**
      * @author Garrigues Ronan
      *
-     *
      * @param posI étant la position initial des lignes
      * @param posJ étant la position initial des colonnes
      * @param posX étant la position final des lignes
      * @param posY étant la position final des colonnes
      *
-     * Fonction pour vérifier si entre deux case de matrice le chemin diagonal est libre, c'est à dire il ne possède aucun pion
+     * Fonction pour vérifier si entre deux cases de matrice le chemin diagonal est libre, c'est à dire il ne possède aucun pion
      *
      * @return boolean true si il n'y a aucun obstacle, false sinon
      **/
@@ -673,7 +668,7 @@ public class JeuController implements Initializable {
      * @param posX étant la position final des lignes
      * @param posY étant la position final des colonnes
      *
-     * Fonction pour vérifier si entre deux case de matrice le chemin horizontal et vertical est libre, c'est à dire il ne possède aucun pion
+     * Fonction pour vérifier si entre deux cases de matrice le chemin horizontal et vertical est libre, c'est à dire il ne possède aucun pion
      *
      * @return boolean true si il n'y a aucun obstacle, false sinon
      **/
@@ -733,10 +728,10 @@ public class JeuController implements Initializable {
      *
      * @return boolean true si le pion est echec, false sinon
      **/
-    // Cette fonction permet via des coordonnés indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
+    // Cette fonction permet via des coordonnées indiquées si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
     public boolean enEchec(int posIMatrice, int posJMatrice) {
         // Cette fonction permet via des coordonnées indiquer si la pièce est en échec. Cela signifie si la pièce peut être prise au tour suivant
-        // Nous allons tester a partir d'une coordonne toutes les direction. Si le premier pion trouvé est unbe piece le mettant en échecs alors
+        // Nous allons tester, à partir d'une coordonnée, toutes les directions. Si le premier pion trouvé est une pièce le mettant en échec alors le roi est en échec.
 
         // Test du coté horizontal et vertical dans toutes les directions
         for (int i = posIMatrice+1; i <= 7; ++i) { // On parcours à partir de la case de départ en incrémentant la position i jusqu'au bord du plateau de jeu
@@ -808,17 +803,17 @@ public class JeuController implements Initializable {
             }
         }
 
-        // Test des digonales
+        // Test des diagonales
         // On initialise un compteur de boucle afin d'avancer en diagonale
         int countBoucle = 0;
         // Effectue une boucle allant jusqu'au bord de l'échiquier
         for (int i = posIMatrice+1; i <= 7 && posJMatrice + countBoucle +1  <= 7; ++i) {
             ++countBoucle; // On augmente le nombre du compteur de boucle
-            // L'instruction this.matriceJeu.get(i).get(posJMatrice+countBoucle) permet d'avancer en diagonale, en augmentant le i et le j de même manière
+            // L'instruction this.matriceJeu.get(i).get(posJMatrice+countBoucle) permet d'avancer en diagonale, en augmentant le i et le j de la même manière
             if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) != null) {  // Si il y a un pion
                 if (this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Fou || this.matriceJeu.get(i).get(posJMatrice+countBoucle) instanceof Reine) { // On regarde si c'est une reine ou un fou
                     if (!Objects.equals(this.matriceJeu.get(i).get(posJMatrice+countBoucle).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())) { // Puis si la couleur est celle de l'adversaire
-                        return true; // Dans ce cas le pion est échec, dans les autres cas non
+                        return true; // Dans ce cas le roi est en échec, dans les autres cas non
                     }
                     else {
                         break;
@@ -888,8 +883,8 @@ public class JeuController implements Initializable {
             }
         }
 
-        // Test echecs par un cavalier.
-        try{ // On essaie d'accéder à une position de la matrice ou un cavalier pourrait mettre en echec la pièce. On vérifie donc si la case est bien un cavalier
+        // Test échec par un cavalier.
+        try{ // On essaie d'accéder à une position de la matrice ou un cavalier pourrait mettre en échec la pièce. On vérifie donc si la case est bien un cavalier
             if(this.matriceJeu.get(posIMatrice-1).get(posJMatrice-2) instanceof Cavalier && !Objects.equals(this.matriceJeu.get(posIMatrice - 1).get(posJMatrice - 2).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
                 return true;
             }
@@ -948,12 +943,12 @@ public class JeuController implements Initializable {
         } catch(Exception _){}
 
 
-        // Test echec par un Pion
+        // Test échec par un Pion
         // On commence par regarder la couleur du roi
         if (this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur() == "noir"){
-            // Puis on vérifie les coordonné du roi
+            // Puis on vérifie les coordonnées du roi
             try{
-                // Cette vérification permet de regarder si un pion se trouve devant le roi noir donc plus bas sur l'échiquier. Si c'est le cas et qui s'agit de une case en diagonale et que de plus le pion est de la couleur adverse alors le roi est en échec
+                // Cette vérification permet de regarder si un pion se trouve devant le roi noir donc plus bas sur l'échiquier. Si c'est le cas et qui s'agit d'une case en diagonale et que de plus le pion est de la couleur adverse alors le roi est en échec
                 if (this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1) instanceof Pion && !Objects.equals(this.matriceJeu.get(posIMatrice+1).get(posJMatrice-1).getCouleur(), this.matriceJeu.get(posIMatrice).get(posJMatrice).getCouleur())){
                     return true;
                 }

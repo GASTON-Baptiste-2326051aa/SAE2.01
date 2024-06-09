@@ -60,7 +60,7 @@ public class BotVsController implements Initializable {
         j1.setText(player1Prenom + " " + player1Nom);
     }
 
-    public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'a la fin du jeu, une fenetre fin du jeu pop.
+    public void Findejeu(String winnerName, String loserName) throws IOException { //fonction permettant qu'à la fin du jeu, une fenêtre fin du jeu apparaisse.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/fin.fxml"));
         Stage fin = (Stage) boutonFin.getScene().getWindow();
         Scene scene;
@@ -74,9 +74,14 @@ public class BotVsController implements Initializable {
         fin.setWidth(500);
         fin.centerOnScreen();
 
-        startButton.setDisable(false); // pertmet de re-activé le bouton apres la fin du jeu
+        startButton.setDisable(false); // permet de re-activé le bouton après la fin du jeu
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * Cette méthode permet d'initialiser un échiquier dans une matrice
+     **/
     public void initMatrice() {
         matriceJeu = new ArrayList<>(8);
         for (int i = 0; i < 8; i++) {
@@ -115,6 +120,13 @@ public class BotVsController implements Initializable {
         matriceJeu.get(7).set(4, new Roi("blanc", "e", 1, "img/roiBlanc.png"));
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * @params une arraylist étant une matrice de Pions
+     *
+     * Cette méthode permet d'afficher l'échiquier
+     **/
     public void afficheMatriceAvecPlateau(ArrayList<ArrayList<Pions>> matrice) {
         plateau.getChildren().removeIf(node -> node instanceof ImageView);
         Position position = new Position();
@@ -135,6 +147,11 @@ public class BotVsController implements Initializable {
         }
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * Cette méthode permet de gérer l'évenement du clic de l'utilisateur
+     **/
     public void clic(){
         plateau.setOnMouseClicked(e -> {
             if (this.positionDep.getX() < 0){
@@ -160,6 +177,11 @@ public class BotVsController implements Initializable {
         });
     }
 
+    /**
+     * @authors Verhille Manon, Alex Rodrigues
+     *
+     * Cette méthode permet de lancer le jeu du bot de manière aléatoire en simulant un clic puis en effectuant les mêmes conditions de déplacements que le joueur.
+     **/
     public void jeuBot(){
         if(peutJouerJ2) {
             // Création d'une variable random : permet de choisir aléatoirement les coordonnées des cases.
@@ -233,6 +255,11 @@ public class BotVsController implements Initializable {
         }
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
+     * Cette méthode permet de lancer le jeu, c'est à dire les déplacements du pion, les conditions de déplacements, les conditions de victoires
+     **/
     public void jeu(){
         if ( this.positionDep.getI() >= 0 && this.positionDep.getJ() >= 0 && this.positionFin.getI() >= 0 && this.positionFin.getJ() >= 0){
             Pions pionDep = this.matriceJeu.get(positionDep.getI()).get(positionDep.getJ());
@@ -275,7 +302,14 @@ public class BotVsController implements Initializable {
         }
     }
 
-    public void deplacementPiece(Pions pionDep, Pions pionFin){
+    /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
+     * @param pionDep : le pion correspondant au clic de départ
+     * @param pionFin : Le pion correspondant au clic de fin
+     *
+     * Cette fonction permet d'effectuer le déplacement d'un pion
+     **/    public void deplacementPiece(Pions pionDep, Pions pionFin){
         if (pionFin != null){
             pionDep.setPosY(pionFin.getPosY());
             pionDep.setPosX(pionFin.getPosX());
@@ -293,6 +327,14 @@ public class BotVsController implements Initializable {
         peutJouerJ2 = temp;
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon
+     *
+     * @param pionDep : le pion correspondant au clic de départ
+     * @param pionFin : Le pion correspondant au clic de fin
+     *
+     * Cette fonction permet d'effectuer le déplacement d'un pion du bot
+     **/
     public void deplacementPieceBot(Pions pionDep, Pions pionFin){
         if (pionFin != null){
             pionDep.setPosY(pionFin.getPosY());
@@ -311,6 +353,12 @@ public class BotVsController implements Initializable {
         peutJouerJ2 = temp;
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon, Gaston Baptise, Goncalves Rodrigues Alex
+     *
+     * Initialisations de la classe.
+     * @params passe en parametres l'url et les ressources utilisé pour localiser les objets utilisé par le root.
+     **/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Initialisation de la grille");
@@ -329,12 +377,35 @@ public class BotVsController implements Initializable {
         clic();
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     *
+     * @param pion1 étant le premier pion à comparer
+     * @param pion2 étant le deuxième pion à comparer
+     *
+     * Fonction permettant de regarder si les couleurs sont différentes
+     *
+     * @return boolean true si ils sont de même couleur, false sinon
+     **/
     public boolean comparePionsMemeCouleur(Pions pion1, Pions pion2) {
         if (pion2 != null)
             return !(pion1.getCouleur().equals(pion2.getCouleur()));
         return true;
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon
+     *
+     *
+     * @param pion1 étant pion de départ
+     * @param posI étant la postion de la ligne correspondant au clic de fin, à la où on souhaite aller
+     * @param posJstr étant la postion de la colonne
+     *
+     * Methodes permettant de vérifier si le pion rencontre un obstacle. Et ceci selon de quelle classe est le pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
     public boolean comparePionsDirection(Pions pion1, int posI, String posJstr) {
         Position position = new Position();
         int posJ = position.conversionLettreInt(posJstr);
@@ -368,6 +439,18 @@ public class BotVsController implements Initializable {
         return true;
     }
 
+    /**
+     * @author Garrigues Ronan
+     *
+     * @param posI étant la position initial des lignes
+     * @param posJ étant la position initial des colonnes
+     * @param posX étant la position final des lignes
+     * @param posY étant la position final des colonnes
+     *
+     * Fonction pour vérifier si entre deux cases de matrice le chemin diagonal est libre, c'est à dire il ne possède aucun pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
     public boolean directionDiagonale(Pions pion, int posI, int posJ, int posX, int posY) {
         if (Math.abs(posX - posJ) == Math.abs(posY - posI)) {
             int xDirection = (posJ - posX > 0) ? 1 : -1;
@@ -387,6 +470,19 @@ public class BotVsController implements Initializable {
         return true;
     }
 
+    /**
+     * @authors Garrigues Ronan, Verhille Manon
+     *
+     *
+     * @param posI étant la position initial des lignes
+     * @param posJ étant la position initial des colonnes
+     * @param posX étant la position final des lignes
+     * @param posY étant la position final des colonnes
+     *
+     * Fonction pour vérifier si entre deux cases de matrice le chemin horizontal et vertical est libre, c'est à dire il ne possède aucun pion
+     *
+     * @return boolean true si il n'y a aucun obstacle, false sinon
+     **/
     public boolean directionHorizontalVertical(Pions pion, int posI, int posJ, int posX, int posY){
         if (posY == posI) {
             if (posX > posJ) {
@@ -422,10 +518,6 @@ public class BotVsController implements Initializable {
             }
         }
         return true;
-    }
-
-    public void situationRoi(Roi roi){
-        //TODO
     }
 }
 

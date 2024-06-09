@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 /**
  * Classe Controller pour le Login dans le jeux d'echec.
- * Cette classe gere certains bouton pour aller vers d'autres pages, la sauvegarde des Noms, Prenoms, parties gagnées et les parties jouées par chaques joueurs.
+ * Cette classe gère certains bouton pour aller vers d'autres pages, la sauvegarde des Noms, Prénoms, parties gagnées et les parties jouées par chaque joueur.
 **/
 
 public class LoginController implements Initializable {
@@ -42,7 +42,7 @@ public class LoginController implements Initializable {
 
     /**
      * Initialisations de la classe.
-     * @params  passe en parametres l'url et les ressources utilisé pour localisé les objets utilisé par le root.
+     * @params  passe en paramètres l'url et les ressources utilisées pour localisé les objets utilisés par le root.
      **/
     private static final String CSV_FILE_PATH = "src/main/resources/joueurs.csv";
     @Override // Initialisation des boutons Controller pour savoir quel mode de jeux on choisi
@@ -59,10 +59,10 @@ public class LoginController implements Initializable {
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * @params actionEvent, quand le bouton va etre cliqué, le code va etre executé
+     * @params actionEvent, quand le bouton va âtre cliqué, le code va âtre exécuté
      *
-     * Ici, quand le bouton va etre cliqué, la scene va etre change par celle du mode Joueur vs Joueur.
-     * Et on a aussi juste avant la sauvegarder des informations des joueurs dans un fichier csv.
+     * Ici, quand le bouton va âtre cliqué, la scène va âtre changée par celle du mode Joueur vs Joueur.
+     * Et on a aussi juste avant la sauvegarde des informations des joueurs dans un fichier csv.
      **/
     @FXML
     private void bouttonJvJ(ActionEvent actionEvent) {
@@ -87,10 +87,10 @@ public class LoginController implements Initializable {
     /**
      * @author Alex GONCALVES RODRIGUES
      *
-     * @params actionEvent, quand le bouton va etre cliqué, le code va etre executé
+     * @params actionEvent, quand le bouton va être cliqué, le code va être exécuté
      *
-     * Ici, quand le bouton va etre cliqué, la scene va etre change par celle du mode Joueur vs Bot..
-     * Et on a aussi juste avant la sauvegarder des informations des joueurs dans un fichier csv.
+     * Ici, quand le bouton va être cliqué, la scène va être changée par celle du mode Joueur vs Bot..
+     * Et on a aussi juste avant la sauvegarde des informations des joueurs dans un fichier csv.
      **/
     @FXML
     private void bouttonJvB(ActionEvent actionEvent) {

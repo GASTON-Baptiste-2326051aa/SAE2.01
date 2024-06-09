@@ -49,8 +49,10 @@ public class AccueilController implements Initializable {
 
     private ButtonController buttonController;
 
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) { // Initialisation des boutons Controller pour savoir quel mode de jeu est choisi.
+
         buttonController = new ButtonController();
         if (boutonJvJlog != null) {
             buttonController.initButtonLogJvJ(boutonJvJlog);
@@ -78,9 +80,6 @@ public class AccueilController implements Initializable {
             String value = param.getValue().get("victories");
             return new SimpleStringProperty(value);
         });
-
-
-
 
         tableView.setItems(loadDataFromCSV("src/main/resources/joueurs.csv"));
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

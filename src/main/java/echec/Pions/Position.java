@@ -7,13 +7,13 @@ public class Position {
     private int x = -1;
     private int y = -1;
 
-    // COnvertion de coordonnée d'image en x et y en coordonnée de matrice i et j
+    // Convertion de coordonnées d'image en x et y en coordonnées de matrice i et j
     public void conversion(int x, int y){
         this.j = x/100;
         this.i = y/100;
     }
 
-    // Conversion des lettre de l'échiquier en chiffre
+    // Conversion des lettres de l'échiquier en chiffres
     public int conversionLettreInt(String lettre){
         int resultat;
         switch (lettre.toLowerCase()) {
@@ -48,7 +48,7 @@ public class Position {
         return resultat;
     }
 
-    // Conversion des chiffre en case d'échiquier
+    // Conversion des chiffres en cases d'échiquier
     public String conversionIntLettre(int chiffre){
         String resultat;
         switch (chiffre) {
