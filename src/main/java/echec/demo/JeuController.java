@@ -577,7 +577,7 @@ public class JeuController implements Initializable {
     }
 
     /**
-     * @author Garrigues Ronan
+     * @authors Garrigues Ronan, Verhille Manon
      *
      *
      * @param pion1 étant pion de départ
@@ -665,7 +665,7 @@ public class JeuController implements Initializable {
     }
 
     /**
-     * @author Garrigues Ronan
+     * @authors Garrigues Ronan, Verhille Manon
      *
      *
      * @param posI étant la position initial des lignes
