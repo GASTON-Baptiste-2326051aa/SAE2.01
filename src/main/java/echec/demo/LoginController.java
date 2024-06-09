@@ -40,7 +40,6 @@ public class LoginController implements Initializable {
     @FXML
     private TextField joueur2Nom;
 
-
     private static final String CSV_FILE_PATH = "src/main/resources/joueurs.csv";
     /**
      * Initialise les boutons du contrôleur pour déterminer le mode de jeu sélectionné.
@@ -188,9 +187,8 @@ public class LoginController implements Initializable {
      * @author Baptiste Gaston
      */
     private void writeCsvFile(String joueurPrenom, String joueurNom, int matches, int victories) {
-        String fileName = "joueurs.csv";
-        try (FileWriter writer = new FileWriter(fileName, true)) {
-            if (new File(fileName).length() == 0) {
+        try (FileWriter writer = new FileWriter(CSV_FILE_PATH, true)) {
+            if (new File(CSV_FILE_PATH).length() == 0) {
                 writer.append("Prénom,Nom,Nombre de matchs,Nombre de victoires\n");
             }
             writer.append(joueurPrenom)
